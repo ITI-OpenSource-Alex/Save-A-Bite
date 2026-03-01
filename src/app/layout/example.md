@@ -1,5 +1,5 @@
 for example:
-in the path src/app/layout/main-layout/main-layout.ts there's one layout
+## in the path src/app/layout/main-layout/main-layout.ts there's one layout
 ```typescript
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -27,7 +27,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 export class MainLayoutComponent {}
 ```
 
-and in src/app/layout/auth-layout/auth-layout.component.ts there's another layout
+## and in src/app/layout/auth-layout/auth-layout.ts there's another layout
 
 ```typescript
 import { Component } from '@angular/core';
@@ -46,7 +46,7 @@ import { RouterOutlet } from '@angular/router';
 export class AuthLayoutComponent {}
 ```
 
-now we have to configure the router paths
+## now we have to configure the router paths
 
 ```typescript
 import { Routes } from '@angular/router';
