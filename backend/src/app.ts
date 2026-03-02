@@ -4,6 +4,7 @@ import env, { envSchema } from "./config/env.config";
 import Container from "typedi";
 import cors from "cors";
 import { dbConnection } from "./config/db.config";
+import addressRoutes from './routes/address.routes';
 import ErrorHandlerMiddleware from "./middlewares/error-handler";
 
 class App {
@@ -39,6 +40,7 @@ class App {
     this.app.use(cors(this.corsOptions));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use('/addresses', addressRoutes);
 
     // Test route
     this.app.get("/", (req: Request, res: Response) => {
