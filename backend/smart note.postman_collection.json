@@ -1,0 +1,1444 @@
+{
+	"info": {
+		"_postman_id": "ea3d5653-a905-408c-821e-cbc9f075a970",
+		"name": "smart note",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31519255",
+		"_collection_link": "https://cynerv.postman.co/workspace/CyNerv-Workspace~b52ef86a-efce-4385-8806-986443500024/collection/31519255-ea3d5653-a905-408c-821e-cbc9f075a970?action=share&source=collection_link&creator=31519255"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"password\": \"SecurePass123!\",\r\n  \"name\": \"Test User\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/create-user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"create-user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"tesdtuser234@example.com\",\r\n  \"password\": \"SecurePass123!\",\r\n  \"name\": \"Test User\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/create-user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"create-user"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "15"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "14"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 07:34:30 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753775371"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-jeRNSHxG/gKmySg0W7OayFI8r78\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [],\n    \"status\": 409,\n    \"message\": \"Email already in use\"\n}"
+						},
+						{
+							"name": "200 ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"password\": \"SecurePass123!\",\r\n  \"name\": \"Test User\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/create-user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"create-user"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "15"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "13"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 07:34:51 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753775371"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"af-mKmj28fUEgiG/7P8yVRu974Yn2E\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User registered successfully\",\n    \"user\": {\n        \"id\": \"6888799b4141489f532b25e7\",\n        \"name\": \"Test User\",\n        \"email\": \"tesdtuser24@example.com\",\n        \"createdAt\": \"2025-07-29T07:34:51.639Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"password\": \"NewPass123!\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404 not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"testuser@example.com\",\r\n  \"password\": \"SecurPass123!\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "10"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "9"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 07:45:26 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753775727"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "85"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"55-qrf5N/NIlo3ogZyLCnuTUZrKcrA\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [],\n    \"status\": 404,\n    \"message\": \"User with email testuser@example.com not found\"\n}"
+						},
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"password\": \"SecurePass123!\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "10"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "7"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 07:47:11 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753775727"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "433"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b1-hiXFbjFTJrrl15RkmID+hTEnioM\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODg4Nzk5YjQxNDE0ODlmNTMyYjI1ZTciLCJlbWFpbCI6InRlc2R0dXNlcjI0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzUzNzc1MjMxLCJleHAiOjE3NTM3NzUyMzR9.SCNWv5vPja6qWd4l5wiTSSb_OtQu4yeP0X6DuiPhvLY\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODg4Nzk5YjQxNDE0ODlmNTMyYjI1ZTciLCJpYXQiOjE3NTM3NzUyMzEsImV4cCI6MTc1NDM4MDAzMX0.GqCrJddIsWdNtjVVgpKq4XMTje1rlBv3zEtHvR1exvE\"\n}"
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"password\": \"SecurePass123!\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "401 Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"password\": \"SecurePass123!\"\r\n}\r\n\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/auth/logout",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1f-pZK48A3ZbwxVl8UtZcC9y8sBFbw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 07:48:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"No token provided\"\n}"
+						},
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"password\": \"SecurePass123!\"\r\n}\r\n\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/auth/logout",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-xfntuSKAoA991HVaWVVrlGmNooo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 07:50:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully logged out\"\n}"
+						}
+					]
+				},
+				{
+					"name": "upload profile pic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "postman-cloud:///1eff3cec-84e9-4360-b160-143f83df29bb"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/upload-profile-pic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"upload-profile-pic"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/upload-profile-pic",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"upload-profile-pic"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "56"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"38-/IvAvASEcUi1PJU+Ktd1yXcFX+I\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 08:24:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [],\n    \"status\": 401,\n    \"message\": \"No token provided\"\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "postman-cloud:///1eff3cec-84e9-4360-b160-143f83df29bb"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/upload-profile-pic",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"upload-profile-pic"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "160"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a0-zbcdN9DgZykPzGuEifj7/GY6jU4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 08:37:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Profile picture uploaded successfully\",\n    \"profilePicture\": \"C:\\\\Users\\\\HP\\\\Desktop\\\\Note Management System\\\\src\\\\uploads\\\\1753778253914-292204824.csv\"\n}"
+						}
+					]
+				},
+				{
+					"name": "forgetpassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"tesdtuser24@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/forget-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"forget-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"tesdtuser24@example.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/forget-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"forget-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "69"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"45-nCoXtv+FQ1Vr+z8LEof8LFbJJh0\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 10:12:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"If a user with that email exists, an OTP has been sent.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"otp\": \"631342\",\r\n  \"newPassword\": \"NewPass123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"reset-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"otp\": \"631342\",\r\n  \"newPassword\": \"NewPass123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/reset-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"reset-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27-L4xvc+jp/avJkeCZKkXIaqi7KoM\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 10:18:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Password reset successful\"\n}"
+						},
+						{
+							"name": "400 bad request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"tesdtuser24@example.com\",\r\n  \"otp\": \"631342\",\r\n  \"newPassword\": \"NewPass123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/reset-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"reset-password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3d-euJS42J7nb+nphTEzWlPXnTBM+g\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 10:18:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [],\n    \"status\": 400,\n    \"message\": \"Invalid or expired OTP\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "create note",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Meeting Summary\",\r\n  \"content\": \"Today we discussed the quarterly goals, marketing strategies, and client onboarding processes.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/notes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"notes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Meeting Summary\",\r\n  \"content\": \"Today we discussed the quarterly goals, marketing strategies, and client onboarding processes.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/notes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "100"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "98"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 11:17:52 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753787886"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "288"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"120-+xqCLxi77pudcRii2GydsnmNiDY\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Meeting Summary\",\n    \"content\": \"Today we discussed the quarterly goals, marketing strategies, and client onboarding processes.\",\n    \"owner\": \"6888799b4141489f532b25e7\",\n    \"_id\": \"6888ade0400325de1a9f022c\",\n    \"createdAt\": \"2025-07-29T11:17:52.865Z\",\n    \"updatedAt\": \"2025-07-29T11:17:52.865Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "delete note",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Meeting Summary\",\r\n  \"content\": \"Today we discussed the quarterly goals, marketing strategies, and client onboarding processes.\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/notes/6888ade0400325de1a9f022c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"6888ade0400325de1a9f022c"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204 No content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Meeting Summary\",\r\n  \"content\": \"Today we discussed the quarterly goals, marketing strategies, and client onboarding processes.\"\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/notes/6888ade0400325de1a9f022c",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"notes",
+										"6888ade0400325de1a9f022c"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "100"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "98"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 11:20:01 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753788048"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Ai summarize",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/notes/6888af81532d9dfbe88dd5ff/summarize",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"notes",
+								"6888af81532d9dfbe88dd5ff",
+								"summarize"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/notes/6888af81852d9dfbe88dd5ff/summarize",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"notes",
+										"6888af81852d9dfbe88dd5ff",
+										"summarize"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "10"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "9"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 11:51:32 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753790493"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "127"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7f-aGWYyL53gN3qhHPAGMbluHDlbCw\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"summary\": \"Today's meeting covered three key topics: quarterly goals, marketing strategies, and client onboarding processes.\"\n}"
+						},
+						{
+							"name": "404 not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/notes/6888af81532d9dfbe88dd5ff/summarize",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"notes",
+										"6888af81532d9dfbe88dd5ff",
+										"summarize"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "10"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "7"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jul 2025 11:52:03 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1753790493"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "53"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"35-zHWjCh6UFX3UZt/lAcxcxIXs2nM\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [],\n    \"status\": 404,\n    \"message\": \"Note not found\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
