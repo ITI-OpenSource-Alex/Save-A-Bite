@@ -4,7 +4,8 @@ import env, { envSchema } from "./config/env.config";
 import Container from "typedi";
 import cors from "cors";
 import { dbConnection } from "./config/db.config";
-import addressRoutes from './routes/address.routes';
+import rootRouter from './routes/index';
+import { Seeder } from "./utils/seeder";
 import ErrorHandlerMiddleware from "./middlewares/error-handler";
 
 class App {
@@ -24,6 +25,7 @@ class App {
     appInstance.app = express();
     await appInstance.initializeMiddlewares();
     await dbConnection();
+    await Seeder.seedSuperAdmin();
     await appInstance.initializeRoutes();
     appInstance.errorHandler();
     return appInstance;
@@ -40,7 +42,7 @@ class App {
     this.app.use(cors(this.corsOptions));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use('/addresses', addressRoutes);
+    this.app.use('/', rootRouter);
 
     // Test route
     this.app.get("/", (req: Request, res: Response) => {

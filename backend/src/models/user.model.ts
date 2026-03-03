@@ -7,12 +7,13 @@ export interface IUser extends Document{
     password : string;
     //comparePassword(candidatePassword: string): Promise<boolean>;
     phone?: string;
-    role: 'user' | 'admin' | 'vendor';
+    role: 'user' | 'admin' | 'vendor' | 'super-admin';
     profileImage?: string;
     isEmailVerified: boolean;
     isActive: boolean;
     isDeleted: boolean;
     address?:mongoose.Types.ObjectId;
+    tokenBlacklist?: string[];
     cretedAt: Date;
     updatedAt: Date;
 }
@@ -26,12 +27,13 @@ const userSchema = new Schema<IUser>(
     email : {type : String, required : [true, 'Email is required'], unique : true, lowercase : true, trim: true},
     password : {type : String, required : [true, 'Password is required'], minlength:[8, 'Password must be at least 8 characters']},
     phone : {type : String, trim: true},
-    role : {type : String, enum : ['user', 'admin', 'vendor'], default : 'user'},
+    role : {type : String, enum : ['user', 'admin', 'vendor', 'super-admin'], default : 'user'},
     profileImage : {type : String},
     isEmailVerified : {type : Boolean, default : false},
     isActive : {type : Boolean, default : true},
     isDeleted : {type : Boolean, default : false},
     address : {type : mongoose.Types.ObjectId, ref : 'Address'},
+    tokenBlacklist: [{ type: String }],
     },
     {timestamps : true}
 );
