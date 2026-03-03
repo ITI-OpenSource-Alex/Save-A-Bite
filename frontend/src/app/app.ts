@@ -4,11 +4,20 @@ import { Navbar } from './layout/navbar/navbar';
 import { HeroSlider } from './features/home/hero-slider/hero-slider';
 import { FlashDealsComponent } from './features/home/flash-deals/flash-deals';
 import { CategoriesSection } from './layout/categories-section/categories-section';
+import { EcoSection } from './layout/eco-section/eco-section/eco-section';
 import { Footer } from './layout/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, HeroSlider, FlashDealsComponent, CategoriesSection, Footer],
+  imports: [
+    RouterOutlet,
+    Navbar,
+    HeroSlider,
+    FlashDealsComponent,
+    CategoriesSection,
+    EcoSection,
+    Footer,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
