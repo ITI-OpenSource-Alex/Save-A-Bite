@@ -28,8 +28,6 @@ type OnChangeType = (value: string) => void;
 
 @Directive({
   selector: 'input[z-input], textarea[z-input]',
-  standalone: true,
-
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
