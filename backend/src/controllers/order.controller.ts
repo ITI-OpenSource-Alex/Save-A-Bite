@@ -18,12 +18,12 @@ export const orderController = {
             // todo: Auth check
 
             if (!idempotencyKey) {
-                logger.error(`Idempotency key is missing`, null)
+                logger.warning(`Idempotency key is missing`)
                 return res.status(400).json({ message: "idempotency-key header is required" })
             }
 
             if (!req.body.items || req.body.items.length === 0) {
-                logger.error(`Order items are missing`, null)
+                logger.warning(`Order items are missing`)
                 return res.status(400).json({ message: "Order items are required" })
             }
              
