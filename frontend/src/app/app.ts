@@ -6,6 +6,7 @@ import { FlashDealsComponent } from './features/home/flash-deals/flash-deals';
 import { CategoriesSection } from './layout/categories-section/categories-section';
 import { EcoSection } from './layout/eco-section/eco-section/eco-section';
 import { Footer } from './layout/footer/footer';
+import { Restaurants } from './features/home/restaurants/restaurants';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ import { Footer } from './layout/footer/footer';
     CategoriesSection,
     EcoSection,
     Footer,
+    Restaurants,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
