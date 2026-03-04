@@ -4,6 +4,7 @@ import env from "../config/env.config";
 import jwt from "jsonwebtoken";
 import { JwtDto } from "../dto/jwt.dto";
 import User from "../models/user.model";
+import { Role } from "../enum/role.enum";
 
 export interface AuthRequest extends Request {
   jwt?: JwtDto;
@@ -51,4 +52,18 @@ export const IsAuthenticatedMiddleware = async (
     res.setHeader("Www-Authenticate", "Bearer");
     return next(new UnauthorizedException(err.message));
   }
+};
+
+export const AuthorizeRoles = (...allowedRoles: Role[]) => {
+  return (req: AuthRequest, res: ExpressResponse, next: NextFunction) => {
+    if (!req.jwt) {
+      return next(new UnauthorizedException("User is not authenticated"));
+    }
+
+    if (!allowedRoles.includes(req.jwt.role)) {
+      return next(new UnauthorizedException("You do not have permission to perform this action"));
+    }
+
+    next();
+  };
 };
