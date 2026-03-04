@@ -6,9 +6,9 @@ import { CreateOrderDto } from "../dto/order.dto";
 
 const router = Router();
 
-router.post('/create', IsAuthenticatedMiddleware, ValidationMiddleware(CreateOrderDto), orderController.createOrder);
-router.get('/my-orders', IsAuthenticatedMiddleware, orderController.getMyOrders);
-router.get('/my-orders/:id', IsAuthenticatedMiddleware, orderController.getOrderById);
-router.post('/cancel/:id', IsAuthenticatedMiddleware, orderController.cancelOrder);
+router.post('/orders', IsAuthenticatedMiddleware, ValidationMiddleware(CreateOrderDto), orderController.createOrder);
+router.get('/orders', IsAuthenticatedMiddleware, orderController.getMyOrders);
+router.get('/orders/:id', IsAuthenticatedMiddleware, orderController.getOrderById);
+router.post('/orders/:id', IsAuthenticatedMiddleware, orderController.cancelOrder);
 
 export default router;

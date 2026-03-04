@@ -1,54 +1,58 @@
-<nav class="bg-white border-b px-8 py-4">
-  <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="bg-green-600 w-10 h-10 rounded-xl flex items-center justify-center">
-        <span class="text-white text-lg">🌿</span>
+<nav class="bg-white border-b sticky top-0 z-50 lg:px-15">
+  <div class="flex items-center px-4 md:px-8 py-3">
+    <div class="flex items-center gap-2 shrink-0">
+      <div class="bg-green-600 w-8 h-8 rounded-lg flex items-center justify-center">
+        <span class="text-white text-sm">🌿</span>
       </div>
-
-      <h1 class="text-2xl font-bold">
+      <h1 class="text-lg font-bold whitespace-nowrap">
         <span>Save</span>
         <span class="text-green-600">Bite</span>
       </h1>
     </div>
 
-    <div class="flex-1 flex justify-center px-10">
+    <div class="hidden md:flex flex-1 justify-center px-6">
       <div class="w-full max-w-lg">
-        <input z-input placeholder="Search restaurants or food..." zSize="default" />
+        <input z-input placeholder="Search restaurants or food..." zSize="default" class="w-full" />
       </div>
     </div>
 
-    <div class="cursor-pointer flex items-center gap-6">
-      <a class="text-green-600 font-medium">Home</a>
-      <a class="text-gray-600 hover:text-green-600">Browse</a>
-      <a class="text-gray-600 hover:text-green-600">Flash Deals</a>
-      <!-- Cart -->
-      <div class="relative">
-        <div
-          class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-green-100 transition duration-200 cursor-pointer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            class="w-5 h-5 text-gray-700 hover:text-green-600 transition"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M5 7h14l-1 14H6L5 7zM9 7V5a3 3 0 016 0v2"
-            />
-          </svg>
+    <div class="hidden md:flex items-center gap-6 shrink-0">
+      <a class="text-green-600 font-medium cursor-pointer">Home</a>
+      <a class="text-gray-600 hover:text-green-600 cursor-pointer">Browse</a>
+      <a class="text-gray-600 hover:text-green-600 cursor-pointer">Flash Deals</a>
+      <button class="bg-green-600 text-white px-5 py-2 rounded-full">Sign In</button>
+    </div>
+
+    <button class="md:hidden ml-auto text-2xl" (click)="toggleMenu()">☰</button>
+  </div>
+
+  @if (isMenuOpen) {
+    <div class="fixed inset-0 bg-white z-[999] p-6 md:hidden transition-all duration-300">
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-2">
+          <div class="bg-green-600 w-8 h-8 rounded-lg flex items-center justify-center">
+            <span class="text-white text-sm">🌿</span>
+          </div>
+          <h1 class="text-lg font-bold">
+            <span>Save</span>
+            <span class="text-green-600">Bite</span>
+          </h1>
         </div>
 
-        <span
-          class="absolute -top-1 -right-1 bg-green-600 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full shadow"
-        >
-          2
-        </span>
+        <button class="text-2xl" (click)="toggleMenu()">✕</button>
       </div>
-      <button class="cursor-pointer bg-green-600 text-white px-5 py-2 rounded-full">Sign In</button>
+
+      <div class="mb-6">
+        <input z-input placeholder="Search..." zSize="default" class="w-full" />
+      </div>
+
+      <div class="flex flex-col gap-5 text-lg">
+        <a class="hover:text-green-600 cursor-pointer">Home</a>
+        <a class="hover:text-green-600 cursor-pointer">Browse</a>
+        <a class="hover:text-green-600 cursor-pointer">Flash Deals</a>
+      </div>
+
+      <button class="mt-8 w-full bg-green-600 text-white py-3 rounded-lg">Sign In</button>
     </div>
-  </div>
+  }
 </nav>
