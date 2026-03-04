@@ -1,6 +1,8 @@
 import User from "../models/user.model";
+import mongoose from "mongoose";
 import { logger } from "../services/logger.service";
 import dotenv from "dotenv";
+import { Role } from "../enum/role.enum";
 
 dotenv.config();
 
@@ -15,10 +17,11 @@ export class Seeder {
                 return;
             }
 
+
             const existingAdmin = await User.findOne({ email: adminEmail });
 
             if (existingAdmin) {
-                logger.info("Super Admin already exists. Skipping seeding.");
+                logger.info("Super Admin already exists.");
                 return;
             }
 
@@ -26,15 +29,19 @@ export class Seeder {
                 name: "Super Admin",
                 email: adminEmail,
                 password: adminPassword,
-                role: "super-admin",
+                role: Role.SUPER_ADMIN,
                 isEmailVerified: true,
                 isActive: true
             });
 
             await superAdmin.save();
             logger.info("Super Admin seeded successfully.");
-        } catch (error) {
-            logger.error("Error seeding Super Admin:", error);
+        } catch (error: any) {
+            if (error.message.includes("requires authentication")) {
+                logger.error("Authentication failed. Please check your MONGO_URI in .env to ensure it includes the correct username and password.", error);
+            } else {
+                logger.error("Error seeding Super Admin:", error);
+            }
         }
     }
 }
