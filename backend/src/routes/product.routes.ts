@@ -7,11 +7,30 @@ import ValidationMiddleware from "../middlewares/validation.middleware";
 
 const router = Router();
 
-router.post('/products', IsAuthenticatedMiddleware, ValidationMiddleware(CreateProductDto), productController.createProduct); // // TODO: NEED TO BE UPDATED AFTER IMPLEMENTING RBAC
-router.get('/products', IsAuthenticatedMiddleware, productController.getProducts);
-router.get('/products/:id', IsAuthenticatedMiddleware, productController.getProductById)
-router.patch('/products/:id', IsAuthenticatedMiddleware,ValidationMiddleware(UpdateProductDto), productController.updateProduct)
-router.delete('/products/:id', IsAuthenticatedMiddleware, productController.deleteProduct)
+router.post(
+  "/",
+  IsAuthenticatedMiddleware,
+  ValidationMiddleware(CreateProductDto),
+  productController.createProduct,
+); // // TODO: NEED TO BE UPDATED AFTER IMPLEMENTING RBAC
+router.get("/", IsAuthenticatedMiddleware, productController.getProducts);
+router.get("/:id", IsAuthenticatedMiddleware, productController.getProductById);
+router.get(
+  "/:id/:storeId",
+  IsAuthenticatedMiddleware,
+  productController.getProductByIdAndStoreId,
+);
+router.patch(
+  "/:id",
+  IsAuthenticatedMiddleware,
+  ValidationMiddleware(UpdateProductDto),
+  productController.updateProduct,
+);
+router.delete(
+  "/:id",
+  IsAuthenticatedMiddleware,
+  productController.deleteProduct,
+);
 
 export default router;
 
