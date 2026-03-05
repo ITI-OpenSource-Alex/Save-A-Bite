@@ -1,16 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { CategoryService } from "../services/category.service";
+import { AuthRequest } from "../middlewares/auth.middleware";
 
 const categoryService = new CategoryService();
 
-const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  const admin = req.headers["x-admin"] === "true";
-  if (!admin) return res.status(403).json({ message: "Admin only" });
-  next();
-};
-
 export class CategoryController {
-  async create(req: Request, res: Response) {
+  async createCategory(req: AuthRequest, res: Response) {
     try {
       const category = await categoryService.createCategory(req.body);
       res.status(201).json(category);
@@ -68,5 +63,5 @@ export class CategoryController {
   }
 }
 
-export { isAdmin };
+// export { isAdmin };
 export const categoryController = new CategoryController();

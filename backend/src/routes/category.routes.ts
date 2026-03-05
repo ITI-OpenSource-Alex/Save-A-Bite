@@ -1,19 +1,10 @@
-import { Router } from "express";
-import {
-  CategoryController,
-  isAdmin,
-} from "../controllers/category.controller";
-
-const router = Router();
-const controller = new CategoryController();
-
+import { Router } from 'express';
+import { authController } from '../controllers/auth.controller';
+import ValidationMiddleware from '../middlewares/validation.middleware';
+import { IsAuthenticatedMiddleware } from '../middlewares/auth.middleware';
+import { categoryController } from '../controllers/category.controller';
+import { categoryDto } from '../dto/category.dto';
 // Public endpoints
-router.get("/", (req, res) => controller.list(req, res));
-router.get("/:id", (req, res) => controller.details(req, res));
-
-// Admin-only endpoints
-router.post("/", isAdmin, (req, res) => controller.create(req, res));
-router.patch("/:id", isAdmin, (req, res) => controller.update(req, res));
-router.delete("/:id", isAdmin, (req, res) => controller.softDelete(req, res));
-
+const router = Router();
+router.post('/create', IsAuthenticatedMiddleware, ValidationMiddleware(categoryDto), categoryController.createCategory);
 export default router;

@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import express, { Application, Request, Response } from "express";
-import env, { envSchema } from "./config/env.config";
+import env, { envSchema } from "./config/env.config.ts";
 import Container from "typedi";
 import cors from "cors";
-import { dbConnection } from "./config/db.config";
+import { dbConnection } from "./config/db.config.ts/index.js";
 import rootRouter from './routes/index';
 import { Seeder } from "./utils/seeder";
 import ErrorHandlerMiddleware from "./middlewares/error-handler";
