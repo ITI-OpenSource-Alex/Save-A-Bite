@@ -29,3 +29,5 @@ router.delete(
   IsAuthenticatedMiddleware,
   storeController.deleteStoreById,
 );
+
+export default router;
