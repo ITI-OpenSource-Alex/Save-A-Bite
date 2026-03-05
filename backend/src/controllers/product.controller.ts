@@ -19,14 +19,14 @@ export class ProductController{
             }
             
             const product = await this.productService.createProduct({
-                ...productData,
-                categoryId: new ObjectId(productData.categoryId),
-                productId: new ObjectId, 
-                isActive: true,
-                isDeleted: false,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                storeId: new ObjectId(storeId),
+              ...productData,
+              categoryId: new ObjectId(),
+              productId: new ObjectId(),
+              isActive: true,
+              isDeleted: false,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              storeId: new ObjectId(storeId),
             });
 
             const status = product.createdAt === product.updatedAt ? 201 : 200;

@@ -1,6 +1,4 @@
-
 import mongoose, {Schema} from "mongoose";
-
 
 export interface IProduct {
     productId : mongoose.Types.ObjectId

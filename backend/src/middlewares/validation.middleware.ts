@@ -7,7 +7,7 @@ type RequestSource = 'body' | 'query' | 'params';
 
 const ValidationMiddleware = (
   type: any,
-  source: RequestSource = 'body',
+  source: RequestSource = 'body' ,
   skipMissingProperties = false
 ): RequestHandler => {
   return (req: Request, res: ExpressResponse, next: NextFunction) => {

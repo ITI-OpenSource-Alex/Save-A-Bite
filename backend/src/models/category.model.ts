@@ -1,27 +1,33 @@
-import mongoose, { Schema, Document, mongo, model } from "mongoose";
-import { IProduct } from "./product.model";
-import {ECategory } from "../enum/category.enum";
+import { Schema, Document, model, Types } from "mongoose";
+
 
 export interface ICategory extends Document {
-  name: ECategory;
-  categoryStock:IProduct[];
+  name: string;
+  categoryStock:number;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
+
 const CategorySchema = new Schema<ICategory>(
   {
-    name: { type: String, enum: Object.values(ECategory), required: true, trim: true },
-    categoryStock:  
-      [
-        {
-         type: String,
-         ref:"Product" 
-        }
-      ],
-    isActive: { type: Boolean, default: true },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    categoryStock: {
+      type: Number,
+      default: 0,
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export const Category = model<ICategory>("Category", CategorySchema);

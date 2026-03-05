@@ -5,11 +5,11 @@ export class CreateProductDto {
     @IsString()
     name!: string;
 
-    @IsString()
-    storeId!: string;
+    // @IsString()
+    // storeId!: string;
 
-    @IsString()
-    categoryId!: string;
+    // @IsString()
+    // categoryId!: string;
 
     @IsArray()
     @IsString({ each: true })

@@ -1,67 +1,74 @@
 import { Request, Response, NextFunction } from "express";
 import { CategoryService } from "../services/category.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
+import { CategoryDto } from "../dto/category.dto";
 
-const categoryService = new CategoryService();
+
+
 
 export class CategoryController {
-  async createCategory(req: AuthRequest, res: Response) {
+  private categoryService: CategoryService;
+
+  constructor() {
+    this.categoryService = new CategoryService();
+  }
+
+  createCategory = async (req: AuthRequest, res: Response) => {
     try {
-      const category = await categoryService.createCategory(req.body);
-      res.status(201).json(category);
+      const dtoCategory: CategoryDto = req.body;
+      const created = await this.categoryService.createCategory(dtoCategory);
+      res.status(201).json(created);
     } catch (err: any) {
       res.status(400).json({ error: err.message });
     }
-  }
+  };
 
-  async list(req: Request, res: Response) {
+  list = async (req: Request, res: Response) => {
     try {
-      const categories = await categoryService.findAll();
+      const categories = await this.categoryService.findAll();
       res.json(categories);
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
-  }
+  };
 
-  async details(req: Request, res: Response) {
+  details = async (req: Request, res: Response) => {
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     if (!id) return res.status(400).json({ message: "Invalid category ID" });
 
     try {
-      const category = await categoryService.findById(id);
+      const category = await this.categoryService.findById(id);
       if (!category) return res.status(404).json({ message: "Not found" });
       res.json(category);
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
-  }
+  };
 
-  async update(req: Request, res: Response) {
+  update = async (req: Request, res: Response) => {
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     if (!id) return res.status(400).json({ message: "Invalid category ID" });
 
     try {
-      const updated = await categoryService.update(id, req.body);
+      const updated = await this.categoryService.update(id, req.body);
       if (!updated) return res.status(404).json({ message: "Not found" });
       res.json(updated);
     } catch (err: any) {
       res.status(400).json({ error: err.message });
     }
-  }
+  };
 
-  async softDelete(req: Request, res: Response) {
+  softDelete = async (req: Request, res: Response) => {
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     if (!id) return res.status(400).json({ message: "Invalid category ID" });
 
     try {
-      const deleted = await categoryService.softDelete(id);
+      const deleted = await this.categoryService.softDelete(id);
       if (!deleted) return res.status(404).json({ message: "Not found" });
       res.json({ message: "Category soft deleted", category: deleted });
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
-  }
+  };
 }
-
-// export { isAdmin };
-export const categoryController = new CategoryController();
+export default new CategoryController();

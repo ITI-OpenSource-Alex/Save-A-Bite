@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import User, { IUser } from '../models/user.model';
-import env from "../config/env.config.ts";
+import env from "../config/env.config";
 import { JwtDto } from '../dto/jwt.dto';
 import { RegisterDto, LoginDto, ResetPasswordDto, VerifyChangeEmailDto } from '../dto/auth.dto';
 import { sendVerifyEmail, sendOtpEmail } from '../send-mails/emailService';
