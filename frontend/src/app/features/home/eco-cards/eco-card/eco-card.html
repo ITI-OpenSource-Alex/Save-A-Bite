@@ -1,0 +1,15 @@
+<div
+  class="flex flex-col items-center justify-center rounded-2xl bg-white p-8 text-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] transition-all hover:shadow-lg"
+>
+  <div [class]="stat().iconColor + ' mb-4 flex h-8 w-8 items-center justify-center text-3xl'">
+    <i [class]="stat().icon"></i>
+  </div>
+
+  <h3 class="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
+    {{ stat().value }}
+  </h3>
+
+  <p class="mt-2 text-xs font-medium text-gray-500 md:text-sm">
+    {{ stat().label }}
+  </p>
+</div>

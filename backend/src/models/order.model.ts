@@ -45,7 +45,6 @@ const orderSchema = new Schema<IOrder>({
     idempotencyKey: { type: String, unique: true, required: true }
 }, { timestamps: true })
 
-orderSchema.index({ idempotencyKey: 1 }, { unique: true });
 orderSchema.index({ userId: 1 })
 
 export const Order = mongoose.model<IOrder>('Order', orderSchema);
