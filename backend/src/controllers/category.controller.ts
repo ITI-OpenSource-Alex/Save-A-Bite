@@ -7,6 +7,7 @@ import { CategoryDto } from "../dto/category.dto";
 
 
 export class CategoryController {
+  
   private categoryService: CategoryService;
 
   constructor() {
