@@ -16,5 +16,8 @@
     "url": "https://github.com/ITI-OpenSource-Alex/Save-A-Bite/issues"
   },
   "homepage": "https://github.com/ITI-OpenSource-Alex/Save-A-Bite#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "mongo": "^0.1.0"
+  }
 }
