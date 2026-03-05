@@ -13,8 +13,7 @@ debug.log
 # Environment Variables
 .env
 .env.local
-config.js
-config
+
 
 
 
