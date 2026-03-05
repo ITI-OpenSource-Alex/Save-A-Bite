@@ -15,10 +15,11 @@ router.post(
 ); // // TODO: NEED TO BE UPDATED AFTER IMPLEMENTING RBAC
 router.get("/", IsAuthenticatedMiddleware, productController.getProducts);
 router.get("/:id", IsAuthenticatedMiddleware, productController.getProductById);
-router.get(
-  "/:id/:storeId",
+router.post(
+  "/:storeId",
   IsAuthenticatedMiddleware,
-  productController.getProductByIdAndStoreId,
+  ValidationMiddleware(CreateProductDto),
+  productController.createProduct,
 );
 router.patch(
   "/:id",

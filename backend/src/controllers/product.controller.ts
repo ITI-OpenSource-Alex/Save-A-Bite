@@ -21,16 +21,17 @@ export class ProductController {
       const userId = req.jwt?.userId;
       const storeId = Array.isArray(req.params.storeId)
         ? req.params.storeId[0]
-        : (req.params.storeId as string); // TODO: NEED TO BE UPDATED AFTER IMPLEMENTING RBAC
-      const productData: CreateProductDto = req.body;
+        : (req.params.storeId as string);
 
-      if (!userId) {
-        return res.status(401).json({ message: "Unauthorized" });
+      if (!userId || !mongoose.Types.ObjectId.isValid(storeId)) {
+        return res.status(400).json({ message: "Invalid user or storeId" });
       }
+
+      const productData: CreateProductDto = req.body;
 
       const product = await this.productService.createProduct({
         ...productData,
-        categoryId: new ObjectId(),
+        categoryId: new ObjectId(req.body.categoryId),
         productId: new ObjectId(),
         isActive: true,
         isDeleted: false,
@@ -38,18 +39,6 @@ export class ProductController {
         updatedAt: new Date(),
         storeId: new ObjectId(storeId),
       });
-
-      const productId = Array.isArray(req.params.productId)
-        ? req.params.productId[0]
-        : (req.params.productId as string);
-
-      if (!product.categoryId) {
-        return res.status(400).json({ message: "categoryId is required" });
-      }
-
-      if (!mongoose.Types.ObjectId.isValid(storeId)) {
-        return res.status(400).json({ message: "Invalid storeId" });
-      }
 
       const category = await this.categoryService.incrementStock(
         product.categoryId.toString(),
@@ -60,18 +49,13 @@ export class ProductController {
         return res.status(404).json({ message: "Category not found" });
       }
 
-      const status = product.createdAt === product.updatedAt ? 201 : 200;
-      const message =
-        status === 201
-          ? "Product created successfully"
-          : "Product already processed";
-
-      return res.status(status).json({ message, product });
+      return res.status(201).json({
+        message: "Product created successfully",
+        product,
+      });
     } catch (error: any) {
-      logger.error(`Internal server error`, error);
-      return res
-        .status(500)
-        .json({ message: "Internal server error", error: error.message });
+      logger.error(`Error creating product: ${error.message}`, error);
+      return res.status(500).json({ message: "Internal server error" });
     }
   };
 
@@ -179,4 +163,5 @@ export class ProductController {
     }
   };
 }
+
 export const productController = new ProductController(new ProductService());

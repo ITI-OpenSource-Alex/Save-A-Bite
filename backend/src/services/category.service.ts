@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { ICategory, Category } from "../models/category.model";
-import { ObjectId } from "mongoose";
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
+const { ObjectId } = Types;
 
 @Service()
 export class CategoryService {
@@ -26,7 +26,13 @@ export class CategoryService {
     return Category.findByIdAndUpdate(id, { isActive: false }, { new: true });
   }
 
-  async incrementStock(id: Types.ObjectId | string, value: number = 1) {
+  async incrementStock(
+    id: string,
+    value: number = 1,
+  ): Promise<ICategory | null> {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error("Invalid category ID");
+    }
     return Category.findByIdAndUpdate(
       id,
       { $inc: { categoryStock: value } },

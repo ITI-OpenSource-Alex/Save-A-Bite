@@ -7,7 +7,6 @@ import { CategoryDto } from "../dto/category.dto";
 
 
 export class CategoryController {
-  
   private categoryService: CategoryService;
 
   constructor() {
@@ -67,6 +66,18 @@ export class CategoryController {
       const deleted = await this.categoryService.softDelete(id);
       if (!deleted) return res.status(404).json({ message: "Not found" });
       res.json({ message: "Category soft deleted", category: deleted });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+
+  incrementStock = async (req: Request, res: Response) => {
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    if (!id) return res.status(400).json({ message: "Invalid category ID" });
+    try {
+      const updated = await this.categoryService.incrementStock(id, 1);
+      if (!updated) return res.status(404).json({ message: "Not found" });
+      res.json(updated);
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
