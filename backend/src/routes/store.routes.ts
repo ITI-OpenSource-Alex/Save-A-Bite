@@ -7,25 +7,25 @@ import ValidationMiddleware from "../middlewares/validation.middleware";
 const router = Router();
 
 router.post(
-  "/stores",
+  "/",
   IsAuthenticatedMiddleware,
   ValidationMiddleware(StoreDto),
   storeController.createStore,
 );
-router.get("/stores", IsAuthenticatedMiddleware, storeController.getAllStores);
+router.get("/", IsAuthenticatedMiddleware, storeController.getAllStores);
 router.get(
-  "/stores/:id",
+  "/:id",
   IsAuthenticatedMiddleware,
   storeController.getStoreById,
 );
 router.patch(
-  "/stores/:id",
+  "/:id",
   IsAuthenticatedMiddleware,
   ValidationMiddleware(UpdateStoreDto),
   storeController.updateStoreById,
 );
 router.delete(
-  "/stores/:id",
+  "/:id",
   IsAuthenticatedMiddleware,
   storeController.deleteStoreById,
 );
