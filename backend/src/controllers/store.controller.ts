@@ -119,3 +119,5 @@ export class StoreController {
     }
   };
 }
+
+export const storeController = new StoreController();
