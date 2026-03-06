@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { Role } from '../enum/role.enum';
 
 export interface IUser extends Document {
+    _id: mongoose.Types.ObjectId;
     name: string;
     email: string;
     password?: string;
@@ -26,6 +27,7 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
     {
+        _id: { type: Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() }, // before was evaluated once and gets duplicated with each registiration
         name: { type: String, required: [true, 'Name is required'], trim: true },
         email: { type: String, required: [true, 'Email is required'], unique: true, lowercase: true, trim: true },
         password: {

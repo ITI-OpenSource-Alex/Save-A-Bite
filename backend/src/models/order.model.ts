@@ -1,4 +1,6 @@
 import mongoose, {Schema,Document, mongo} from "mongoose";
+import { PAYMENT_METHOD, PAYMENT_STATUS, ORDER_STATUS} from "../enum/order.enum";
+
 
 export interface IOrderItem {
     productId : mongoose.Types.ObjectId
@@ -13,9 +15,9 @@ export interface IOrder extends Document {
     totalPrice: number
     discount: number
     finalPrice: number
-    paymentMethod: 'CASH' | 'CARD' | 'WALLET'
-    paymentStatus: 'PENDING' | 'PAID' | 'FAILED'
-    status: 'PLACED' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED'
+    paymentMethod: string
+    paymentStatus: string
+    status: string
     addressSnapshot: Record<string, string>
     promocode?: string
     idempotencyKey: string
@@ -37,9 +39,9 @@ const orderSchema = new Schema<IOrder>({
     totalPrice: { type: Number, required: true },
     discount: { type: Number, default: 0 },
     finalPrice: { type: Number, required: true },
-    paymentMethod: { type: String, enum: ['CASH', 'CARD', 'WALLET'], required: true },
-    paymentStatus: { type: String, enum: ['PENDING', 'PAID', 'FAILED'], default: 'PENDING' },
-    status: { type: String, enum: ['PLACED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'], default: 'PLACED' },
+    paymentMethod: { type: String, enum: PAYMENT_METHOD, required: true },
+    paymentStatus: { type: String, enum: PAYMENT_STATUS, default: PAYMENT_STATUS.PENDING },
+    status: { type: String, enum: ORDER_STATUS, default: ORDER_STATUS.PLACED },
     addressSnapshot: { type: String, required: true },
     promocode: { type: String },
     idempotencyKey: { type: String, unique: true, required: true }

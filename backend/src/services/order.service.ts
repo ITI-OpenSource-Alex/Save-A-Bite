@@ -31,13 +31,13 @@ export class OrderService {
         return orders;
     }
 
-    async getOrderById(orderId: string, userId: string): Promise<IOrder | null> {
+    async getOrderById(orderId: string): Promise<IOrder | null> {
         if (!mongoose.Types.ObjectId.isValid(orderId)) {
             logger.error(`Invalid Order ID: ${orderId}`, null);
             throw new Error("Invalid Order ID");
         }
 
-        const order = await Order.findOne({ _id: orderId, userId });
+        const order = await Order.findOne({ orderId });
         if (!order) {
             logger.error(`Order not found: ${orderId}`, null);
             return null;
@@ -46,18 +46,7 @@ export class OrderService {
         return order;
     }
 
-    async cancelOrder(orderId: string, userId: string): Promise<IOrder | null> {
-        if (!mongoose.Types.ObjectId.isValid(orderId)) {
-            logger.error(`Invalid Order ID: ${orderId}`, null);
-            throw new Error("Invalid Order ID");
-        }
-
-        const order = await Order.findOne({ _id: orderId, userId });
-
-        if (!order) {
-            logger.error(`Order not found: ${orderId}`, null);
-            return null;
-        }
+    async cancelOrder(order: IOrder): Promise<IOrder | null> {
 
         if (order.status !== 'PLACED' && order.status !== 'PROCESSING') {
             logger.error(`Cannot cancel an order with status: ${order.status}`, null);
@@ -67,7 +56,7 @@ export class OrderService {
         order.status = 'CANCELLED';
         await order.save();
 
-        logger.info(`Order cancelled successfully of user id:${userId}`);
+        logger.info(`Order ${order._id} cancelled successfully`);
         return order;
     }
 }

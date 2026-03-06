@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { JwtDto } from "../dto/jwt.dto";
 import User from "../models/user.model";
 import { Role } from "../enum/role.enum";
+import { AbacRequest } from "./abac.middleware";
 
 export interface AuthRequest extends Request {
   jwt?: JwtDto;
@@ -19,7 +20,7 @@ const verifyToken = (token: string): JwtDto => {
 };
 
 export const IsAuthenticatedMiddleware = async (
-  req: AuthRequest,
+  req: AbacRequest,
   res: ExpressResponse,
   next: NextFunction
 ) => {
