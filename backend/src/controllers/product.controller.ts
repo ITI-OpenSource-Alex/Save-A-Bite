@@ -31,7 +31,7 @@ export class ProductController {
 
       const product = await this.productService.createProduct({
         ...productData,
-        categoryId: new ObjectId(req.body.categoryId),
+        categoryId: new ObjectId(productData.categoryId),
         productId: new ObjectId(),
         isActive: true,
         isDeleted: false,

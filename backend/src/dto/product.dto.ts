@@ -8,8 +8,8 @@ export class CreateProductDto {
     // @IsString()
     // storeId!: string;
 
-    // @IsString()
-    // categoryId!: string;
+    @IsString()
+    categoryId!: string;
 
     @IsArray()
     @IsString({ each: true })
