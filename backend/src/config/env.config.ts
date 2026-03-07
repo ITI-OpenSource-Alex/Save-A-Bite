@@ -15,6 +15,7 @@ const processEnvSchema = Joi.object({
   JWT_REFRESH_EXPIRE: Joi.string().required(),
   EMAIL_HOST: Joi.string().required(),
   EMAIL_PORT: Joi.number().required(),
+  
   EMAIL_USER: Joi.string().required(),
   EMAIL_PASS: Joi.string().required(),
   APP_URL: Joi.string().required(),
@@ -77,5 +78,6 @@ const env = {
     PASS: envVars.EMAIL_PASS,
   },
 };
+
 
 export default env;

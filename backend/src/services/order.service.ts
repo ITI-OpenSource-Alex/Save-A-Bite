@@ -2,6 +2,9 @@ import { Order, IOrder } from "../models/order.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
 
+import { getIo } from "../utils/socket"; 
+import { sendInvoiceEmail } from "../send-mails/emailService"; 
+
 export class OrderService {
     constructor() {}
 
@@ -22,6 +25,36 @@ export class OrderService {
 
         await newOrder.save();
         logger.info(`Order created successfully of user id:${newOrder.userId}`);
+
+        try {
+            const io = getIo();
+            io.to(userId).emit('orderStatusChanged', {
+                orderId: newOrder._id,
+                status: newOrder.status,
+                message: 'Your order has been placed successfully!'
+            });
+        } catch (error) {
+            logger.error(`WebSocket Error: Failed to emit PLACED status for order ${newOrder._id}`, error);
+        }
+
+
+        try {
+            const user = await mongoose.model('User').findById(userId); 
+
+            if (user && user.email) {
+                await sendInvoiceEmail(
+                    user.email, 
+                    newOrder._id.toString(), 
+                    newOrder.totalPrice 
+                );
+              //  console.log(`Invoice email sent successfully to ${user.email} for order ${newOrder._id}`);
+            } else {
+                logger.error(`Could not find email address for user ID: ${userId}`, null);
+            }
+        } catch (error) {
+            logger.error(`Email Error: Failed to send invoice for order ${newOrder._id}`, error );
+        }
+
         return newOrder;
     }
 
@@ -66,8 +99,19 @@ export class OrderService {
 
         order.status = 'CANCELLED';
         await order.save();
-
         logger.info(`Order cancelled successfully of user id:${userId}`);
+
+        try {
+            const io = getIo();
+            io.to(userId).emit('orderStatusChanged', {
+                orderId: order._id,
+                status: order.status,
+                message: 'Your order has been cancelled.'
+            });
+        } catch (error) {
+            logger.error(`WebSocket Error: Failed to emit CANCELLED status for order ${order._id}`, error);
+        }
+
         return order;
     }
 }
