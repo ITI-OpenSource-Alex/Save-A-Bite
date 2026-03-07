@@ -1,11 +1,11 @@
-import "reflect-metadata";
-import Container from "typedi";
-import { Logger } from "./services/logger.service";
-import { exit } from "process";
-import env from "./config/env.config";
-import { createServer } from "http";
-import addressRoutes from "./routes/address.routes";
-import App from "./app";
+import 'reflect-metadata';
+import Container from 'typedi';
+import { Logger } from './services/logger.service';
+import { exit } from 'process';
+import env from './config/env.config';
+import { createServer } from 'http';
+import addressRoutes from './routes/address.routes';
+import App from './app';
 
 const logger = Container.get(Logger);
 

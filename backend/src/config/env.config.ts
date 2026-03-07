@@ -1,12 +1,10 @@
-import dotenv from "dotenv";
-import Joi from "joi";
+import dotenv from 'dotenv';
+import Joi from 'joi';
 
 dotenv.config({ quiet: true });
 
 const processEnvSchema = Joi.object({
-  NODE_ENV: Joi.string()
-    .valid("development", "production", "test")
-    .default("development"),
+  NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
   PORT: Joi.number().default(3000),
   MONGO_URI: Joi.string().required(),
   JWT_SECRET: Joi.string().required(),
@@ -22,14 +20,10 @@ const processEnvSchema = Joi.object({
   .unknown()
   .required();
 
-const { value: envVars, error: envError } = processEnvSchema.validate(
-  process.env,
-);
+const { value: envVars, error: envError } = processEnvSchema.validate(process.env);
 
 if (envError) {
-  throw new Error(
-    `Environment variables validation error: ${envError.message}`,
-  );
+  throw new Error(`Environment variables validation error: ${envError.message}`);
 }
 
 export const envSchema = Joi.object({

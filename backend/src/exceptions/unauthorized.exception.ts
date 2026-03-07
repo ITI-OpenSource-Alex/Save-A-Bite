@@ -1,7 +1,7 @@
-import HttpException from "./http.exception";
+import HttpException from './http.exception';
 
 class UnauthorizedException extends HttpException {
-  constructor(error: string = "Unauthorized access") {
+  constructor(error: string = 'Unauthorized access') {
     super(401, error);
   }
 }

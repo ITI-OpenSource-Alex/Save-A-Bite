@@ -1,11 +1,5 @@
-import {
-  IsString,
-  IsArray,
-  IsNumber,
-  ValidateNested,
-  IsEnum,
-} from "class-validator";
-import { Type } from "class-transformer";
+import { IsString, IsArray, IsNumber, ValidateNested, IsEnum } from 'class-validator';
+import { Type } from 'class-transformer';
 
 class OrderItemDto {
   @IsString()
@@ -36,9 +30,9 @@ export class CreateOrderDto {
   @IsNumber()
   finalPrice!: number;
 
-  @IsEnum(["CASH", "CARD", "WALLET"])
+  @IsEnum(['CASH', 'CARD', 'WALLET'])
   @IsString()
-  paymentMethod!: "CASH" | "CARD" | "WALLET";
+  paymentMethod!: 'CASH' | 'CARD' | 'WALLET';
 
   @IsString()
   addressSnapshot!: string;

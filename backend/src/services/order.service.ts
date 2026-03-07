@@ -1,20 +1,14 @@
-import { Order, IOrder } from "../models/order.model";
-import mongoose from "mongoose";
-import { logger } from "./logger.service";
+import { Order, IOrder } from '../models/order.model';
+import mongoose from 'mongoose';
+import { logger } from './logger.service';
 
 export class OrderService {
   constructor() {}
 
-  async createOrder(
-    orderData: any,
-    userId: string,
-    idempotencyKey: string,
-  ): Promise<IOrder> {
+  async createOrder(orderData: any, userId: string, idempotencyKey: string): Promise<IOrder> {
     const existingOrder = await Order.findOne({ idempotencyKey, userId });
     if (existingOrder) {
-      logger.info(
-        `Order with idempotency key ${idempotencyKey} already exists`,
-      );
+      logger.info(`Order with idempotency key ${idempotencyKey} already exists`);
       return existingOrder;
     }
 
@@ -22,8 +16,8 @@ export class OrderService {
       ...orderData,
       userId,
       idempotencyKey,
-      status: "PLACED",
-      paymentStatus: "PENDING",
+      status: 'PLACED',
+      paymentStatus: 'PENDING',
     });
 
     await newOrder.save();
@@ -40,7 +34,7 @@ export class OrderService {
   async getOrderById(orderId: string, userId: string): Promise<IOrder | null> {
     if (!mongoose.Types.ObjectId.isValid(orderId)) {
       logger.error(`Invalid Order ID: ${orderId}`, null);
-      throw new Error("Invalid Order ID");
+      throw new Error('Invalid Order ID');
     }
 
     const order = await Order.findOne({ _id: orderId, userId });
@@ -55,7 +49,7 @@ export class OrderService {
   async cancelOrder(orderId: string, userId: string): Promise<IOrder | null> {
     if (!mongoose.Types.ObjectId.isValid(orderId)) {
       logger.error(`Invalid Order ID: ${orderId}`, null);
-      throw new Error("Invalid Order ID");
+      throw new Error('Invalid Order ID');
     }
 
     const order = await Order.findOne({ _id: orderId, userId });
@@ -65,12 +59,12 @@ export class OrderService {
       return null;
     }
 
-    if (order.status !== "PLACED" && order.status !== "PROCESSING") {
+    if (order.status !== 'PLACED' && order.status !== 'PROCESSING') {
       logger.error(`Cannot cancel an order with status: ${order.status}`, null);
       throw new Error(`Cannot cancel an order with status: ${order.status}`);
     }
 
-    order.status = "CANCELLED";
+    order.status = 'CANCELLED';
     await order.save();
 
     logger.info(`Order cancelled successfully of user id:${userId}`);

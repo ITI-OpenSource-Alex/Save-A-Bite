@@ -1,4 +1,4 @@
-import { IsOptional, IsMongoId, IsArray } from "class-validator";
+import { IsOptional, IsMongoId, IsArray } from 'class-validator';
 
 export class StoreDto {
   name!: string;

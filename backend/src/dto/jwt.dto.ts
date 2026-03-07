@@ -1,5 +1,5 @@
-import { ObjectId } from "mongodb";
-import { Role } from "../enum/role.enum";
+import { ObjectId } from 'mongodb';
+import { Role } from '../enum/role.enum';
 
 export class JwtDto {
   userId!: string;

@@ -1,8 +1,8 @@
-import User from "../models/user.model";
-import mongoose from "mongoose";
-import { logger } from "../services/logger.service";
-import dotenv from "dotenv";
-import { Role } from "../enum/role.enum";
+import User from '../models/user.model';
+import mongoose from 'mongoose';
+import { logger } from '../services/logger.service';
+import dotenv from 'dotenv';
+import { Role } from '../enum/role.enum';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ export class Seeder {
 
       if (!adminEmail || !adminPassword) {
         logger.warning(
-          "Super Admin credentials not found in environment variables. Skipping seeding.",
+          'Super Admin credentials not found in environment variables. Skipping seeding.'
         );
         return;
       }
@@ -22,12 +22,12 @@ export class Seeder {
       const existingAdmin = await User.findOne({ email: adminEmail });
 
       if (existingAdmin) {
-        logger.info("Super Admin already exists.");
+        logger.info('Super Admin already exists.');
         return;
       }
 
       const superAdmin = new User({
-        name: "Super Admin",
+        name: 'Super Admin',
         email: adminEmail,
         password: adminPassword,
         role: Role.SUPER_ADMIN,
@@ -36,15 +36,15 @@ export class Seeder {
       });
 
       await superAdmin.save();
-      logger.info("Super Admin seeded successfully.");
+      logger.info('Super Admin seeded successfully.');
     } catch (error: any) {
-      if (error.message.includes("requires authentication")) {
+      if (error.message.includes('requires authentication')) {
         logger.error(
-          "Authentication failed. Please check your MONGO_URI in .env to ensure it includes the correct username and password.",
-          error,
+          'Authentication failed. Please check your MONGO_URI in .env to ensure it includes the correct username and password.',
+          error
         );
       } else {
-        logger.error("Error seeding Super Admin:", error);
+        logger.error('Error seeding Super Admin:', error);
       }
     }
   }
