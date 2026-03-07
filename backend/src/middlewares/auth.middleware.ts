@@ -21,7 +21,7 @@ const verifyToken = (token: string): JwtDto => {
 export const IsAuthenticatedMiddleware = async (
   req: AuthRequest,
   res: ExpressResponse,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const authorization = req.headers.authorization;
@@ -40,7 +40,10 @@ export const IsAuthenticatedMiddleware = async (
     }
 
     // Check if token is blacklisted in user's tokenBlacklist array
-    if (Array.isArray(user.tokenBlacklist) && user.tokenBlacklist.includes(token)) {
+    if (
+      Array.isArray(user.tokenBlacklist) &&
+      user.tokenBlacklist.includes(token)
+    ) {
       return next(new UnauthorizedException("Token has been revoked"));
     }
 
@@ -61,7 +64,11 @@ export const AuthorizeRoles = (...allowedRoles: Role[]) => {
     }
 
     if (!allowedRoles.includes(req.jwt.role)) {
-      return next(new UnauthorizedException("You do not have permission to perform this action"));
+      return next(
+        new UnauthorizedException(
+          "You do not have permission to perform this action",
+        ),
+      );
     }
 
     next();

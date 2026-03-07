@@ -1,9 +1,8 @@
 import { Router } from "express";
-import{ productController } from "../controllers/product.controller";
+import { productController } from "../controllers/product.controller";
 import { CreateProductDto, UpdateProductDto } from "../dto/product.dto";
 import { IsAuthenticatedMiddleware } from "../middlewares/auth.middleware";
 import ValidationMiddleware from "../middlewares/validation.middleware";
-
 
 const router = Router();
 
@@ -34,4 +33,3 @@ router.delete(
 );
 
 export default router;
-

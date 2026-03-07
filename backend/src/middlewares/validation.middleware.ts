@@ -1,14 +1,19 @@
 import { plainToInstance } from "class-transformer";
 import { validate, ValidationError } from "class-validator";
-import { NextFunction, Request, RequestHandler, Response as ExpressResponse } from "express";
+import {
+  NextFunction,
+  Request,
+  RequestHandler,
+  Response as ExpressResponse,
+} from "express";
 import BadRequestException from "../exceptions/bad-request.exception";
 
-type RequestSource = 'body' | 'query' | 'params';
+type RequestSource = "body" | "query" | "params";
 
 const ValidationMiddleware = (
   type: any,
-  source: RequestSource = 'body' ,
-  skipMissingProperties = false
+  source: RequestSource = "body",
+  skipMissingProperties = false,
 ): RequestHandler => {
   return (req: Request, res: ExpressResponse, next: NextFunction) => {
     const data = req[source];
@@ -20,12 +25,12 @@ const ValidationMiddleware = (
           const formatedErrors = getErrorsFormated(errors);
           return next(new BadRequestException("BAD_REQUEST", formatedErrors));
         } else {
-          if (source === 'body') {
+          if (source === "body") {
             req.body = transformedData;
           }
           next();
         }
-      }
+      },
     );
   };
 };

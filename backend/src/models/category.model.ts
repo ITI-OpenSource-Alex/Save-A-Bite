@@ -1,9 +1,8 @@
 import { Schema, Document, model, Types } from "mongoose";
 
-
 export interface ICategory extends Document {
   name: string;
-  categoryStock:number;
+  categoryStock: number;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -27,7 +26,7 @@ const CategorySchema = new Schema<ICategory>(
       default: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Category = model<ICategory>("Category", CategorySchema);

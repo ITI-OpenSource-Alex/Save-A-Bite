@@ -10,7 +10,16 @@ import { Restaurants } from './features/home/restaurants/restaurants';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, HeroSlider, FlashDealsComponent, CategoriesSection, Footer, EcoSection,Restaurants],
+  imports: [
+    RouterOutlet,
+    Navbar,
+    HeroSlider,
+    FlashDealsComponent,
+    CategoriesSection,
+    Footer,
+    EcoSection,
+    Restaurants,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
