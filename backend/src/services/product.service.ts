@@ -1,6 +1,6 @@
-import { Product, IProduct } from '../models/product.model';
-import mongoose from 'mongoose';
-import { logger } from './logger.service';
+import { Product, IProduct } from "../models/product.model";
+import mongoose from "mongoose";
+import { logger } from "./logger.service";
 
 export class ProductService {
   constructor() {}
@@ -22,13 +22,13 @@ export class ProductService {
       if (filters.maxPrice) query.price.$lte = Number(filters.maxPrice);
     }
     logger.info(`Products fetched successfully`);
-    return await Product.find(query).populate('storeId categoryId');
+    return await Product.find(query).populate("storeId categoryId");
   }
 
   async getProductByIdAndStoreId(productId: string, storeId: string): Promise<IProduct | null> {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       logger.warning(`Invalid Product ID: ${productId}`);
-      throw new Error('Invalid Product ID');
+      throw new Error("Invalid Product ID");
     }
     const product = await Product.findOne({
       _id: productId,
@@ -46,7 +46,7 @@ export class ProductService {
   async getProductById(productId: string): Promise<IProduct | null> {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       logger.warning(`Invalid Product ID: ${productId}`);
-      throw new Error('Invalid Product ID');
+      throw new Error("Invalid Product ID");
     }
     const product = await Product.findOne({
       _id: productId,
@@ -66,7 +66,7 @@ export class ProductService {
   ): Promise<IProduct | null> {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       logger.warning(`Invalid Product ID: ${productId}`);
-      throw new Error('Invalid Product ID');
+      throw new Error("Invalid Product ID");
     }
     const updatedProduct = await Product.findByIdAndUpdate(productId, updateData, { new: true });
     if (!updatedProduct) {
@@ -79,7 +79,7 @@ export class ProductService {
   async deleteProductById(productId: string): Promise<IProduct | null> {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       logger.warning(`Invalid Product ID: ${productId}`);
-      throw new Error('Invalid Product ID');
+      throw new Error("Invalid Product ID");
     }
     const deletedProduct = await Product.findByIdAndUpdate(
       productId,

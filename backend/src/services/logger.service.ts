@@ -1,6 +1,6 @@
-import { Service } from 'typedi';
-import * as winston from 'winston';
-import 'winston-daily-rotate-file';
+import { Service } from "typedi";
+import * as winston from "winston";
+import "winston-daily-rotate-file";
 
 @Service()
 export class Logger {
@@ -10,7 +10,7 @@ export class Logger {
   constructor() {
     this.logger = winston.createLogger({
       format: winston.format.combine(
-        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
         winston.format.printf(({ level, timestamp, message }) => {
           return `[${level.toUpperCase()}] ${timestamp} - ${message}`;
         })
@@ -18,27 +18,27 @@ export class Logger {
       transports: [
         new winston.transports.Console(),
         new winston.transports.DailyRotateFile({
-          filename: 'logs/%DATE%/app-%DATE%.log',
-          datePattern: 'YYYY-MM-DD',
+          filename: "logs/%DATE%/app-%DATE%.log",
+          datePattern: "YYYY-MM-DD",
         }),
         new winston.transports.DailyRotateFile({
-          filename: 'logs/%DATE%/errors-%DATE%.log',
-          datePattern: 'YYYY-MM-DD',
-          level: 'error',
+          filename: "logs/%DATE%/errors-%DATE%.log",
+          datePattern: "YYYY-MM-DD",
+          level: "error",
         }),
       ],
     });
 
     this.userLogger = winston.createLogger({
       format: winston.format.combine(
-        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
         winston.format.printf(({ level, timestamp, message }) => {
           return `[${level.toUpperCase()}] ${timestamp} - ${message}`;
         })
       ),
       transports: [
         new winston.transports.Console(),
-        new winston.transports.File({ filename: 'logs/user.log' }),
+        new winston.transports.File({ filename: "logs/user.log" }),
       ],
     });
   }

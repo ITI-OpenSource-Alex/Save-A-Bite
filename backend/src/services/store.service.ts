@@ -1,8 +1,8 @@
-import { IStore } from '../models/store.model';
-import Store from '../models/store.model';
-import { logger } from './logger.service';
-import { StoreDto } from '../dto/store.dto';
-import mongoose from 'mongoose';
+import { IStore } from "../models/store.model";
+import Store from "../models/store.model";
+import { logger } from "./logger.service";
+import { StoreDto } from "../dto/store.dto";
+import mongoose from "mongoose";
 
 export class StoreService {
   constructor() {}
@@ -22,7 +22,7 @@ export class StoreService {
   async getStoreById(storeId: string): Promise<IStore | null> {
     if (!mongoose.Types.ObjectId.isValid(storeId)) {
       logger.warning(`Invalid Store ID: ${storeId}`);
-      throw new Error('Invalid Store ID');
+      throw new Error("Invalid Store ID");
     }
     logger.info(`Fetching store with id: ${storeId}`);
     return await Store.findById(storeId);
@@ -31,7 +31,7 @@ export class StoreService {
   async updateStoreById(storeId: string, updateData: Partial<IStore>): Promise<IStore | null> {
     if (!mongoose.Types.ObjectId.isValid(storeId)) {
       logger.warning(`Invalid Store ID: ${storeId}`);
-      throw new Error('Invalid Store ID');
+      throw new Error("Invalid Store ID");
     }
     logger.info(`Updating store with id: ${storeId}`);
     return await Store.findByIdAndUpdate(storeId, updateData, { new: true });
@@ -40,7 +40,7 @@ export class StoreService {
   async deleteStoreById(storeId: string): Promise<IStore | null> {
     if (!mongoose.Types.ObjectId.isValid(storeId)) {
       logger.warning(`Invalid Store ID: ${storeId}`);
-      throw new Error('Invalid Store ID');
+      throw new Error("Invalid Store ID");
     }
     const deletedStore = await Store.findByIdAndUpdate(storeId, { isDeleted: true }, { new: true });
     if (!deletedStore) {

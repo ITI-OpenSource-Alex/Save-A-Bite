@@ -1,20 +1,20 @@
-import 'reflect-metadata';
-import express, { Application, Request, Response } from 'express';
-import env, { envSchema } from './config/env.config';
-import Container from 'typedi';
-import cors from 'cors';
-import { dbConnection } from './config/db.config';
-import rootRouter from './routes/index';
-import { Seeder } from './utils/seeder';
-import ErrorHandlerMiddleware from './middlewares/error-handler';
+import "reflect-metadata";
+import express, { Application, Request, Response } from "express";
+import env, { envSchema } from "./config/env.config";
+import Container from "typedi";
+import cors from "cors";
+import { dbConnection } from "./config/db.config";
+import rootRouter from "./routes/index";
+import { Seeder } from "./utils/seeder";
+import ErrorHandlerMiddleware from "./middlewares/error-handler";
 
 class App {
   private app!: Application;
 
   public corsOptions: cors.CorsOptions = {
-    origin: '*',
-    allowedHeaders: '*',
-    methods: '*',
+    origin: "*",
+    allowedHeaders: "*",
+    methods: "*",
   };
 
   private constructor() {}
@@ -44,13 +44,13 @@ class App {
     this.app.use(express.urlencoded({ extended: true }));
 
     // Health check
-    this.app.get('/', (req: Request, res: Response) => {
-      res.json({ message: 'Hello World!' });
+    this.app.get("/", (req: Request, res: Response) => {
+      res.json({ message: "Hello World!" });
     });
   }
 
   private async initializeRoutes() {
-    this.app.use('/api', rootRouter);
+    this.app.use("/api", rootRouter);
   }
 
   private errorHandler() {

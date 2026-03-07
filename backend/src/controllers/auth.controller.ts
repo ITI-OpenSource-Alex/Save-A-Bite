@@ -1,13 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
-import { authService } from '../services/auth.service';
-import { AuthRequest } from '../middlewares/auth.middleware';
+import { Request, Response, NextFunction } from "express";
+import { authService } from "../services/auth.service";
+import { AuthRequest } from "../middlewares/auth.middleware";
 
 export class AuthController {
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       await authService.register(req.body);
       res.status(201).json({
-        message: 'Registration successful. Please check your email to verify your account.',
+        message: "Registration successful. Please check your email to verify your account.",
       });
     } catch (error) {
       next(error);
@@ -18,7 +18,7 @@ export class AuthController {
     try {
       const token = req.query.token as string;
       await authService.verifyEmail(token);
-      res.status(200).json({ message: 'Email verified successfully. You can now log in.' });
+      res.status(200).json({ message: "Email verified successfully. You can now log in." });
     } catch (error) {
       next(error);
     }
@@ -27,7 +27,7 @@ export class AuthController {
   login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const tokens = await authService.login(req.body);
-      res.status(200).json({ message: 'Login successful', data: tokens });
+      res.status(200).json({ message: "Login successful", data: tokens });
     } catch (error) {
       next(error);
     }
@@ -37,7 +37,7 @@ export class AuthController {
     try {
       const { refreshToken } = req.body;
       const tokens = await authService.refreshToken(refreshToken);
-      res.status(200).json({ message: 'Token refreshed successfully', data: tokens });
+      res.status(200).json({ message: "Token refreshed successfully", data: tokens });
     } catch (error) {
       next(error);
     }
@@ -45,9 +45,9 @@ export class AuthController {
 
   logout = async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const token = req.headers.authorization!.split(' ')[1];
+      const token = req.headers.authorization!.split(" ")[1];
       await authService.logout(req.jwt!.userId, token);
-      res.status(200).json({ message: 'Logged out successfully' });
+      res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
       next(error);
     }
@@ -58,7 +58,7 @@ export class AuthController {
       await authService.forgotPassword(req.body.email);
       // Always respond with 200 to avoid user enumeration
       res.status(200).json({
-        message: 'If an account with that email exists, an OTP has been sent.',
+        message: "If an account with that email exists, an OTP has been sent.",
       });
     } catch (error) {
       next(error);
@@ -69,7 +69,7 @@ export class AuthController {
     try {
       await authService.resetPassword(req.body);
       res.status(200).json({
-        message: 'Password reset successfully. Please log in with your new password.',
+        message: "Password reset successfully. Please log in with your new password.",
       });
     } catch (error) {
       next(error);
@@ -79,7 +79,7 @@ export class AuthController {
   updateProfile = async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const updatedUser = await authService.updateProfile(req.jwt!.userId, req.body);
-      res.status(200).json({ message: 'Profile updated successfully', data: updatedUser });
+      res.status(200).json({ message: "Profile updated successfully", data: updatedUser });
     } catch (error) {
       next(error);
     }

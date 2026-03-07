@@ -1,6 +1,6 @@
 // Depending on your team's setup, this import might be from 'typedi' or a similar DI container
-import { Service } from 'typedi';
-import Address, { IAddress } from '../models/address.model';
+import { Service } from "typedi";
+import Address, { IAddress } from "../models/address.model";
 
 @Service()
 export class AddressService {

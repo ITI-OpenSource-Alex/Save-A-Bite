@@ -1,8 +1,8 @@
-import { Response as ExpressResponse, NextFunction } from 'express';
-import { ObjectId } from 'mongodb';
-import { logger } from '../services/logger.service';
-import { AuthRequest } from '../middlewares/auth.middleware';
-import { StoreService } from '../services/store.service';
+import { Response as ExpressResponse, NextFunction } from "express";
+import { ObjectId } from "mongodb";
+import { logger } from "../services/logger.service";
+import { AuthRequest } from "../middlewares/auth.middleware";
+import { StoreService } from "../services/store.service";
 // import { error } from "winston";
 
 export class StoreController {
@@ -46,7 +46,7 @@ export class StoreController {
       } else {
         logger.error(`Error fetching stores`, error);
       }
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: "Internal server error" });
     }
   };
 
@@ -55,7 +55,7 @@ export class StoreController {
       const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       const store = await this.storeService.getStoreById(id);
       if (!store) {
-        return res.status(404).json({ message: 'Store not found' });
+        return res.status(404).json({ message: "Store not found" });
       }
       res.json(store);
     } catch (error) {
@@ -64,7 +64,7 @@ export class StoreController {
       } else {
         logger.error(`Error fetching store`, error);
       }
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: "Internal server error" });
     }
   };
 
@@ -74,7 +74,7 @@ export class StoreController {
       const updateData = req.body;
       const updatedStore = await this.storeService.updateStoreById(id, updateData);
       if (!updatedStore) {
-        return res.status(404).json({ message: 'Store not found' });
+        return res.status(404).json({ message: "Store not found" });
       }
       res.json(updatedStore);
     } catch (error) {
@@ -83,7 +83,7 @@ export class StoreController {
       } else {
         logger.error(`Error updating store`, error);
       }
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: "Internal server error" });
     }
   };
 
@@ -92,7 +92,7 @@ export class StoreController {
       const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       const deletedStore = await this.storeService.deleteStoreById(id);
       if (!deletedStore) {
-        return res.status(404).json({ message: 'Store not found' });
+        return res.status(404).json({ message: "Store not found" });
       }
       res.json(deletedStore);
     } catch (error) {
@@ -101,7 +101,7 @@ export class StoreController {
       } else {
         logger.error(`Error deleting store`, error);
       }
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: "Internal server error" });
     }
   };
 }

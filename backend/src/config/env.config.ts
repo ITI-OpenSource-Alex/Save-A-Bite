@@ -1,10 +1,10 @@
-import dotenv from 'dotenv';
-import Joi from 'joi';
+import dotenv from "dotenv";
+import Joi from "joi";
 
 dotenv.config({ quiet: true });
 
 const processEnvSchema = Joi.object({
-  NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
+  NODE_ENV: Joi.string().valid("development", "production", "test").default("development"),
   PORT: Joi.number().default(3000),
   MONGO_URI: Joi.string().required(),
   JWT_SECRET: Joi.string().required(),

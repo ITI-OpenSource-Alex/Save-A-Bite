@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import bcrypt from 'bcrypt';
-import { Role } from '../enum/role.enum';
+import mongoose, { Schema, Document } from "mongoose";
+import bcrypt from "bcrypt";
+import { Role } from "../enum/role.enum";
 
 export interface IUser extends Document {
   name: string;
@@ -26,17 +26,17 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
-    name: { type: String, required: [true, 'Name is required'], trim: true },
+    name: { type: String, required: [true, "Name is required"], trim: true },
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      required: [true, "Email is required"],
       unique: true,
       lowercase: true,
       trim: true,
     },
     password: {
       type: String,
-      minlength: [8, 'Password must be at least 8 characters'],
+      minlength: [8, "Password must be at least 8 characters"],
       required: false,
     },
     phone: { type: String, trim: true },
@@ -45,7 +45,7 @@ const userSchema = new Schema<IUser>(
     isEmailVerified: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false },
-    address: { type: Schema.Types.ObjectId, ref: 'Address' },
+    address: { type: Schema.Types.ObjectId, ref: "Address" },
     tokenBlacklist: [{ type: String }],
     // Email verification
     verificationToken: { type: String },
@@ -57,8 +57,8 @@ const userSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-userSchema.pre<IUser>('save', async function (next) {
-  if (!this.isModified('password') || !this.password) {
+userSchema.pre<IUser>("save", async function (next) {
+  if (!this.isModified("password") || !this.password) {
     return next();
   }
   try {
@@ -70,5 +70,5 @@ userSchema.pre<IUser>('save', async function (next) {
   }
 });
 
-const User = mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUser>("User", userSchema);
 export default User;

@@ -1,5 +1,5 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
@@ -23,13 +23,13 @@ export const sendEmail = async (to: string, subject: string, html: string): Prom
     });
     console.log(`Email sent to ${to}`);
   } catch (error) {
-    console.log('Email Error: ' + error);
+    console.log("Email Error: " + error);
     throw error;
   }
 };
 
 export const sendVerifyEmail = async (to: string, token: string) => {
-  const verifyLink = `${process.env.APP_URL || 'http://localhost:3000'}/api/auth/verify-email?token=${token}`;
+  const verifyLink = `${process.env.APP_URL || "http://localhost:3000"}/api/auth/verify-email?token=${token}`;
   const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
           <h2 style="color: #4CAF50;">Verify Your Email - Save A Bite</h2>
@@ -41,17 +41,17 @@ export const sendVerifyEmail = async (to: string, token: string) => {
           <p style="color:#888;font-size:13px;">This link will expire in 24 hours. If you did not request this, please ignore this email.</p>
         </div>
     `;
-  await sendEmail(to, 'Verify Your Email - Save A Bite', html);
+  await sendEmail(to, "Verify Your Email - Save A Bite", html);
 };
 
 export const sendOtpEmail = async (
   to: string,
   otp: string,
-  purpose: 'reset-password' | 'change-email'
+  purpose: "reset-password" | "change-email"
 ) => {
   const titleMap = {
-    'reset-password': 'Reset Your Password',
-    'change-email': 'Change Your Email',
+    "reset-password": "Reset Your Password",
+    "change-email": "Change Your Email",
   };
   const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">

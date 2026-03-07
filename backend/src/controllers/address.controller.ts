@@ -1,10 +1,10 @@
-import { Response as ExpressResponse, NextFunction } from 'express';
-import mongoose from 'mongoose';
-import { Container } from 'typedi';
-import { AddressService } from '../services/address.service';
-import { logger } from '../services/logger.service';
-import { AuthRequest } from '../middlewares/auth.middleware';
-import { CreateAddressDto } from '../dto/address.dto';
+import { Response as ExpressResponse, NextFunction } from "express";
+import mongoose from "mongoose";
+import { Container } from "typedi";
+import { AddressService } from "../services/address.service";
+import { logger } from "../services/logger.service";
+import { AuthRequest } from "../middlewares/auth.middleware";
+import { CreateAddressDto } from "../dto/address.dto";
 
 export class AddressController {
   private addressService: AddressService;
@@ -28,11 +28,11 @@ export class AddressController {
 
       res.status(201).json({
         success: true,
-        message: 'Address added successfully',
+        message: "Address added successfully",
         data: newAddress,
       });
     } catch (error) {
-      logger.error('Error adding address:', error);
+      logger.error("Error adding address:", error);
       next(error);
     }
   };
@@ -45,7 +45,7 @@ export class AddressController {
     try {
       const userId = req.jwt?.userId;
       if (!userId) {
-        res.status(401).json({ success: false, message: 'Unauthorized' });
+        res.status(401).json({ success: false, message: "Unauthorized" });
         return;
       }
 
@@ -56,7 +56,7 @@ export class AddressController {
         data: addresses,
       });
     } catch (error) {
-      logger.error('Error fetching user addresses:', error);
+      logger.error("Error fetching user addresses:", error);
       next(error);
     }
   };
@@ -72,17 +72,17 @@ export class AddressController {
       const updatedAddress = await this.addressService.updateAddressById(id, req.body);
 
       if (!updatedAddress) {
-        res.status(404).json({ success: false, message: 'Address not found' });
+        res.status(404).json({ success: false, message: "Address not found" });
         return;
       }
 
       res.status(200).json({
         success: true,
-        message: 'Address updated successfully',
+        message: "Address updated successfully",
         data: updatedAddress,
       });
     } catch (error) {
-      logger.error('Error updating address:', error);
+      logger.error("Error updating address:", error);
       next(error);
     }
   };
@@ -98,16 +98,16 @@ export class AddressController {
       const deletedAddress = await this.addressService.deleteAddressById(id);
 
       if (!deletedAddress) {
-        res.status(404).json({ success: false, message: 'Address not found' });
+        res.status(404).json({ success: false, message: "Address not found" });
         return;
       }
 
       res.status(200).json({
         success: true,
-        message: 'Address deleted successfully',
+        message: "Address deleted successfully",
       });
     } catch (error) {
-      logger.error('Error deleting address:', error);
+      logger.error("Error deleting address:", error);
       next(error);
     }
   };

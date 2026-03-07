@@ -1,5 +1,5 @@
-import { Schema, Document, model, Types } from 'mongoose';
-import { IAddress } from './address.model';
+import { Schema, Document, model, Types } from "mongoose";
+import { IAddress } from "./address.model";
 
 export interface IStore extends Document {
   name: string;
@@ -20,16 +20,16 @@ export interface IStore extends Document {
 const StoreSchema = new Schema<IStore>({
   name: { type: String, required: true, trim: true },
   description: { type: String, trim: true },
-  ownerId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  ownerId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   phone: {
     type: String,
     trim: true,
-    match: [/^\d{8,11}$/, 'Invalid phone number'],
+    match: [/^\d{8,11}$/, "Invalid phone number"],
   },
   email: { type: String, trim: true },
   address: {
     type: Schema.Types.ObjectId,
-    ref: 'Address',
+    ref: "Address",
   },
   logoUrl: { type: String, trim: true },
   isActive: { type: Boolean, default: true },
@@ -40,4 +40,4 @@ const StoreSchema = new Schema<IStore>({
   isDeleted: { type: Boolean, default: false },
 });
 
-export default model<IStore>('Store', StoreSchema);
+export default model<IStore>("Store", StoreSchema);
