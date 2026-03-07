@@ -21,6 +21,7 @@
     "@types/multer": "^2.0.0",
     "@types/node": "^24.1.0",
     "@types/nodemailer": "^6.4.23",
+    "@types/socket.io": "^3.0.1",
     "@types/winston": "^2.4.4",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
@@ -44,6 +45,7 @@
     "nodemailer": "^7.0.13",
     "openai": "^5.10.2",
     "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.3",
     "typedi": "^0.10.0",
     "winston-daily-rotate-file": "^5.0.0"
   }
