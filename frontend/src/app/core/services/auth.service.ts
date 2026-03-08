@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  
-  private apiUrl = 'http://localhost:3000'; 
+
+  private apiUrl = 'http://localhost:3000';
 
   setToken(token: string): void {
     localStorage.setItem('auth_token', token);

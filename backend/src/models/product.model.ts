@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface IProduct {
     name: string
@@ -14,7 +14,6 @@ export interface IProduct {
     updatedAt: Date
 }
 
-
 const productSchema = new Schema<IProduct>(
   {
     name: { type: String, required: true },
@@ -27,11 +26,9 @@ const productSchema = new Schema<IProduct>(
     isActive: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 productSchema.index({ categoryId: 1, storeId: 1, price: 1 });
 
-export const Product = mongoose.model<IProduct>('Product', productSchema);
-
-
+export const Product = mongoose.model<IProduct>("Product", productSchema);

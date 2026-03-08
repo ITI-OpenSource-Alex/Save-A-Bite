@@ -12,14 +12,10 @@ router.post(
   IsAuthenticatedMiddleware,
   AuthorizeRoles(storePolicy.canCreate),
   ValidationMiddleware(StoreDto),
-  storeController.createStore,
+  storeController.createStore
 );
 router.get("/", IsAuthenticatedMiddleware, storeController.getAllStores);
-router.get(
-  "/:id",
-  IsAuthenticatedMiddleware,
-  storeController.getStoreById,
-);
+router.get("/:id", IsAuthenticatedMiddleware, storeController.getStoreById);
 router.patch(
   "/:id",
   IsAuthenticatedMiddleware,
@@ -33,5 +29,6 @@ router.delete(
   AuthorizeRoles(storePolicy.canDelete, storeController.fetchStoreByID),
   storeController.deleteStoreById,
 );
+router.delete("/:id", IsAuthenticatedMiddleware, storeController.deleteStoreById);
 
 export default router;

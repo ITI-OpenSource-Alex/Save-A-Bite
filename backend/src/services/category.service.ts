@@ -26,18 +26,11 @@ export class CategoryService {
     return Category.findByIdAndUpdate(id, { isActive: false }, { new: true });
   }
 
-  async incrementStock(
-    id: string,
-    value: number = 1,
-  ): Promise<ICategory | null> {
+  async incrementStock(id: string, value: number = 1): Promise<ICategory | null> {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new Error("Invalid category ID");
     }
-    return Category.findByIdAndUpdate(
-      id,
-      { $inc: { categoryStock: value } },
-      { new: true },
-    );
+    return Category.findByIdAndUpdate(id, { $inc: { categoryStock: value } }, { new: true });
   }
 }
 

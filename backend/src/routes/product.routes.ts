@@ -1,11 +1,10 @@
 import { Router } from "express";
-import{ productController } from "../controllers/product.controller";
+import { productController } from "../controllers/product.controller";
 import { CreateProductDto, UpdateProductDto } from "../dto/product.dto";
 import { IsAuthenticatedMiddleware } from "../middlewares/auth.middleware";
 import ValidationMiddleware from "../middlewares/validation.middleware";
 import { AuthorizeRoles } from "../middlewares/abac.middleware";
 import { productPolicy } from "../policies/product.policy";
-
 
 const router = Router();
 
@@ -17,7 +16,7 @@ router.post(
   IsAuthenticatedMiddleware,
   AuthorizeRoles(productPolicy.canCreate),
   ValidationMiddleware(CreateProductDto),
-  productController.createProduct,
+  productController.createProduct
 );
 router.patch(
   "/:id",
@@ -32,6 +31,6 @@ router.delete(
   AuthorizeRoles(productPolicy.canDelete, productController.fetchProductByID),
   productController.deleteProduct,
 );
+router.delete("/:id", IsAuthenticatedMiddleware, productController.deleteProduct);
 
 export default router;
-

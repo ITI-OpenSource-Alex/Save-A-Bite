@@ -22,8 +22,7 @@ export class StoreController {
     next: NextFunction,
   ) => {
     try {
-      const { name, description, phone, email, address, logoUrl, avgRating } =
-        req.body;
+      const { name, description, phone, email, address, logoUrl, avgRating } = req.body;
       const ownerId = new ObjectId(req.jwt?.userId);
       const storeData = {
         name,
@@ -83,14 +82,9 @@ export class StoreController {
 
   updateStoreById = async (req: AbacRequest, res: ExpressResponse) => {
     try {
-      const id = Array.isArray(req.params.id)
-        ? req.params.id[0]
-        : req.params.id;
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       const updateData = req.body;
-      const updatedStore = await this.storeService.updateStoreById(
-        id,
-        updateData,
-      );
+      const updatedStore = await this.storeService.updateStoreById(id, updateData);
       if (!updatedStore) {
         return res.status(404).json({ message: "Store not found" });
       }
@@ -107,9 +101,7 @@ export class StoreController {
 
   deleteStoreById = async (req: AbacRequest, res: ExpressResponse) => {
     try {
-      const id = Array.isArray(req.params.id)
-        ? req.params.id[0]
-        : req.params.id;
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       const deletedStore = await this.storeService.deleteStoreById(id);
       if (!deletedStore) {
         return res.status(404).json({ message: "Store not found" });

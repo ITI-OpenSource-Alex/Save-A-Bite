@@ -28,10 +28,10 @@ export class OrderController {
       }
 
       const order = await this.orderService.createOrder(req.body, userId, idempotencyKey);
-      
+
       const status = order.createdAt === order.updatedAt ? 201 : 200;
       const message = status === 201 ? "Order created successfully" : "Order already processed";
-      
+
       return res.status(status).json({ message, order });
     } catch (error: any) {
       logger.error(`Internal server error`, error);
@@ -84,4 +84,3 @@ export class OrderController {
 }
 
 export const orderController = new OrderController();
-

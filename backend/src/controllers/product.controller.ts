@@ -46,10 +46,7 @@ export class ProductController {
         storeId: new ObjectId(storeId),
       });
 
-      const category = await this.categoryService.incrementStock(
-        product.categoryId.toString(),
-        1,
-      );
+      const category = await this.categoryService.incrementStock(product.categoryId.toString(), 1);
 
       if (!category) {
         return res.status(404).json({ message: "Category not found" });
@@ -106,10 +103,7 @@ export class ProductController {
     try {
       const productId = req.params.id as string;
       const storeId = req.params.storeId as string;
-      const product = await this.productService.getProductByIdAndStoreId(
-        productId,
-        storeId,
-      );
+      const product = await this.productService.getProductByIdAndStoreId(productId, storeId);
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }
@@ -128,10 +122,7 @@ export class ProductController {
     try {
       const productId = req.params.id as string;
       const updateData: UpdateProductDto = req.body;
-      const updatedProduct = await this.productService.updateProductById(
-        productId,
-        updateData,
-      );
+      const updatedProduct = await this.productService.updateProductById(productId, updateData);
       if (!updatedProduct) {
         logger.warning(`Product not found: ${productId}`);
         return res.status(404).json({ message: "Product not found" });
@@ -153,8 +144,7 @@ export class ProductController {
   ) => {
     try {
       const productId = req.params.id as string;
-      const deletedProduct =
-        await this.productService.deleteProductById(productId);
+      const deletedProduct = await this.productService.deleteProductById(productId);
       if (!deletedProduct) {
         logger.warning(`Product not found: ${productId}`);
         return res.status(404).json({ message: "Product not found" });

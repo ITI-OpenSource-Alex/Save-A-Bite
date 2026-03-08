@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import bcrypt from 'bcrypt';
-import { Role } from '../enum/role.enum';
+import mongoose, { Schema, Document } from "mongoose";
+import bcrypt from "bcrypt";
+import { Role } from "../enum/role.enum";
 
 export interface IUser extends Document {
     _id: mongoose.Types.ObjectId;
@@ -50,21 +50,36 @@ const userSchema = new Schema<IUser>(
         otpCode: { type: String },
         otpExpiresAt: { type: Date },
     },
-    { timestamps: true }
+    phone: { type: String, trim: true },
+    role: { type: String, enum: Object.values(Role), default: Role.USER },
+    profileImage: { type: String },
+    isEmailVerified: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
+    isDeleted: { type: Boolean, default: false },
+    address: { type: Schema.Types.ObjectId, ref: "Address" },
+    tokenBlacklist: [{ type: String }],
+    // Email verification
+    verificationToken: { type: String },
+    verificationTokenExpiresAt: { type: Date },
+    // OTP
+    otpCode: { type: String },
+    otpExpiresAt: { type: Date },
+  },
+  { timestamps: true }
 );
 
-userSchema.pre<IUser>('save', async function (next) {
-    if (!this.isModified('password') || !this.password) {
-        return next();
-    }
-    try {
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-    } catch (error) {
-        next(error as Error);
-    }
+userSchema.pre<IUser>("save", async function (next) {
+  if (!this.isModified("password") || !this.password) {
+    return next();
+  }
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error as Error);
+  }
 });
 
-const User = mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUser>("User", userSchema);
 export default User;
