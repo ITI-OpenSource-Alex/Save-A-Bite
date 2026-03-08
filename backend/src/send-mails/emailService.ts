@@ -60,7 +60,7 @@ export const sendOtpEmail = async (to: string, otp: string, purpose: 'reset-pass
     await sendEmail(to, `${titleMap[purpose]} - Save A Bite`, html);
 };
 
-export const sendInvoiceEmail = async (to: string, orderId: number, amount: number) => {
+export const sendInvoiceEmail = async (to: string, orderId: string, amount: number) => {
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
           <h1>Invoice #${orderId}</h1>
