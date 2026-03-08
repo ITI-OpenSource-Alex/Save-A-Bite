@@ -1,4 +1,6 @@
-import mongoose, { Schema, Document, mongo } from "mongoose";
+import mongoose, {Schema,Document, mongo} from "mongoose";
+import { PAYMENT_METHOD, PAYMENT_STATUS, ORDER_STATUS} from "../enum/order.enum";
+
 
 export interface IOrderItem {
   productId: mongoose.Types.ObjectId;

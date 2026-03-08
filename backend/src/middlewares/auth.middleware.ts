@@ -3,11 +3,13 @@ import UnauthorizedException from "../exceptions/unauthorized.exception";
 import env from "../config/env.config";
 import jwt from "jsonwebtoken";
 import { JwtDto } from "../dto/jwt.dto";
-import User from "../models/user.model";
+import User, { IUser }from "../models/user.model";
 import { Role } from "../enum/role.enum";
+import { AbacRequest } from "./abac.middleware";
 
 export interface AuthRequest extends Request {
-  jwt?: JwtDto;
+    jwt?: JwtDto;
+    user?: IUser; 
 }
 
 const verifyToken = (token: string): JwtDto => {
@@ -19,7 +21,7 @@ const verifyToken = (token: string): JwtDto => {
 };
 
 export const IsAuthenticatedMiddleware = async (
-  req: AuthRequest,
+  req: AbacRequest & AuthRequest,
   res: ExpressResponse,
   next: NextFunction
 ) => {
@@ -46,7 +48,7 @@ export const IsAuthenticatedMiddleware = async (
 
     // Attach jwt payload to request for downstream use
     req.jwt = jwtPayload;
-
+    req.user = user;
     return next();
   } catch (err: any) {
     res.setHeader("Www-Authenticate", "Bearer");

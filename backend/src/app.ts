@@ -25,7 +25,7 @@ class App {
     appInstance.app = express();
     await appInstance.initializeMiddlewares();
     await dbConnection();
-    await Seeder.seedSuperAdmin();
+    await Seeder.runAllSeeds();
     await appInstance.initializeRoutes();
     appInstance.errorHandler();
     return appInstance;
@@ -39,11 +39,17 @@ class App {
   }
 
   private async initializeMiddlewares() {
+    this.app.post(
+      '/api/payments/webhook', 
+      express.raw({ type: 'application/json' }), 
+      (req, res) => {import('./controllers/webhook.controller').then
+        (m => m.webhookController.handleStripeWebhook(req, res));
+      });
     this.app.use(cors(this.corsOptions));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
 
-    // Health check
+  
     this.app.get("/", (req: Request, res: Response) => {
       res.json({ message: "Hello World!" });
     });

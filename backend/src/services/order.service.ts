@@ -8,13 +8,6 @@ import { sendInvoiceEmail } from "../send-mails/emailService";
 export class OrderService {
   constructor() {}
 
-<<<<<<< HEAD
-  async createOrder(orderData: any, userId: string, idempotencyKey: string): Promise<IOrder> {
-    const existingOrder = await Order.findOne({ idempotencyKey, userId });
-    if (existingOrder) {
-      logger.info(`Order with idempotency key ${idempotencyKey} already exists`);
-      return existingOrder;
-=======
     async createOrder(orderData: any, userId: string, idempotencyKey: string): Promise<IOrder> {
         const existingOrder = await Order.findOne({ idempotencyKey, userId });
         if (existingOrder) {
@@ -63,7 +56,6 @@ export class OrderService {
         }
 
         return newOrder;
->>>>>>> 23e71ff6fd50002e03a170d4179d915866b8b3bd
     }
 
     const newOrder = new Order({
@@ -100,33 +92,15 @@ export class OrderService {
     return order;
   }
 
-<<<<<<< HEAD
   async cancelOrder(orderId: string, userId: string): Promise<IOrder | null> {
-    if (!mongoose.Types.ObjectId.isValid(orderId)) {
-      logger.error(`Invalid Order ID: ${orderId}`, null);
-      throw new Error("Invalid Order ID");
-    }
+      if (!mongoose.Types.ObjectId.isValid(orderId)) {
+          logger.error(`Invalid Order ID: ${orderId}`, null);
+          throw new Error("Invalid Order ID");
+      } 
 
-    const order = await Order.findOne({ _id: orderId, userId });
+        const order = await Order.findOne({ _id: orderId, userId });
 
-    if (!order) {
-      logger.error(`Order not found: ${orderId}`, null);
-      return null;
-    }
-
-    if (order.status !== "PLACED" && order.status !== "PROCESSING") {
-      logger.error(`Cannot cancel an order with status: ${order.status}`, null);
-      throw new Error(`Cannot cancel an order with status: ${order.status}`);
-    }
-
-    order.status = "CANCELLED";
-    await order.save();
-
-    logger.info(`Order cancelled successfully of user id:${userId}`);
-    return order;
-  }
-}
-=======
+    
         const order = await Order.findOne({ _id: orderId, userId });
 
         if (!order) {
@@ -157,4 +131,4 @@ export class OrderService {
         return order;
     }
 }
->>>>>>> 23e71ff6fd50002e03a170d4179d915866b8b3bd
+

@@ -1,10 +1,11 @@
 import { Product, IProduct } from "../models/product.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
+import { AbacRequest } from "../middlewares/abac.middleware";
 
 export class ProductService {
   constructor() {}
-
+  
   async createProduct(productData: IProduct): Promise<IProduct> {
     const newProduct = new Product(productData);
     await newProduct.save();
@@ -44,15 +45,11 @@ export class ProductService {
   }
 
   async getProductById(productId: string): Promise<IProduct | null> {
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      logger.warning(`Invalid Product ID: ${productId}`);
-      throw new Error("Invalid Product ID");
-    }
+
     const product = await Product.findOne({
       _id: productId,
       isDeleted: false,
-      isActive: true,
-    });
+    }).populate({path: 'storeId',select: 'ownerId'}).exec();
     if (!product) {
       logger.warning(`Product not found: ${productId}`);
       return null;
@@ -64,11 +61,11 @@ export class ProductService {
     productId: string,
     updateData: Partial<IProduct>
   ): Promise<IProduct | null> {
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      logger.warning(`Invalid Product ID: ${productId}`);
-      throw new Error("Invalid Product ID");
-    }
-    const updatedProduct = await Product.findByIdAndUpdate(productId, updateData, { new: true });
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      updateData,
+      { new: true },
+    );
     if (!updatedProduct) {
       logger.warning(`Product not found: ${productId}`);
       return null;
@@ -77,10 +74,7 @@ export class ProductService {
   }
 
   async deleteProductById(productId: string): Promise<IProduct | null> {
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      logger.warning(`Invalid Product ID: ${productId}`);
-      throw new Error("Invalid Product ID");
-    }
+
     const deletedProduct = await Product.findByIdAndUpdate(
       productId,
       { isDeleted: true },

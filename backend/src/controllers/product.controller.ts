@@ -2,17 +2,28 @@ import { Response as ExpressResponse, NextFunction } from "express";
 import { ObjectId } from "mongodb";
 import { ProductService } from "../services/product.service";
 import { logger } from "../services/logger.service";
-import { AuthRequest } from "../middlewares/auth.middleware";
 import { CreateProductDto, UpdateProductDto } from "../dto/product.dto";
 import { CategoryService } from "../services/category.service";
 import mongoose from "mongoose";
+import { AbacRequest } from "../middlewares/abac.middleware";
 
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   categoryService = new CategoryService();
 
-  createProduct = async (req: AuthRequest, res: ExpressResponse, next: NextFunction) => {
+  fetchProductByID = async (req: AbacRequest) => {
+    const productId = req.params.id as string;
+    return await this.productService.getProductById(productId);
+  };
+
+
+
+  createProduct = async (
+    req: AbacRequest,
+    res: ExpressResponse,
+    next: NextFunction,
+  ) => {
     try {
       const userId = req.jwt?.userId;
       const storeId = Array.isArray(req.params.storeId)
@@ -28,7 +39,6 @@ export class ProductController {
       const product = await this.productService.createProduct({
         ...productData,
         categoryId: new ObjectId(productData.categoryId),
-        productId: new ObjectId(),
         isActive: true,
         isDeleted: false,
         createdAt: new Date(),
@@ -52,7 +62,11 @@ export class ProductController {
     }
   };
 
-  getProducts = async (req: AuthRequest, res: ExpressResponse, next: NextFunction) => {
+  getProducts = async (
+    req: AbacRequest,
+    res: ExpressResponse,
+    next: NextFunction,
+  ) => {
     try {
       const filters = req.query;
       const products = await this.productService.getAllProducts(filters);
@@ -63,10 +77,14 @@ export class ProductController {
     }
   };
 
-  getProductById = async (req: AuthRequest, res: ExpressResponse, next: NextFunction) => {
+  getProductById = async (
+    req: AbacRequest,
+    res: ExpressResponse,
+    next: NextFunction,
+  ) => {
     try {
       const productId = req.params.id as string;
-      const product = await this.productService.getProductById(productId);
+      const product = req.resource!;
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }
@@ -77,7 +95,11 @@ export class ProductController {
     }
   };
 
-  getProductByIdAndStoreId = async (req: AuthRequest, res: ExpressResponse, next: NextFunction) => {
+  getProductByIdAndStoreId = async (
+    req: AbacRequest,
+    res: ExpressResponse,
+    next: NextFunction,
+  ) => {
     try {
       const productId = req.params.id as string;
       const storeId = req.params.storeId as string;
@@ -92,7 +114,11 @@ export class ProductController {
     }
   };
 
-  updateProduct = async (req: AuthRequest, res: ExpressResponse, next: NextFunction) => {
+  updateProduct = async (
+    req: AbacRequest,
+    res: ExpressResponse,
+    next: NextFunction,
+  ) => {
     try {
       const productId = req.params.id as string;
       const updateData: UpdateProductDto = req.body;
@@ -111,7 +137,11 @@ export class ProductController {
     }
   };
 
-  deleteProduct = async (req: AuthRequest, res: ExpressResponse, next: NextFunction) => {
+  deleteProduct = async (
+    req: AbacRequest,
+    res: ExpressResponse,
+    next: NextFunction,
+  ) => {
     try {
       const productId = req.params.id as string;
       const deletedProduct = await this.productService.deleteProductById(productId);
