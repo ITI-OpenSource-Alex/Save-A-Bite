@@ -2,15 +2,36 @@ import { Cart, ICart } from "../models/cart.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
 import { Product } from "../models/product.model";
+import { PromoCode } from "../models/promocode.model";
+import { PromoCodeService } from "./promocode.service";
 
 export class CartService {
-  constructor() {}
+  private promoCodeService: PromoCodeService;
 
-  private recalculateTotals(cart: ICart): void {
+  constructor() {
+    this.promoCodeService = new PromoCodeService();
+  }
+
+  private async recalculateTotals(cart: ICart): Promise<void> {
     cart.subtotal = cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     if (cart.appliedPromoCode) {
-      cart.discount = Math.round(cart.subtotal * 0.1 * 100) / 100;
+      const promo = await PromoCode.findById(cart.appliedPromoCode);
+
+      if (promo && promo.active && promo.expiresAt > new Date()) {
+        if (promo.type === "percentage") {
+          cart.discount = Math.round(cart.subtotal * (promo.value / 100) * 100) / 100;
+        } else {
+          cart.discount = Math.round(promo.value * 100) / 100;
+        }
+
+        if (cart.discount > cart.subtotal) {
+          cart.discount = cart.subtotal;
+        }
+      } else {
+        cart.appliedPromoCode = undefined;
+        cart.discount = 0;
+      }
     } else {
       cart.discount = 0;
     }
@@ -76,7 +97,7 @@ export class CartService {
       logger.info(`Added product ${itemData.productId} to cart of user id:${userId}`);
     }
 
-    this.recalculateTotals(cart);
+    await this.recalculateTotals(cart);
 
     await cart.save();
 
@@ -98,7 +119,7 @@ export class CartService {
       item.quantity = quantity;
     }
 
-    this.recalculateTotals(cart);
+    await this.recalculateTotals(cart);
 
     await cart.save();
 
@@ -120,7 +141,7 @@ export class CartService {
 
     cart.items.splice(itemIndex, 1);
 
-    this.recalculateTotals(cart);
+    await this.recalculateTotals(cart);
 
     await cart.save();
 
@@ -152,9 +173,16 @@ export class CartService {
       throw new Error("Cannot apply promo code to an empty cart");
     }
 
-    cart.appliedPromoCode = promoCode;
+    cart.subtotal = cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    this.recalculateTotals(cart);
+    const promo = await this.promoCodeService.validateAndGetPromo(promoCode, userId, cart.subtotal);
+
+    // Store the promo reference
+    cart.appliedPromoCode = promo._id as mongoose.Types.ObjectId;
+
+    await this.recalculateTotals(cart);
+
+    await this.promoCodeService.incrementUsage(promo._id as mongoose.Types.ObjectId);
 
     await cart.save();
 
@@ -168,7 +196,7 @@ export class CartService {
 
     cart.appliedPromoCode = undefined;
 
-    this.recalculateTotals(cart);
+    await this.recalculateTotals(cart);
 
     await cart.save();
 

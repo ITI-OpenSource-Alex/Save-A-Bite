@@ -128,8 +128,20 @@ export class CartController {
         cart,
       });
     } catch (error: any) {
-      if (error.message === "Cannot apply promo code to an empty cart") {
+      const badRequestErrors = [
+        "Cannot apply promo code to an empty cart",
+        "Promo code is no longer active",
+        "Promo code has expired",
+        "Promo code usage limit reached",
+        "You are not allowed to use this promo code",
+      ];
+
+      if (badRequestErrors.includes(error.message) || error.message.startsWith("Minimum order amount")) {
         return res.status(400).json({ message: error.message });
+      }
+
+      if (error.message === "Promo code not found") {
+        return res.status(404).json({ message: error.message });
       }
 
       logger.error("Internal server error", error);

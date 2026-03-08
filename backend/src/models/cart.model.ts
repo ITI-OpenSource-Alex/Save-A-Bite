@@ -12,7 +12,7 @@ export interface ICart extends Document {
   subtotal: number;
   discount: number;
   total: number;
-  appliedPromoCode?: string;
+  appliedPromoCode?: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -33,7 +33,7 @@ const cartSchema = new Schema<ICart>(
     subtotal: { type: Number, default: 0 },
     discount: { type: Number, default: 0 },
     total: { type: Number, default: 0 },
-    appliedPromoCode: { type: String },
+    appliedPromoCode: { type: Schema.Types.ObjectId, ref: "PromoCode" },
   },
   { timestamps: true },
 );
