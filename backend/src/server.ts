@@ -7,6 +7,7 @@ import { createServer } from "http";
 import addressRoutes from './routes/address.routes';
 import { initSocket } from './utils/socket';
 import App from "./app";
+import NotificationCollector from './utils/notification.collector';
 
 const logger = Container.get(Logger);
 
@@ -15,7 +16,11 @@ const startApplication = async () => {
     const app = await App.init();
     const server = createServer(app.getExpressInstance());
     const io = initSocket(server);
-      server.listen(env.APP.PORT, () => {
+    
+    // Initialize notification collector
+    NotificationCollector.getInstance();
+
+    server.listen(env.APP.PORT, () => {
       logger.info(`🚀 Server is running at http://localhost:${env.APP.PORT}`);
  
     });

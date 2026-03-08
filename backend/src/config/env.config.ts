@@ -19,6 +19,9 @@ const processEnvSchema = Joi.object({
   EMAIL_USER: Joi.string().required(),
   EMAIL_PASS: Joi.string().required(),
   APP_URL: Joi.string().required(),
+  REDIS_HOST: Joi.string().required(),
+  REDIS_PORT: Joi.number().required(),
+  REDIS_PASSWORD: Joi.string().required(),
 })
   .unknown()
   .required();
@@ -54,6 +57,11 @@ export const envSchema = Joi.object({
     USER: Joi.string().required(),
     PASS: Joi.string().required(),
   }).required(),
+  REDIS: Joi.object({
+    HOST: Joi.string().required(),
+    PORT: Joi.number().required(),
+    PASSWORD: Joi.string().required(),
+  }).required(),
 });
 
 const env = {
@@ -76,6 +84,11 @@ const env = {
     PORT: envVars.EMAIL_PORT,
     USER: envVars.EMAIL_USER,
     PASS: envVars.EMAIL_PASS,
+  },
+  REDIS: {
+    HOST: envVars.REDIS_HOST,
+    PORT: envVars.REDIS_PORT,
+    PASSWORD: envVars.REDIS_PASSWORD,
   },
 };
 
