@@ -12,10 +12,11 @@ export class OrderController {
     this.orderService = new OrderService();
   }
 
-  fetchOrderByID = async (req: AbacRequest) => { // We intentionally do NOT use try/catch here. as it's used inside the AuthorizeAbac which has error handling
+  fetchOrderByID = async (req: AbacRequest) => {
+    // We intentionally do NOT use try/catch here. as it's used inside the AuthorizeAbac which has error handling
     const orderId = req.params.id as string;
     return await this.orderService.getOrderById(orderId);
-  }
+  };
 
   createOrder = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
@@ -52,7 +53,7 @@ export class OrderController {
 
   getOrderById = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
-      const order = req.resource!
+      const order = req.resource!;
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
@@ -69,12 +70,12 @@ export class OrderController {
   cancelOrder = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const order = req.resource!;
-      
+
       const cancelledOrder = await this.orderService.cancelOrder(order);
-      
-      return res.status(200).json({ 
-        message: "Order cancelled successfully", 
-        order: cancelledOrder 
+
+      return res.status(200).json({
+        message: "Order cancelled successfully",
+        order: cancelledOrder,
       });
     } catch (error: any) {
       logger.error(`Internal server error during order cancellation`, error);
