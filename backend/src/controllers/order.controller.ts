@@ -15,7 +15,8 @@ export class OrderController {
   fetchOrderByID = async (req: AbacRequest) => {
     // We intentionally do NOT use try/catch here. as it's used inside the AuthorizeAbac which has error handling
     const orderId = req.params.id as string;
-    return await this.orderService.getOrderById(orderId);
+    const userId = req.jwt!.userId;
+    return await this.orderService.getOrderById(orderId, userId);
   };
 
   createOrder = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
@@ -70,8 +71,8 @@ export class OrderController {
   cancelOrder = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const order = req.resource!;
-
-      const cancelledOrder = await this.orderService.cancelOrder(order);
+      const userId = req.jwt!.userId;
+      const cancelledOrder = await this.orderService.cancelOrder(order, userId);
 
       return res.status(200).json({
         message: "Order cancelled successfully",
