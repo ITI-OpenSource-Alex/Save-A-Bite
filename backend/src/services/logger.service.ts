@@ -13,7 +13,7 @@ export class Logger {
         winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
         winston.format.printf(({ level, timestamp, message }) => {
           return `[${level.toUpperCase()}] ${timestamp} - ${message}`;
-        }),
+        })
       ),
       transports: [
         new winston.transports.Console(),
@@ -34,7 +34,7 @@ export class Logger {
         winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
         winston.format.printf(({ level, timestamp, message }) => {
           return `[${level.toUpperCase()}] ${timestamp} - ${message}`;
-        }),
+        })
       ),
       transports: [
         new winston.transports.Console(),

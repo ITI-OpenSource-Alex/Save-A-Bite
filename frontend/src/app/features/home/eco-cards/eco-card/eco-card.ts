@@ -12,5 +12,5 @@ export interface EcoStat {
   styleUrl: './eco-card.css',
 })
 export class EcoCard {
-stat = input.required<EcoStat>();
+  stat = input.required<EcoStat>();
 }

@@ -23,6 +23,6 @@ const addressSchema = new Schema<IAddress>(
     city: { type: String, required: [true, "City is required"], trim: true },
     postalCode: { type: String, trim: true },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 export default mongoose.model<IAddress>("Address", addressSchema);

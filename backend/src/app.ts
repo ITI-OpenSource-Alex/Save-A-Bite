@@ -4,7 +4,7 @@ import env, { envSchema } from "./config/env.config";
 import Container from "typedi";
 import cors from "cors";
 import { dbConnection } from "./config/db.config";
-import rootRouter from './routes/index';
+import rootRouter from "./routes/index";
 import { Seeder } from "./utils/seeder";
 import ErrorHandlerMiddleware from "./middlewares/error-handler";
 
@@ -25,7 +25,7 @@ class App {
     appInstance.app = express();
     await appInstance.initializeMiddlewares();
     await dbConnection();
-    await Seeder.seedSuperAdmin();
+    await Seeder.runAllSeeds();
     await appInstance.initializeRoutes();
     appInstance.errorHandler();
     return appInstance;
@@ -56,7 +56,7 @@ class App {
   }
 
   private async initializeRoutes() {
-    this.app.use('/api', rootRouter);
+    this.app.use("/api", rootRouter);
   }
 
   private errorHandler() {

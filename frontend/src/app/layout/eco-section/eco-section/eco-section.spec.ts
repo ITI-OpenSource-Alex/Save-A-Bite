@@ -8,9 +8,8 @@ describe('EcoSection', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EcoSection]
-    })
-    .compileComponents();
+      imports: [EcoSection],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EcoSection);
     component = fixture.componentInstance;
