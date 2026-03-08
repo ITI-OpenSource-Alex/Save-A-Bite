@@ -58,18 +58,6 @@ export class OrderService {
         return newOrder;
     }
 
-    const newOrder = new Order({
-      ...orderData,
-      userId,
-      idempotencyKey,
-      status: "PLACED",
-      paymentStatus: "PENDING",
-    });
-
-    await newOrder.save();
-    logger.info(`Order created successfully of user id:${newOrder.userId}`);
-    return newOrder;
-  }
 
   async getMyOrders(userId: string): Promise<IOrder[]> {
     const orders = await Order.find({ userId }).sort({ createdAt: -1 });
@@ -101,8 +89,6 @@ export class OrderService {
         const order = await Order.findOne({ _id: orderId, userId });
 
     
-        const order = await Order.findOne({ _id: orderId, userId });
-
         if (!order) {
             logger.error(`Order not found: ${orderId}`, null);
             return null;
