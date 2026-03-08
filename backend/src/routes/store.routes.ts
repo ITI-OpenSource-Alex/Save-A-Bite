@@ -3,12 +3,14 @@ import { storeController } from "../controllers/store.controller";
 import { StoreDto, UpdateStoreDto } from "../dto/store.dto";
 import { IsAuthenticatedMiddleware } from "../middlewares/auth.middleware";
 import ValidationMiddleware from "../middlewares/validation.middleware";
-
+import { storePolicy } from "../policies/store.policy";
+import {AuthorizeRoles} from "../middlewares/abac.middleware"
 const router = Router();
 
 router.post(
   "/",
   IsAuthenticatedMiddleware,
+  AuthorizeRoles(storePolicy.canCreate),
   ValidationMiddleware(StoreDto),
   storeController.createStore,
 );
@@ -21,12 +23,14 @@ router.get(
 router.patch(
   "/:id",
   IsAuthenticatedMiddleware,
+  AuthorizeRoles(storePolicy.canUpdate, storeController.fetchStoreByID),
   ValidationMiddleware(UpdateStoreDto),
   storeController.updateStoreById,
 );
 router.delete(
   "/:id",
   IsAuthenticatedMiddleware,
+  AuthorizeRoles(storePolicy.canDelete, storeController.fetchStoreByID),
   storeController.deleteStoreById,
 );
 
