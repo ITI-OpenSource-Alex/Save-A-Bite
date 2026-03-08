@@ -14,11 +14,11 @@ export class ProductFilter {
   filters: ProductFilters = {};
 
   categories = [
-    { name: 'Software Engineering', count: 2100 },
-    { name: 'Technology', count: 1951 },
-    { name: 'AI & Data Science', count: 3089 },
-    { name: 'DevOps & Cloud', count: 894 },
-    { name: 'Security & Hardware', count: 1896 },
+    { name: 'Meals', count: 2100 },
+    { name: 'Desserts', count: 1951 },
+    { name: 'Bakeries', count: 3089 },
+    { name: 'Grocery', count: 894 },
+    { name: 'Drinks', count: 1896 },
   ];
   selectCategory(categoryName?: string) {
     this.filters.category = categoryName;

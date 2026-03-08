@@ -24,7 +24,7 @@
               <button
                 type="button"
                 (click)="changeLimit(12)"
-                [ngClass]="{ 'text-orange-500 font-bold': limit === 12 }"
+                [ngClass]="{ 'text-green-500 font-bold': limit === 12 }"
                 class="hover:text-gray-900"
               >
                 12
@@ -33,7 +33,7 @@
               <button
                 type="button"
                 (click)="changeLimit(18)"
-                [ngClass]="{ 'text-orange-500 font-bold': limit === 18 }"
+                [ngClass]="{ 'text-green-500 font-bold': limit === 18 }"
                 class="hover:text-gray-900"
               >
                 18
@@ -42,7 +42,7 @@
               <button
                 type="button"
                 (click)="changeLimit(24)"
-                [ngClass]="{ 'text-orange-500 font-bold': limit === 24 }"
+                [ngClass]="{ 'text-green-500 font-bold': limit === 24 }"
                 class="hover:text-gray-900"
               >
                 24
@@ -66,7 +66,7 @@
 
         @if (isLoading) {
           <div class="flex items-center justify-center h-64">
-            <div class="w-10 h-10 border-b-2 border-orange-500 rounded-full animate-spin"></div>
+            <div class="w-10 h-10 border-b-2 border-green-500 rounded-full animate-spin"></div>
           </div>
         } @else {
           @if (products.length === 0) {
@@ -88,7 +88,7 @@
               <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or price range.</p>
             </div>
           } @else {
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
               @for (product of products; track product.id) {
                 <app-product-card [product]="product"></app-product-card>
               }

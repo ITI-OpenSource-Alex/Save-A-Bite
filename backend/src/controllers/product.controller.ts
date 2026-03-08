@@ -17,13 +17,7 @@ export class ProductController {
     return await this.productService.getProductById(productId);
   };
 
-
-
-  createProduct = async (
-    req: AbacRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+  createProduct = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const userId = req.jwt?.userId;
       const storeId = Array.isArray(req.params.storeId)
@@ -62,26 +56,19 @@ export class ProductController {
     }
   };
 
-  getProducts = async (
-    req: AbacRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+  getProducts = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const filters = req.query;
+      const paginatedResult = await this.productService.getAllProducts(filters);
       const products = await this.productService.getAllProducts(filters);
-      return res.status(200).json({ products });
+      return res.status(200).json(paginatedResult);
     } catch (error: any) {
       logger.error(`Internal server error`, error);
       return res.status(500).json({ success: false, message: error.message });
     }
   };
 
-  getProductById = async (
-    req: AbacRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+  getProductById = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const productId = req.params.id as string;
       const product = req.resource!;
@@ -95,11 +82,7 @@ export class ProductController {
     }
   };
 
-  getProductByIdAndStoreId = async (
-    req: AbacRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+  getProductByIdAndStoreId = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const productId = req.params.id as string;
       const storeId = req.params.storeId as string;
@@ -114,11 +97,7 @@ export class ProductController {
     }
   };
 
-  updateProduct = async (
-    req: AbacRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+  updateProduct = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const productId = req.params.id as string;
       const updateData: UpdateProductDto = req.body;
@@ -137,11 +116,7 @@ export class ProductController {
     }
   };
 
-  deleteProduct = async (
-    req: AbacRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+  deleteProduct = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const productId = req.params.id as string;
       const deletedProduct = await this.productService.deleteProductById(productId);
