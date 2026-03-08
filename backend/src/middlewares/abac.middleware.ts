@@ -12,7 +12,7 @@ export interface AbacRequest<ResourceT = any> extends AuthRequest {
 }
 
 export const AuthorizeRoles = <ResourceT>(
-    policyEvaluator: (user: any, resource: ResourceT) => boolean,
+    policyEvaluator: (user: IUser, resource: ResourceT) => boolean,
     resourceFetcher?: (req: AbacRequest)=>Promise<ResourceT | null>) =>{
         return async (req: AbacRequest<ResourceT>, res: ExpressResponse, next: NextFunction) => {
             try{

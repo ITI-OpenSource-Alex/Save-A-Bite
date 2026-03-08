@@ -1,10 +1,11 @@
 import { Product, IProduct } from "../models/product.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
+import { AbacRequest } from "../middlewares/abac.middleware";
 
 export class ProductService {
   constructor() {}
-
+  
   async createProduct(productData: IProduct): Promise<IProduct> {
     const newProduct = new Product(productData);
     await newProduct.save();
