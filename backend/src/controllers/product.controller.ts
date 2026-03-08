@@ -2,18 +2,25 @@ import { Response as ExpressResponse, NextFunction } from "express";
 import { ObjectId } from "mongodb";
 import { ProductService } from "../services/product.service";
 import { logger } from "../services/logger.service";
-import { AuthRequest } from "../middlewares/auth.middleware";
 import { CreateProductDto, UpdateProductDto } from "../dto/product.dto";
 import { CategoryService } from "../services/category.service";
 import mongoose from "mongoose";
+import { AbacRequest } from "../middlewares/abac.middleware";
 
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   categoryService = new CategoryService();
 
+  fetchProductByID = async (req: AbacRequest) => {
+    const productId = req.params.id as string;
+    return await this.productService.getProductById(productId);
+  };
+
+
+
   createProduct = async (
-    req: AuthRequest,
+    req: AbacRequest,
     res: ExpressResponse,
     next: NextFunction,
   ) => {
@@ -32,7 +39,6 @@ export class ProductController {
       const product = await this.productService.createProduct({
         ...productData,
         categoryId: new ObjectId(productData.categoryId),
-        productId: new ObjectId(),
         isActive: true,
         isDeleted: false,
         createdAt: new Date(),
@@ -40,10 +46,7 @@ export class ProductController {
         storeId: new ObjectId(storeId),
       });
 
-      const category = await this.categoryService.incrementStock(
-        product.categoryId.toString(),
-        1,
-      );
+      const category = await this.categoryService.incrementStock(product.categoryId.toString(), 1);
 
       if (!category) {
         return res.status(404).json({ message: "Category not found" });
@@ -60,7 +63,7 @@ export class ProductController {
   };
 
   getProducts = async (
-    req: AuthRequest,
+    req: AbacRequest,
     res: ExpressResponse,
     next: NextFunction,
   ) => {
@@ -75,13 +78,13 @@ export class ProductController {
   };
 
   getProductById = async (
-    req: AuthRequest,
+    req: AbacRequest,
     res: ExpressResponse,
     next: NextFunction,
   ) => {
     try {
       const productId = req.params.id as string;
-      const product = await this.productService.getProductById(productId);
+      const product = req.resource!;
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }
@@ -93,17 +96,14 @@ export class ProductController {
   };
 
   getProductByIdAndStoreId = async (
-    req: AuthRequest,
+    req: AbacRequest,
     res: ExpressResponse,
     next: NextFunction,
   ) => {
     try {
       const productId = req.params.id as string;
       const storeId = req.params.storeId as string;
-      const product = await this.productService.getProductByIdAndStoreId(
-        productId,
-        storeId,
-      );
+      const product = await this.productService.getProductByIdAndStoreId(productId, storeId);
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }
@@ -115,17 +115,14 @@ export class ProductController {
   };
 
   updateProduct = async (
-    req: AuthRequest,
+    req: AbacRequest,
     res: ExpressResponse,
     next: NextFunction,
   ) => {
     try {
       const productId = req.params.id as string;
       const updateData: UpdateProductDto = req.body;
-      const updatedProduct = await this.productService.updateProductById(
-        productId,
-        updateData,
-      );
+      const updatedProduct = await this.productService.updateProductById(productId, updateData);
       if (!updatedProduct) {
         logger.warning(`Product not found: ${productId}`);
         return res.status(404).json({ message: "Product not found" });
@@ -141,14 +138,13 @@ export class ProductController {
   };
 
   deleteProduct = async (
-    req: AuthRequest,
+    req: AbacRequest,
     res: ExpressResponse,
     next: NextFunction,
   ) => {
     try {
       const productId = req.params.id as string;
-      const deletedProduct =
-        await this.productService.deleteProductById(productId);
+      const deletedProduct = await this.productService.deleteProductById(productId);
       if (!deletedProduct) {
         logger.warning(`Product not found: ${productId}`);
         return res.status(404).json({ message: "Product not found" });

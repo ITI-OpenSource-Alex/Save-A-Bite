@@ -4,9 +4,7 @@ import Joi from "joi";
 dotenv.config({ quiet: true });
 
 const processEnvSchema = Joi.object({
-  NODE_ENV: Joi.string()
-    .valid("development", "production", "test")
-    .default("development"),
+  NODE_ENV: Joi.string().valid("development", "production", "test").default("development"),
   PORT: Joi.number().default(3000),
   MONGO_URI: Joi.string().required(),
   JWT_SECRET: Joi.string().required(),
@@ -15,10 +13,11 @@ const processEnvSchema = Joi.object({
   JWT_REFRESH_EXPIRE: Joi.string().required(),
   EMAIL_HOST: Joi.string().required(),
   EMAIL_PORT: Joi.number().required(),
-  
   EMAIL_USER: Joi.string().required(),
   EMAIL_PASS: Joi.string().required(),
   APP_URL: Joi.string().required(),
+  STRIPE_SECRET_KEY: Joi.string().required(),
+  STRIPE_WEBHOOK_SECRET: Joi.string().required() // <-- 1. Added this here!
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
   REDIS_PASSWORD: Joi.string().required(),
@@ -26,14 +25,10 @@ const processEnvSchema = Joi.object({
   .unknown()
   .required();
 
-const { value: envVars, error: envError } = processEnvSchema.validate(
-  process.env,
-);
+const { value: envVars, error: envError } = processEnvSchema.validate(process.env);
 
 if (envError) {
-  throw new Error(
-    `Environment variables validation error: ${envError.message}`,
-  );
+  throw new Error(`Environment variables validation error: ${envError.message}`);
 }
 
 export const envSchema = Joi.object({
@@ -56,6 +51,10 @@ export const envSchema = Joi.object({
     PORT: Joi.number().required(),
     USER: Joi.string().required(),
     PASS: Joi.string().required(),
+  }).required(),
+  STRIPE: Joi.object({                           // <-- 2. Grouped into an object!
+    SECRET_KEY: Joi.string().required(),
+    WEBHOOK_SECRET: Joi.string().required(),
   }).required(),
   REDIS: Joi.object({
     HOST: Joi.string().required(),
@@ -85,12 +84,15 @@ const env = {
     USER: envVars.EMAIL_USER,
     PASS: envVars.EMAIL_PASS,
   },
+  STRIPE: {
+    SECRET_KEY: envVars.STRIPE_SECRET_KEY,
+    WEBHOOK_SECRET: envVars.STRIPE_WEBHOOK_SECRET,
+  },
   REDIS: {
     HOST: envVars.REDIS_HOST,
     PORT: envVars.REDIS_PORT,
     PASSWORD: envVars.REDIS_PASSWORD,
   },
 };
-
 
 export default env;

@@ -1,11 +1,12 @@
-import { Router } from 'express';
-import addressRoutes from './address.routes';
-import orderRoutes from './order.routes';
-import authRoutes from './auth.routes';
-import userRoutes from './user.routes';
-import categoryRoutes from './category.routes';
+import { Router } from "express";
+import addressRoutes from "./address.routes";
+import orderRoutes from "./order.routes";
+import authRoutes from "./auth.routes";
+import userRoutes from "./user.routes";
+import categoryRoutes from "./category.routes";
 import storeRoutes from "./store.routes";
 import productRoutes from "./product.routes";
+import paymentRoutes from './payment.routes';
 
 const rootRouter = Router();
 
@@ -16,5 +17,6 @@ rootRouter.use("/users", userRoutes);
 rootRouter.use("/categories", categoryRoutes);
 rootRouter.use("/stores", storeRoutes);
 rootRouter.use("/products", productRoutes);
+rootRouter.use('/payments', paymentRoutes);
 
 export default rootRouter;

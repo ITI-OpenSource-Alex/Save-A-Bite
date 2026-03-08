@@ -1,9 +1,8 @@
 import { Schema, Document, model, Types } from "mongoose";
 
-
 export interface ICategory extends Document {
   name: string;
-  categoryStock:number;
+  categoryStock: number;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
