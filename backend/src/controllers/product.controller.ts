@@ -60,7 +60,6 @@ export class ProductController {
     try {
       const filters = req.query;
       const paginatedResult = await this.productService.getAllProducts(filters);
-      const products = await this.productService.getAllProducts(filters);
       return res.status(200).json(paginatedResult);
     } catch (error: any) {
       logger.error(`Internal server error`, error);
