@@ -9,13 +9,7 @@ import { productPolicy } from "../policies/product.policy";
 
 const router = Router();
 
-router.post(
-  "/",
-  IsAuthenticatedMiddleware,
-  AuthorizeRoles(productPolicy.canCreate),
-  ValidationMiddleware(CreateProductDto),
-  productController.createProduct,
-); 
+
 router.get("/", IsAuthenticatedMiddleware, productController.getProducts);
 router.get("/:id", IsAuthenticatedMiddleware,AuthorizeRoles(productPolicy.canRead, productController.fetchProductByID), productController.getProductById);
 router.post(

@@ -5,9 +5,9 @@ import { IStore } from "../models/store.model";
 export class ProductPolicy extends Policy<IProduct> {
 
 
-    protected isAuthorizedVendor(user:IUser, product:IProduct):boolean{
+    private isAuthorizedVendor(user:IUser, product:IProduct):boolean{
         if (!this.isVendor(user)) return false;
-        const store = product.storeId as unknown as IStore;
+        const store = product.storeId as unknown as IStore // for referring an object in mongodb
         if (!store || !store.ownerId) {
             console.warn("ProductPolicy: storeId was not populated on the product document.");
             return false; 
@@ -24,17 +24,17 @@ export class ProductPolicy extends Policy<IProduct> {
 
 
     canCreate = (user: IUser, product: IProduct): boolean => {
-        if (this.isVendor(user))return true
+        if (this.isAuthorizedVendor(user, product))return true
         return super.canCreate(user, product)
     }
 
-    canUpdate(user: IUser, product: IProduct): boolean {
+    canUpdate =(user: IUser, product: IProduct): boolean=> {
         // A vendor can only update products linked to their specific store
         if (this.isAuthorizedVendor(user, product))return true
         return super.canUpdate(user, product);
     }
 
-    canDelete(user: IUser, product: IProduct): boolean {
+    canDelete =(user: IUser, product: IProduct): boolean => {
         if (this.isAuthorizedVendor(user, product))return true
         return super.canDelete(user, product)
     
