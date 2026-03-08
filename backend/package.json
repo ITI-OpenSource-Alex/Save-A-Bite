@@ -46,6 +46,7 @@
     "openai": "^5.10.2",
     "reflect-metadata": "^0.2.2",
     "socket.io": "^4.8.3",
+    "stripe": "^20.4.1",
     "typedi": "^0.10.0",
     "winston-daily-rotate-file": "^5.0.0"
   }
