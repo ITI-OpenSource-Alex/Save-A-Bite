@@ -64,13 +64,13 @@ export class OrderService {
         return orders;
     }
 
-    async getOrderById(orderId: string, userId: string): Promise<IOrder | null> {
+    async getOrderById(orderId: string): Promise<IOrder | null> {
         if (!mongoose.Types.ObjectId.isValid(orderId)) {
             logger.error(`Invalid Order ID: ${orderId}`, null);
             throw new Error("Invalid Order ID");
         }
 
-        const order = await Order.findOne({ _id: orderId, userId });
+        const order = await Order.findOne({ orderId });
         if (!order) {
             logger.error(`Order not found: ${orderId}`, null);
             return null;
@@ -79,7 +79,8 @@ export class OrderService {
         return order;
     }
 
-    async cancelOrder(orderId: string, userId: string): Promise<IOrder | null> {
+    async cancelOrder(orderId: string, userId:string): Promise<IOrder | null> {
+
         if (!mongoose.Types.ObjectId.isValid(orderId)) {
             logger.error(`Invalid Order ID: ${orderId}`, null);
             throw new Error("Invalid Order ID");

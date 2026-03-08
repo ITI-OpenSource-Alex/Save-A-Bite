@@ -7,6 +7,7 @@ import { Role } from "../enum/role.enum";
 dotenv.config();
 
 export class Seeder {
+
     static async seedSuperAdmin() {
         try {
             const adminEmail = process.env.SUPER_ADMIN_EMAIL;
@@ -16,7 +17,6 @@ export class Seeder {
                 logger.warning("Super Admin credentials not found in environment variables. Skipping seeding.");
                 return;
             }
-
 
             const existingAdmin = await User.findOne({ email: adminEmail });
 
@@ -43,5 +43,66 @@ export class Seeder {
                 logger.error("Error seeding Super Admin:", error);
             }
         }
+    }
+
+
+    static async seedTestUsers() {
+        if (process.env.NODE_ENV === 'production') {
+            logger.warning("Attempted to seed test users in a production environment. Aborting.");
+            return;
+        }
+
+        const testUsers = [
+            {
+                name: "Test Admin",
+                email: "admin@test.com",
+                password: "password123", 
+                role: Role.ADMIN,
+                isEmailVerified: true,
+                isActive: true
+            },
+            {
+                name: "Test Vendor",
+                email: "vendor@test.com",
+                password: "password123",
+                role: Role.VENDOR,
+                isEmailVerified: true,
+                isActive: true
+            },
+            {
+                name: "Test User",
+                email: "user@test.com",
+                password: "password123",
+                role: Role.USER,
+                isEmailVerified: true,
+                isActive: true
+            }
+        ];
+
+        try {
+            for (const userData of testUsers) {
+                const existingUser = await User.findOne({ email: userData.email });
+                
+                if (existingUser) {
+                    logger.info(`Test ${userData.role} already exists (${userData.email}). Skipping.`);
+                    continue;
+                }
+
+                await User.create(userData);
+                logger.info(`Test ${userData.role} seeded successfully (${userData.email}).`);
+            }
+        } catch (error: any) {
+            logger.error("Error seeding test users:", error);
+        }
+    }
+
+
+    static async runAllSeeds() {
+        logger.info("Starting database seeding process...");
+        
+        await this.seedSuperAdmin();
+        await this.seedTestUsers();
+        
+        logger.info("Database seeding process completed.");
     }
 }

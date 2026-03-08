@@ -25,7 +25,7 @@ class App {
     appInstance.app = express();
     await appInstance.initializeMiddlewares();
     await dbConnection();
-    await Seeder.seedSuperAdmin();
+    await Seeder.runAllSeeds();
     await appInstance.initializeRoutes();
     appInstance.errorHandler();
     return appInstance;

@@ -1,8 +1,8 @@
 import { Response as ExpressResponse, NextFunction } from "express";
 import { ObjectId } from "mongodb";
 import { logger } from "../services/logger.service";
-import { AuthRequest } from "../middlewares/auth.middleware";
 import { StoreService } from "../services/store.service";
+import { AbacRequest } from "../middlewares/abac.middleware";
 // import { error } from "winston";
 
 export class StoreController {
@@ -10,8 +10,14 @@ export class StoreController {
 
   storeService = new StoreService();
 
+
+  fetchStoreByID = async (req: AbacRequest) => {
+    const storeId = req.params.id as string;
+    return await this.storeService.getStoreById(storeId);
+  };
+
   createStore = async (
-    req: AuthRequest,
+    req: AbacRequest,
     res: ExpressResponse,
     next: NextFunction,
   ) => {
@@ -41,7 +47,7 @@ export class StoreController {
     }
   };
 
-  getAllStores = async (req: AuthRequest, res: ExpressResponse) => {
+  getAllStores = async (req: AbacRequest, res: ExpressResponse) => {
     try {
       const stores = await this.storeService.getAllStores();
       res.json(stores);
@@ -55,12 +61,12 @@ export class StoreController {
     }
   };
 
-  getStoreById = async (req: AuthRequest, res: ExpressResponse) => {
+  getStoreById = async (req: AbacRequest, res: ExpressResponse) => {
     try {
       const id = Array.isArray(req.params.id)
         ? req.params.id[0]
         : req.params.id;
-      const store = await this.storeService.getStoreById(id);
+      const store = req.resource!
       if (!store) {
         return res.status(404).json({ message: "Store not found" });
       }
@@ -75,7 +81,7 @@ export class StoreController {
     }
   };
 
-  updateStoreById = async (req: AuthRequest, res: ExpressResponse) => {
+  updateStoreById = async (req: AbacRequest, res: ExpressResponse) => {
     try {
       const id = Array.isArray(req.params.id)
         ? req.params.id[0]
@@ -99,7 +105,7 @@ export class StoreController {
     }
   };
 
-  deleteStoreById = async (req: AuthRequest, res: ExpressResponse) => {
+  deleteStoreById = async (req: AbacRequest, res: ExpressResponse) => {
     try {
       const id = Array.isArray(req.params.id)
         ? req.params.id[0]
