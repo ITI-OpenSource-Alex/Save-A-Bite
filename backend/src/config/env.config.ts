@@ -17,7 +17,7 @@ const processEnvSchema = Joi.object({
   EMAIL_PASS: Joi.string().required(),
   APP_URL: Joi.string().required(),
   STRIPE_SECRET_KEY: Joi.string().required(),
-  STRIPE_WEBHOOK_SECRET: Joi.string().required() // <-- 1. Added this here!
+  STRIPE_WEBHOOK_SECRET: Joi.string().required(), // <-- 1. Added this here!
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
   REDIS_PASSWORD: Joi.string().required(),
