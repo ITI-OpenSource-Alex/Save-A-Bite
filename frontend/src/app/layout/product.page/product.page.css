@@ -1,15 +1,15 @@
-.img-container{
-    display: flex;
-    justify-content: center;
-    left: 0%;
+.img-container {
+  display: flex;
+  justify-content: center;
+  left: 0%;
 }
 
-.buy-container{
-    display: flex;
-    align-content: center;
-    gap: 5%;
+.buy-container {
+  display: flex;
+  align-content: center;
+  gap: 5%;
 }
-img{
-    width: 400px;
-    border-radius: 10px;
+img {
+  width: 400px;
+  border-radius: 10px;
 }

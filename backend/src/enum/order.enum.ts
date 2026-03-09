@@ -1,0 +1,21 @@
+export const ORDER_STATUS = {
+    PLACED: 'PLACED',
+    PROCESSING: 'PROCESSING',
+    SHIPPED: 'SHIPPED',
+    DELIVERED: 'DELIVERED',
+    CANCELLED: 'CANCELLED'
+}
+
+export const PAYMENT_STATUS = {
+    PENDING: 'PENDING',
+    PAID: 'PAID',
+    FAILED: 'FAILED'
+}
+
+export const PAYMENT_METHOD = {
+    CASH: 'CASH',
+    CARD: 'CARD',
+    WALLET: 'WALLET'
+}
+
+

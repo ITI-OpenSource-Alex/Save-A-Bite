@@ -3,24 +3,28 @@ import { validate, ValidationError } from "class-validator";
 import { NextFunction, Request, RequestHandler, Response as ExpressResponse } from "express";
 import BadRequestException from "../exceptions/bad-request.exception";
 
+type RequestSource = "body" | "query" | "params";
+
 const ValidationMiddleware = (
   type: any,
+  source: RequestSource = "body",
   skipMissingProperties = false
 ): RequestHandler => {
   return (req: Request, res: ExpressResponse, next: NextFunction) => {
-    const transformedBody = plainToInstance(type, req.body);
+    const data = req[source];
+    const transformedData = plainToInstance(type, data);
 
-    validate(transformedBody, { skipMissingProperties }).then(
-      (errors: ValidationError[]) => {
-        if (errors.length > 0) {
-          const formatedErrors = getErrorsFormated(errors);
-          return next(new BadRequestException("BAD_REQUEST", formatedErrors));
-        } else {
-          req.body = transformedBody;
-          next();
+    validate(transformedData, { skipMissingProperties }).then((errors: ValidationError[]) => {
+      if (errors.length > 0) {
+        const formatedErrors = getErrorsFormated(errors);
+        return next(new BadRequestException("BAD_REQUEST", formatedErrors));
+      } else {
+        if (source === "body") {
+          req.body = transformedData;
         }
+        next();
       }
-    );
+    });
   };
 };
 

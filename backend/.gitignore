@@ -1,7 +1,7 @@
 # Node.js dependencies
 node_modules/
 package-lock.json
-
+../node_modules/
 # Logs
 logs/
 *.log
@@ -13,8 +13,7 @@ debug.log
 # Environment Variables
 .env
 .env.local
-config.js
-config
+
 
 
 

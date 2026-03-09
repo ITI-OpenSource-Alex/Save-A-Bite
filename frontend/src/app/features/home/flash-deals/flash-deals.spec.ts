@@ -8,9 +8,8 @@ describe('FlashDeals', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FlashDeals]
-    })
-    .compileComponents();
+      imports: [FlashDeals],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FlashDeals);
     component = fixture.componentInstance;

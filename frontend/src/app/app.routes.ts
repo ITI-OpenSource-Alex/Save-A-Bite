@@ -13,25 +13,24 @@ import { ProductPage } from './layout/product.page/product.page';
 //@Component({ template: '<h1>Admin Dashboard (Restricted)</h1>', standalone: true })
 ///export class DummyAdminComponent {}
 
-
-  export const routes: Routes = [
- // { 
-//    path: 'home', 
-  //  component: DummyHomeComponent 
+export const routes: Routes = [
+  // {
+  //    path: 'home',
+  //  component: DummyHomeComponent
   //},
-//  { 
-//    path: 'checkout', 
- //   component: DummyCheckoutComponent,
- //   canActivate: [authGuard] 
- // },
- // { 
- //   path: 'admin', 
- //   component: DummyAdminComponent,
- //   canActivate: [roleGuard],
- //   data: { roles: ['Admin'] }
+  //  {
+  //    path: 'checkout',
+  //   component: DummyCheckoutComponent,
+  //   canActivate: [authGuard]
+  // },
+  // {
+  //   path: 'admin',
+  //   component: DummyAdminComponent,
+  //   canActivate: [roleGuard],
+  //   data: { roles: ['Admin'] }
   //},
- // { 
-  //  path: '**', 
-  //  redirectTo: 'home' 
- // }
+  // {
+  //  path: '**',
+  //  redirectTo: 'home'
+  // }
 ];
