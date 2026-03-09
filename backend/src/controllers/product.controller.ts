@@ -1,5 +1,4 @@
 import { Response as ExpressResponse, NextFunction } from "express";
-import { ObjectId } from "mongodb";
 import { ProductService } from "../services/product.service";
 import { logger } from "../services/logger.service";
 import { CreateProductDto, UpdateProductDto } from "../dto/product.dto";
@@ -32,12 +31,12 @@ export class ProductController {
 
       const product = await this.productService.createProduct({
         ...productData,
-        categoryId: new ObjectId(productData.categoryId),
+        categoryId: new mongoose.Types.ObjectId(productData.categoryId),
         isActive: true,
         isDeleted: false,
         createdAt: new Date(),
         updatedAt: new Date(),
-        storeId: new ObjectId(storeId),
+        storeId: new mongoose.Types.ObjectId(storeId),
       });
 
       const category = await this.categoryService.incrementStock(product.categoryId.toString(), 1);
