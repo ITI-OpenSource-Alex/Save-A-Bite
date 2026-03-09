@@ -7,6 +7,7 @@ import { CategoriesSection } from './layout/categories-section/categories-sectio
 import { EcoSection } from './layout/eco-section/eco-section/eco-section';
 import { Footer } from './layout/footer/footer';
 import { Restaurants } from './features/home/restaurants/restaurants';
+import { MasterSearch } from './features/search/master-search/master-search/master-search';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ import { Restaurants } from './features/home/restaurants/restaurants';
     Footer,
     EcoSection,
     Restaurants,
+    MasterSearch,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
