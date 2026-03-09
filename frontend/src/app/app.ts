@@ -8,6 +8,8 @@ import { EcoSection } from './layout/eco-section/eco-section/eco-section';
 import { Footer } from './layout/footer/footer';
 import { Restaurants } from './features/home/restaurants/restaurants';
 import { MasterSearch } from './features/search/master-search/master-search/master-search';
+import { SimilarCategory } from './layout/simillarcategory/similar-category/similar-category';
+import { ProductPage } from './layout/product-page/product-page';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +23,8 @@ import { MasterSearch } from './features/search/master-search/master-search/mast
     EcoSection,
     Restaurants,
     MasterSearch,
+    SimilarCategory,
+    ProductPage,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

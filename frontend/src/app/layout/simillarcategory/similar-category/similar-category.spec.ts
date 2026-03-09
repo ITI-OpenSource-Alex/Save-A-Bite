@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductPage } from './product.page';
+import { SimilarCategory } from './similar-category';
 
-describe('ProductPage', () => {
-  let component: ProductPage;
-  let fixture: ComponentFixture<ProductPage>;
+describe('SimilarCategory', () => {
+  let component: SimilarCategory;
+  let fixture: ComponentFixture<SimilarCategory>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductPage],
-    }).compileComponents();
+      imports: [SimilarCategory]
+    })
+    .compileComponents();
 
-    fixture = TestBed.createComponent(ProductPage);
+    fixture = TestBed.createComponent(SimilarCategory);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

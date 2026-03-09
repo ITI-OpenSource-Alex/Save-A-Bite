@@ -1,0 +1,130 @@
+<div class="flex gap-10 p-10 bg-gray-50">
+  <!-- Left Container -->
+  <div class="flex justify-center">
+    <div>
+      <img
+        [src]="'assets/images/4e52654e8674efe5def5c7050fac51d5.jpg'"
+        alt="Product_image"
+        class="w-100 rounded-lg"
+      />
+    </div>
+  </div>
+
+  <!-- Right Container -->
+  <div class="flex flex-col gap-6">
+    <div>
+      <h1 class="text-3xl font-bold">Product Name</h1>
+      <h3 class="text-xl text-emerald-600">300 EGP</h3>
+    </div>
+
+    <!-- Buy Container -->
+    <div class="flex items-center gap-10 flex-wrap">
+      <!-- Quantity -->
+      <div class="w-50 flex items-center gap-2">
+        <button
+          class="bg-emerald-500 text-white px-3 py-1 rounded hover:bg-emerald-600"
+          (click)="decrement()"
+        >
+          -
+        </button>
+
+        <input
+          type="text"
+          [(ngModel)]="quantity"
+          class="border rounded px-2 py-1 w-15 text-center"
+        />
+
+        <button
+          class="bg-emerald-500 text-white px-3 py-1 rounded hover:bg-emerald-600"
+          (click)="increment()"
+        >
+          +
+        </button>
+      </div>
+
+      <!-- Add to Cart -->
+      <div class="flex justify-center items-center flex-wrap">
+        <button class="w-75 bg-emerald-500 text-white py-2 rounded hover:bg-emerald-600">
+          Add To Cart
+        </button>
+      </div>
+
+      <!-- Wishlist -->
+      <div class="w-50 flex items-center gap-2">
+        <p class="mb-0">
+          {{ wishlistAdded ? 'Added to wishlist' : 'Add to wishlist' }}
+        </p>
+
+        <input class="w-4 h-4" type="checkbox" (change)="toggleWishlist()" />
+      </div>
+    </div>
+
+    <hr class="border-gray-300" />
+
+    <!-- Vendor & Category -->
+    <div class="space-y-2">
+      <p><span class="font-semibold">Vendor:</span> <span>Vendor_Name</span></p>
+      <p><span class="font-semibold">Category:</span> <span>Cat_Name</span></p>
+    </div>
+
+    <hr class="border-gray-300" />
+
+    <!-- Tabs -->
+    <div>
+      <div class="flex gap-3 mb-4">
+        <button
+          class="border border-emerald-500 text-emerald-500 px-4 py-1 rounded hover:bg-emerald-500 hover:text-white"
+          (click)="showMacros()"
+        >
+          Macros
+        </button>
+
+        <button
+          class="border border-emerald-500 text-emerald-500 px-4 py-1 rounded hover:bg-emerald-500 hover:text-white"
+          (click)="showIngredients()"
+        >
+          Ingredients
+        </button>
+
+        <button
+          class="border border-emerald-500 text-emerald-500 px-4 py-1 rounded hover:bg-emerald-500 hover:text-white"
+          (click)="showState()"
+        >
+          State
+        </button>
+      </div>
+
+      <div>
+        <!-- Macros -->
+        @if (content === 'macros') {
+          <ul>
+            @for (item of macros; track item.key) {
+              <li>
+                <strong>{{ item.key }}</strong
+                >: {{ item.value }}
+              </li>
+            }
+          </ul>
+        }
+
+        <!-- Ingredients -->
+        @if (content === 'ingredients') {
+          <ul>
+            @for (item of ingredients; track item) {
+              <li>
+                {{ item }}
+              </li>
+            }
+          </ul>
+        }
+
+        <!-- State -->
+        @if (content === 'state') {
+          <p>
+            {{ state }}
+          </p>
+        }
+      </div>
+    </div>
+  </div>
+</div>
