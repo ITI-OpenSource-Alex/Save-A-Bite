@@ -5,7 +5,7 @@ import { AbacRequest } from "../middlewares/abac.middleware";
 
 export class ProductService {
   constructor() {}
-  
+
   async createProduct(productData: IProduct): Promise<IProduct> {
     const newProduct = new Product(productData);
     await newProduct.save();
@@ -13,17 +13,42 @@ export class ProductService {
     return newProduct;
   }
 
-  async getAllProducts(filters: any): Promise<IProduct[]> {
+  async getAllProducts(
+    filters: any
+  ): Promise<{ products: IProduct[]; total: number; page: number; limit: number }> {
+    const page = Number(filters.page) || 1;
+    const limit = Number(filters.limit) || 12;
+    const sort = filters.sort || "relevance";
+
     const query: any = { isDeleted: false, isActive: true };
+    if (filters.category) query.categoryId = filters.category; 
     if (filters.categoryId) query.categoryId = filters.categoryId;
     if (filters.storeId) query.storeId = filters.storeId;
-    if (filters.minPrice || filters.maxPrice) {
+    if (filters.minPrice != null || filters.maxPrice != null) {
       query.price = {};
-      if (filters.minPrice) query.price.$gte = Number(filters.minPrice);
-      if (filters.maxPrice) query.price.$lte = Number(filters.maxPrice);
+      if (filters.minPrice != null) query.price.$gte = Number(filters.minPrice);
+      if (filters.maxPrice != null) query.price.$lte = Number(filters.maxPrice);
     }
+
+    let sortOption: any = { createdAt: -1 }; // Default to newest
+    if (sort === 'price_asc') sortOption = { price: 1 };
+    if (sort === 'price_desc') sortOption = { price: -1 };
+
+    const skip = (page - 1) * limit;
+
+    const [products, totalItems] = await Promise.all([
+      Product.find(query)
+        .populate("storeId categoryId")
+        .sort(sortOption)
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      Product.countDocuments(query)
+    ]);
     logger.info(`Products fetched successfully`);
-    return await Product.find(query).populate("storeId categoryId");
+    return { products, total: totalItems, page, limit };
+  
+
   }
 
   async getProductByIdAndStoreId(productId: string, storeId: string): Promise<IProduct | null> {
@@ -45,11 +70,12 @@ export class ProductService {
   }
 
   async getProductById(productId: string): Promise<IProduct | null> {
-
     const product = await Product.findOne({
       _id: productId,
       isDeleted: false,
-    }).populate({path: 'storeId',select: 'ownerId'}).exec();
+    })
+      .populate({ path: "storeId", select: "ownerId" })
+      .exec();
     if (!product) {
       logger.warning(`Product not found: ${productId}`);
       return null;
@@ -61,11 +87,7 @@ export class ProductService {
     productId: string,
     updateData: Partial<IProduct>
   ): Promise<IProduct | null> {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      productId,
-      updateData,
-      { new: true },
-    );
+    const updatedProduct = await Product.findByIdAndUpdate(productId, updateData, { new: true });
     if (!updatedProduct) {
       logger.warning(`Product not found: ${productId}`);
       return null;
@@ -74,7 +96,6 @@ export class ProductService {
   }
 
   async deleteProductById(productId: string): Promise<IProduct | null> {
-
     const deletedProduct = await Product.findByIdAndUpdate(
       productId,
       { isDeleted: true },
