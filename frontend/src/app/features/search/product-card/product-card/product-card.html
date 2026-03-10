@@ -1,11 +1,11 @@
 <div
   class="relative flex flex-col h-full overflow-hidden transition-shadow bg-white border border-gray-100 shadow-sm cursor-pointer rounded-xl hover:shadow-md group"
 >
-  @if (product.discount) {
+  @if (product.discountPercentage) {
     <div
       class="absolute top-2 left-2 z-10 px-2 py-1 text-[10px] font-bold tracking-wider text-white uppercase bg-gray-900 rounded"
     >
-      {{ product.discount }}
+      {{ product.discountPercentage }}
     </div>
   }
 
@@ -34,7 +34,7 @@
   <div class="flex-shrink-0 p-4 bg-gray-50 aspect-w-3 aspect-h-4">
     <img
       [src]="product.imageUrl"
-      [alt]="product.title"
+      [alt]="product.name"
       loading="lazy"
       class="block object-contain w-full h-full drop-shadow-md"
     />
@@ -44,7 +44,7 @@
     <h4
       class="mb-2 text-sm font-semibold text-gray-800 transition-colors line-clamp-2 group-hover:text-green-400"
     >
-      {{ product.title }}
+      {{ product.name }}
     </h4>
 
     <div class="flex items-center justify-between pt-2 mt-auto">
