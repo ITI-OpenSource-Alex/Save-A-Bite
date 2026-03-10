@@ -35,6 +35,11 @@ export class ProductService {
       if (filters.maxPrice != null) query.price.$lte = Number(filters.maxPrice);
     }
 
+    if (filters.search) {
+      const searchRegex = { $regex: filters.search, $options: "i" };
+      query.$or = [{ name: searchRegex }, { description: searchRegex }];
+    }
+
     let sortOption: any = { createdAt: -1 }; // Default to newest
     if (sort === "price_asc") sortOption = { price: 1 };
     if (sort === "price_desc") sortOption = { price: -1 };

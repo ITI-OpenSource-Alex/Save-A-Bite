@@ -1,11 +1,11 @@
 <div
   class="relative flex flex-col h-full overflow-hidden transition-shadow bg-white border border-gray-100 shadow-sm cursor-pointer rounded-xl hover:shadow-md group"
 >
-  @if (product.discount) {
+  @if (product.discountPercentage) {
     <div
       class="absolute top-2 left-2 z-10 px-2 py-1 text-[10px] font-bold tracking-wider text-white uppercase bg-gray-900 rounded"
     >
-      {{ product.discount }}
+      {{ product.discountPercentage }}
     </div>
   }
 

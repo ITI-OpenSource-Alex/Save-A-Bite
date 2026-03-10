@@ -111,9 +111,13 @@ export class ProductService {
       // Optional: Explicitly tell the API to sort by relevance if needed
       params = params.set('sortBy', 'relevance');
     }
+    if (filters.isFlashDeal !== undefined) {
+      params = params.set('isFlashDeal', filters.isFlashDeal.toString());
+    }
     if (filters.category) params = params.set('category', filters.category);
     if (filters.minPrice != null) params = params.set('minPrice', filters.minPrice.toString());
     if (filters.maxPrice != null) params = params.set('maxPrice', filters.maxPrice.toString());
+    if (filters.search) params = params.set('search', filters.search);
 
     return this.http.get<PaginatedResponse<Product>>(this.apiURL, { params, headers });
   }

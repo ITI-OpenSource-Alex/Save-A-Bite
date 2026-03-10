@@ -1,17 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CategoryCard, Category } from '@/features/home/category-cards/category-card/category-card';
+import { HttpClient } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 @Component({
   selector: 'app-categories-section',
-  imports: [CategoryCard],
+  imports: [CategoryCard, RouterLink, AsyncPipe],
   templateUrl: './categories-section.html',
   styleUrl: './categories-section.css',
 })
-export class CategoriesSection {
-  categories: Category[] = [
-    { id: 'meals', name: 'Meals', offers: 45, icon: '🍱' },
-    { id: 'desserts', name: 'Desserts', offers: 32, icon: '🍰' },
-    { id: 'bakeries', name: 'Bakeries', offers: 28, icon: '🥐' },
-    { id: 'grocery', name: 'Grocery', offers: 19, icon: '🛒' },
-    { id: 'drinks', name: 'Drinks', offers: 15, icon: '🥤' },
-  ];
+export class CategoriesSection implements OnInit {
+  private http = inject(HttpClient);
+  categories$!: Observable<Category[]>;
+
+  ngOnInit() {
+    const tempToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFjY2VkZjZmMWY4OTUwZjMzZjYyNDEiLCJyb2xlIjoidXNlciIsImVtYWlsIjoidXNlckB0ZXN0LmNvbSIsImlhdCI6MTc3MzEyMjEwMCwiZXhwIjoxNzc1NzE0MTAwfQ.k2D20UHBUFTC-6xbR0rPQUXcJm-ZgzmWINBozJGiJlE';
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${tempToken}`);
+    this.categories$ = this.http
+      .get<Category[]>('http://localhost:3000/api/category/list', {
+        headers,
+      })
+      .pipe(tap((res) => console.log(res)));
+  }
 }

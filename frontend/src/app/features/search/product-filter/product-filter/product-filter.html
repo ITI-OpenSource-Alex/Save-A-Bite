@@ -5,8 +5,8 @@
       @for (cat of categories$ | async; track cat._id) {
         <li
           (click)="selectCategory(cat._id)"
-          [ngClass]="{ 'text-orange-500 font-semibold': filters.category === cat._id }"
-          class="flex items-center justify-between transition-colors cursor-pointer hover:text-orange-500"
+          [ngClass]="{ 'text-green-500 font-semibold': filters.category === cat._id }"
+          class="flex items-center justify-between transition-colors cursor-pointer hover:text-green-500"
         >
           <span>{{ cat.name }}</span>
           <span
@@ -39,7 +39,7 @@
         [(ngModel)]="filters.minPrice"
         aria-label="Minimum Price"
         placeholder="Min"
-        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500"
+        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-green-500"
       />
       <span class="text-gray-400">-</span>
       <input
@@ -47,13 +47,13 @@
         [(ngModel)]="filters.maxPrice"
         aria-label="Maximum Price"
         placeholder="Max"
-        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500"
+        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-green-500"
       />
     </div>
     <button
       (click)="applyFilters()"
       type="button"
-      class="w-full mt-3 py-2 text-sm font-semibold text-white transition-colors bg-gray-900 rounded-lg hover:bg-orange-500"
+      class="w-full mt-3 py-2 text-sm font-semibold text-white transition-colors bg-gray-900 rounded-lg hover:bg-green-500"
     >
       Apply Price
     </button>
