@@ -75,18 +75,23 @@ export class CartService {
       throw new Error("Product not found");
     }
 
-    const existingQuantity = cart.items.find((item) => item.productId.toString() === itemData.productId)?.quantity || 0;
+    const existingQuantity =
+      cart.items.find((item) => item.productId.toString() === itemData.productId)?.quantity || 0;
     if (existingQuantity + itemData.quantity > product.stock) {
       throw new Error("Requested quantity exceeds available stock");
     }
 
-    const existingItem = cart.items.find((item) => item.productId.toString() === itemData.productId);
+    const existingItem = cart.items.find(
+      (item) => item.productId.toString() === itemData.productId
+    );
 
     if (existingItem) {
       existingItem.quantity += itemData.quantity;
       existingItem.price = product.price;
 
-      logger.info(`Updated quantity for product ${itemData.productId} in cart of user id:${userId}`);
+      logger.info(
+        `Updated quantity for product ${itemData.productId} in cart of user id:${userId}`
+      );
     } else {
       cart.items.push({
         productId: new mongoose.Types.ObjectId(itemData.productId),
@@ -181,8 +186,6 @@ export class CartService {
     cart.appliedPromoCode = promo._id as mongoose.Types.ObjectId;
 
     await this.recalculateTotals(cart);
-
-    await this.promoCodeService.incrementUsage(promo._id as mongoose.Types.ObjectId);
 
     await cart.save();
 
