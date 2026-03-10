@@ -11,50 +11,9 @@ export class ProductService {
   private http = inject(HttpClient);
   private apiURL = 'http://localhost:3000/products';
 
-  private mockProducts: Product[] = [
-    {
-      id: '1',
-      title: 'Python Machine Learning',
-      category: 'Machine Learning',
-      price: 769,
-      imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop',
-    },
-    {
-      id: '2',
-      title: 'Python Data Analysis',
-      category: 'Data Analysis',
-      price: 569,
-      imageUrl: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop',
-    },
-    {
-      id: '3',
-      title: 'Python Data Science',
-      category: 'Data Science',
-      price: 509,
-      imageUrl: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&h=300&fit=crop',
-    },
-    {
-      id: '4',
-      title: 'Python Deep Learning',
-      category: 'Deep Learning',
-      price: 509,
-      imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop',
-    },
-    {
-      id: '5',
-      title: 'Python Object-Oriented',
-      category: 'OOP',
-      price: 620,
-      imageUrl: 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=400&h=300&fit=crop',
-    },
-    {
-      id: '6',
-      title: 'Python Tricks',
-      category: 'Python Tricks',
-      price: 450,
-      imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop',
-    },
-  ];
+  private mockProducts: Product[] = [];
+
+  
 
   getMockProducts(
     page: number = 1,
@@ -65,7 +24,7 @@ export class ProductService {
     let filteredData = [...this.mockProducts];
 
     if (filters.category) {
-      filteredData = filteredData.filter((p) => p.category === filters.category);
+      filteredData = filteredData.filter((p) => p.categoryId.toString() === filters.category);
     }
 
     if (filters.minPrice != null) {

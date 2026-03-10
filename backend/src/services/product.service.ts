@@ -2,6 +2,7 @@ import { Product, IProduct } from "../models/product.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
 import { AbacRequest } from "../middlewares/abac.middleware";
+import { Observable } from "rxjs";
 
 export class ProductService {
   constructor() {}
@@ -15,7 +16,7 @@ export class ProductService {
 
   async getAllProducts(
     filters: any
-  ): Promise<{ products: IProduct[]; total: number; page: number; limit: number }> {
+  ): Promise<{ products: IProduct[]; total: number; page: number; limit: number }>{
     const page = Number(filters.page) || 1;
     const limit = Number(filters.limit) || 12;
     const sort = filters.sort || "relevance";
