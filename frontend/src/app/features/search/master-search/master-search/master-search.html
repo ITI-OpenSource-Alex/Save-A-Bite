@@ -89,7 +89,7 @@
             </div>
           } @else {
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-              @for (product of products; track product.id) {
+              @for (product of products; track product._id) {
                 <app-product-card [product]="product"></app-product-card>
               }
             </div>
@@ -100,13 +100,13 @@
                   type="button"
                   [disabled]="currentPage === 1"
                   (click)="loadPage(currentPage - 1)"
-                  class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="cursor-pointer px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Previous
                 </button>
 
                 <span
-                  class="px-4 py-2 text-sm font-bold text-orange-600 border rounded-lg bg-orange-50 border-orange-100"
+                  class="px-4 py-2 text-sm font-bold text-green-600 border rounded-lg bg-orange-50 border-orange-100"
                 >
                   {{ currentPage }}
                 </span>
@@ -115,7 +115,7 @@
                   type="button"
                   [disabled]="currentPage * limit >= totalItems"
                   (click)="loadPage(currentPage + 1)"
-                  class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="cursor-pointer px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>

@@ -1,14 +1,15 @@
 export interface Product {
-  id: string;
+  _id: string;
   title: string;
   price: number;
   category: string;
   imageUrl: string;
-  discount?: number;
+  discountPercentage?: number;
+  isFlashDeal?: boolean;
 }
 
 export interface PaginatedResponse<T> {
-  data: T[];
+  products: T[];
   total: number;
   page: number;
   limit: number;
