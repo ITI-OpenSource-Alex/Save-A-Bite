@@ -16,7 +16,7 @@ export class OrderService {
         }
 
         const newOrder = new Order({
-            ...orderData,
+        ...orderData,
             userId,
             idempotencyKey,
             status: 'PLACED',
