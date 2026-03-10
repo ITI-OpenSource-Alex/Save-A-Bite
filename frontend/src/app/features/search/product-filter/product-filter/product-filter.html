@@ -2,7 +2,7 @@
   <div>
     <h3 class="mb-4 text-lg font-bold text-gray-800">Categories</h3>
     <ul class="space-y-3 text-sm text-gray-600">
-      @for (cat of categories; track cat._id) {
+      @for (cat of categories$ | async; track cat._id) {
         <li
           (click)="selectCategory(cat._id)"
           [ngClass]="{ 'text-orange-500 font-semibold': filters.category === cat._id }"
