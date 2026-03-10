@@ -37,7 +37,7 @@ const productSchema = new Schema<IProduct>(
   },
   { timestamps: true }
 );
-productSchema.index({ isFlashDeal: 1, isDeleted: 1, isActive: 1 });
+productSchema.index({ isFlashDeal: 1, isDeleted: 1, isActive: 1 })
 productSchema.index({ categoryId: 1, storeId: 1, price: 1 });
 
 export const Product = mongoose.model<IProduct>("Product", productSchema);
