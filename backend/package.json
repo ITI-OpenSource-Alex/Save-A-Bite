@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Save A Bite",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "tsc && node dist/server.js",

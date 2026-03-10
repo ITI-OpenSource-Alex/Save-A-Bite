@@ -20,7 +20,8 @@
   "homepage": "https://github.com/ITI-OpenSource-Alex/Save-A-Bite#readme",
   "description": "",
   "dependencies": {
-    "mongo": "^0.1.0"
+    "mongo": "^0.1.0",
+    "mongoose": "^9.2.4"
   },
   "devDependencies": {
     "prettier": "^3.8.1"
