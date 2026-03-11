@@ -1,11 +1,13 @@
 export interface Product {
   _id: string;
-  title: string;
+  name: string;
   price: number;
   category: string;
   imageUrl: string;
   discountPercentage?: number;
   isFlashDeal?: boolean;
+  stock?: number;
+  description?: string;
 }
 
 export interface PaginatedResponse<T> {
@@ -19,4 +21,7 @@ export interface ProductFilters {
   category?: string;
   minPrice?: number;
   maxPrice?: number;
+  isFlashDeal?: boolean;
+  discountPercentage?: number;
+  search?: string;
 }

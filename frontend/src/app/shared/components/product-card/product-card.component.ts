@@ -1,22 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export interface ProductCardData {
-  image: string;
-  title: string;
-  restaurant: string;
-  description?: string;
-  price: number;
-  oldPrice?: number;
-  discount?: number;
-  stock?: number;
-}
+import { Product } from '@/core/models/product';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-card',
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './product-card.component.html',
 })
 export class ProductCardComponent {
-  @Input({ required: true }) product!: ProductCardData;
+  @Input({ required: true }) product!: Product;
 }
