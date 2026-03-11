@@ -14,15 +14,13 @@ export class ProductService {
     return newProduct;
   }
 
-  async getAllProducts(
-    filters: any
-  ): Promise<{ products: IProduct[]; total: number; page: number; limit: number }>{
+  async getAllProducts(filters: any): Promise<IProduct[]> {
     const page = Number(filters.page) || 1;
     const limit = Number(filters.limit) || 12;
     const sort = filters.sort || "relevance";
 
     const query: any = { isDeleted: false, isActive: true };
-    if (filters.category) query.categoryId = filters.category; 
+    if (filters.category) query.categoryId = filters.category;
     if (filters.categoryId) query.categoryId = filters.categoryId;
     if (filters.storeId) query.storeId = filters.storeId;
     if (filters.minPrice != null || filters.maxPrice != null) {
@@ -32,24 +30,20 @@ export class ProductService {
     }
 
     let sortOption: any = { createdAt: -1 }; // Default to newest
-    if (sort === 'price_asc') sortOption = { price: 1 };
-    if (sort === 'price_desc') sortOption = { price: -1 };
+    if (sort === "price_asc") sortOption = { price: 1 };
+    if (sort === "price_desc") sortOption = { price: -1 };
 
     const skip = (page - 1) * limit;
 
-    const [products, totalItems] = await Promise.all([
-      Product.find(query)
-        .populate("storeId categoryId")
-        .sort(sortOption)
-        .skip(skip)
-        .limit(limit)
-        .exec(),
-      Product.countDocuments(query)
-    ]);
-    logger.info(`Products fetched successfully`);
-    return { products, total: totalItems, page, limit };
-  
+    const products = await Product.find(query)
+      .populate("storeId categoryId")
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit)
+      .exec();
 
+    logger.info(`Products fetched successfully, count: ${products.length}`);
+    return products; // <-- just return the array
   }
 
   async getProductByIdAndStoreId(productId: string, storeId: string): Promise<IProduct | null> {

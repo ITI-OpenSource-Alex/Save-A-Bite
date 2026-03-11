@@ -21,4 +21,8 @@ export class SimilarCategory implements OnInit {
       error: (err) => console.error('Failed to load products:', err),
     });
   }
+
+  trackByName(index: number, product: Product) {
+    return product.name;
+  }
 }
