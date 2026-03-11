@@ -3,9 +3,6 @@ import { CategoryService } from "../services/category.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
 import { CategoryDto } from "../dto/category.dto";
 
-
-
-
 export class CategoryController {
   private categoryService: CategoryService;
 

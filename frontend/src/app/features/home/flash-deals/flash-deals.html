@@ -2,62 +2,15 @@
   <div class="container mx-auto px-6">
     <div class="mb-10 text-center">
       <h2 class="text-3xl font-bold flex items-center justify-center gap-2">⚡ Flash Deals</h2>
-      <p class="text-muted-foreground">Expiring soon — grab them fast!</p>
+
+      <p class="text-muted-foreground">Only Few Left — grab them fast!</p>
     </div>
 
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mx-5">
-      @for (deal of deals; track deal.id) {
-        <div
-          class="rounded-xl border bg-background shadow-sm hover:shadow-lg transition overflow-hidden"
-        >
-          <div class="relative">
-            <img [src]="deal.image" class="w-full h-48 object-cover" />
-
-            <span
-              class="absolute top-3 left-3 bg-green-600 text-white text-xs px-3 py-1 rounded-full"
-            >
-              -{{ deal.discount }}%
-            </span>
-
-            @if (deal.expired) {
-              <span
-                class="absolute top-3 right-3 bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full"
-              >
-                Expired
-              </span>
-            }
-          </div>
-
-          <div class="p-5">
-            <p class="text-sm text-green-600 font-medium">
-              {{ deal.restaurant }}
-            </p>
-
-            <h3 class="font-semibold text-lg mt-1">
-              {{ deal.title }}
-            </h3>
-
-            <p class="text-sm text-muted-foreground mt-1">
-              {{ deal.description }}
-            </p>
-
-            <p class="text-sm text-muted-foreground mt-2">{{ deal.left }} left</p>
-          </div>
-
-          <div class="flex items-center justify-between px-5 pb-5">
-            <div class="flex items-center gap-2">
-              <span class="text-green-600 font-bold text-lg"> ${{ deal.price }} </span>
-              <span class="text-muted-foreground line-through text-sm"> ${{ deal.oldPrice }} </span>
-            </div>
-
-            <button
-              class="bg-black text-white px-4 py-2 rounded-lg text-sm hover:opacity-90 transition disabled:opacity-50"
-              [disabled]="deal.expired"
-            >
-              Add
-            </button>
-          </div>
-        </div>
+      @for (deal of deals$ | async; track deal._id) {
+        <app-product-card [product]="deal"></app-product-card>
+      } @empty {
+        <p class="text-center col-span-full text-muted-foreground">Loading deals...</p>
       }
     </div>
   </div>

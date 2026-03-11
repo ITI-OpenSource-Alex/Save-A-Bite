@@ -1,0 +1,54 @@
+<div
+  class="relative flex flex-col h-full overflow-hidden transition-shadow bg-white border border-gray-100 shadow-sm cursor-pointer rounded-xl hover:shadow-md group"
+>
+  @if (product.discountPercentage) {
+    <div
+      class="absolute top-2 left-2 z-10 px-2 py-1 text-[10px] font-bold tracking-wider text-white uppercase bg-gray-900 rounded"
+    >
+      {{ product.discountPercentage }}
+    </div>
+  }
+
+  <button
+    type="button"
+    (click)="toggleWishList($event)"
+    [attr.aria-label]="isWishListed ? 'Remove from wishlist' : 'Add to wishlist'"
+    [ngClass]="isWishListed ? 'text-red-500' : 'text-gray-400'"
+    class="absolute z-10 p-1.5 transition-colors rounded-full top-3 right-3 bg-white/80 hover:text-red-500 backdrop-blur-sm"
+  >
+    <svg
+      class="w-5 h-5 transition-all duration-200"
+      [ngClass]="isWishListed ? 'fill-current scale-110' : 'fill-none scale-100'"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+      />
+    </svg>
+  </button>
+
+  <div class="flex-shrink-0 p-4 bg-gray-50 aspect-w-3 aspect-h-4">
+    <img
+      [src]="product.imageUrl"
+      [alt]="product.name"
+      loading="lazy"
+      class="block object-contain w-full h-full drop-shadow-md"
+    />
+  </div>
+
+  <div class="flex flex-col flex-grow p-4 border-t border-gray-50">
+    <h4
+      class="mb-2 text-sm font-semibold text-gray-800 transition-colors line-clamp-2 group-hover:text-green-400"
+    >
+      {{ product.name }}
+    </h4>
+
+    <div class="flex items-center justify-between pt-2 mt-auto">
+      <span class="text-lg font-bold text-green-400"> {{ product.price }} EGP </span>
+    </div>
+  </div>
+</div>
