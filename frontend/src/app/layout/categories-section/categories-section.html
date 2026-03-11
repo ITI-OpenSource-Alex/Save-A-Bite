@@ -5,8 +5,14 @@
     </div>
 
     <div class="mx-5 flex flex-nowrap items-center justify-between gap-4 overflow-x-auto pb-px">
-      @for (cat of categories; track cat.id) {
-        <app-category-card [category]="cat" class="flex-1" />
+      @for (cat of categories$ | async; track cat._id) {
+        <a
+          [routerLink]="['/browse']"
+          [queryParams]="{ category: cat._id }"
+          class="flex-1 block cursor-pointer"
+        >
+          <app-category-card [category]="cat"></app-category-card>
+        </a>
       }
     </div>
   </div>

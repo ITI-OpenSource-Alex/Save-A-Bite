@@ -16,7 +16,7 @@ rootRouter.use("/auth", authRoutes);
 rootRouter.use("/addresses", addressRoutes);
 rootRouter.use("/orders", orderRoutes);
 rootRouter.use("/users", userRoutes);
-rootRouter.use("/categories", categoryRoutes);
+rootRouter.use("/category", categoryRoutes);
 rootRouter.use("/stores", storeRoutes);
 rootRouter.use("/products", productRoutes);
 rootRouter.use('/payments', paymentRoutes);
