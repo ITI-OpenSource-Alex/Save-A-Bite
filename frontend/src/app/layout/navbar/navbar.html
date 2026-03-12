@@ -12,7 +12,14 @@
 
     <div class="hidden md:flex flex-1 justify-center px-6">
       <div class="w-full max-w-lg">
-        <input z-input placeholder="Search restaurants or food..." zSize="default" class="w-full" />
+        <input
+          #mainSearch
+          z-input
+          placeholder="Search restaurants or food..."
+          zSize="default"
+          class="w-full"
+          (keyup.enter)="onSearch(mainSearch.value)"
+        />
       </div>
     </div>
 
@@ -43,7 +50,14 @@
       </div>
 
       <div class="mb-6">
-        <input z-input placeholder="Search..." zSize="default" class="w-full" />
+        <input
+          #mobileSearch
+          z-input
+          placeholder="Search..."
+          zSize="default"
+          class="w-full"
+          (keyup.enter)="onSearch(mobileSearch.value)"
+        />
       </div>
 
       <div class="flex flex-col gap-5 text-lg">

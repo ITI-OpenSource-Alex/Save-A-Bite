@@ -14,7 +14,7 @@ export class ProductService {
     return newProduct;
   }
 
-  async getAllProducts(filters: any): Promise<IProduct[]> {
+  async getAllProducts(filters: any) {
     const page = Number(filters.page) || 1;
     const limit = Number(filters.limit) || 12;
     const sort = filters.sort || "relevance";
@@ -44,8 +44,17 @@ export class ProductService {
     if (sort === "price_desc") sortOption = { price: -1 };
 
     const skip = (page - 1) * limit;
-    const products = await Product.find(query).sort(sortOption).skip(skip).limit(limit);
-    return products;
+    const [products, total] = await Promise.all([
+      Product.find(query).sort(sortOption).skip(skip).limit(limit),
+      Product.countDocuments(query),
+    ]);
+
+    return {
+      products,
+      total,
+      page,
+      limit,
+    };
   }
 
   async getProductByIdAndStoreId(productId: string, storeId: string): Promise<IProduct | null> {
@@ -72,6 +81,7 @@ export class ProductService {
       isDeleted: false,
     })
       .populate({ path: "storeId", select: "ownerId" })
+      .populate({ path: "categoryId", select: "name" })
       .exec();
     if (!product) {
       logger.warning(`Product not found: ${productId}`);

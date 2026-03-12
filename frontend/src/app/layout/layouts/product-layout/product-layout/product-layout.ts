@@ -4,6 +4,7 @@ import { ProductPage } from '@/layout/product-page/product-page';
 
 @Component({
   selector: 'app-product-layout',
+  standalone: true,
   imports: [SimilarCategory, ProductPage],
   templateUrl: './product-layout.html',
   styleUrl: './product-layout.css',

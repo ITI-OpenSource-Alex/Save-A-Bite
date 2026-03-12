@@ -6,7 +6,7 @@ import { AddItemDto, UpdateItemDto, ApplyPromoCodeDto } from "../dto/cart.dto";
 
 const router = Router();
 
-router.get('/', IsAuthenticatedMiddleware, cartController.getCart);
+router.get('/',IsAuthenticatedMiddleware, cartController.getCart);
 router.post('/add-item', IsAuthenticatedMiddleware, ValidationMiddleware(AddItemDto), cartController.addItem);
 router.patch('/update-item', IsAuthenticatedMiddleware, ValidationMiddleware(UpdateItemDto), cartController.updateItem);
 router.delete('/remove-item/:productId', IsAuthenticatedMiddleware, cartController.removeItem);

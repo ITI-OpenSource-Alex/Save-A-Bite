@@ -12,7 +12,8 @@ const router = Router();
 router.get("/", productController.getProducts);
 router.get(
   "/:id",
-  AuthorizeRoles(productPolicy.canRead, productController.fetchProductByID),
+  //IsAuthenticatedMiddleware,
+  //AuthorizeRoles(productPolicy.canRead, productController.fetchProductByID),
   productController.getProductById
 );
 router.post(

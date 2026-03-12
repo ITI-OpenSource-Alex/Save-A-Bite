@@ -6,6 +6,7 @@ import { ProductCard } from '@/features/search/product-card/product-card/product
 import { ProductFilter } from '@/features/search/product-filter/product-filter/product-filter';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-master-search',
   imports: [CommonModule, FormsModule, ProductCard, ProductFilter],
@@ -16,6 +17,7 @@ export class MasterSearch implements OnInit {
   private productService = inject(ProductService);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
   Math = Math;
 
   products: Product[] = [];
@@ -29,7 +31,17 @@ export class MasterSearch implements OnInit {
   currentSort = 'relevance';
 
   ngOnInit() {
-    this.fetchProducts();
+    this.route.queryParamMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        const search = params.get('search') ?? undefined;
+        this.activeFilters = {
+          ...this.activeFilters,
+          search,
+        };
+        this.currentPage = 1;
+        this.fetchProducts();
+      });
   }
 
   fetchProducts() {

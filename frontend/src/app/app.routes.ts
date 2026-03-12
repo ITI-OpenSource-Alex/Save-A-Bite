@@ -9,6 +9,7 @@ import { Browse } from './layout/layouts/browse/browse';
 import { ProductLayout } from './layout/layouts/product-layout/product-layout/product-layout';
 
 //@Component({ template: '<h1>Welcome Home! (Public)</h1>', standalone: true })
+
 //export class DummyHomeComponent {}
 
 //@/omponent({ template: '<h1>Checkout Page (Protected)</h1>', standalone: true })

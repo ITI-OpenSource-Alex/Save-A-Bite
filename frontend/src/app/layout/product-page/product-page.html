@@ -1,11 +1,13 @@
-<div *ngIf="product$ | async as product" class="flex gap-10 p-10 bg-gray-50">
+@if (product$ | async; as product) {
+<div class="flex justify-center-safe bg-gray-50">
+<div class="flex gap-10 p-10 bg-gray-50">
   <!-- Left Container -->
   <div class="flex justify-center">
-    <div>
+    <div class="w-72 h-72 flex items-center justify-center bg-white rounded-lg overflow-hidden">
       <img
         [src]="product.imageUrl[0]"
         alt="Product_image"
-        class="w-100 rounded-lg"
+        class="w-full h-auto object-contain"
       />
     </div>
   </div>
@@ -63,8 +65,11 @@
 
     <!-- Vendor & Category -->
     <div class="space-y-2">
-      <p><span class="font-semibold">Vendor:</span> <span>{{product.storeId}}</span></p>
-      <p><span class="font-semibold">Category:</span> <span>{{product.categoryId}}</span></p>
+      <p><span class="font-semibold">Vendor:</span> <span>{{ product.storeName || product.storeId }}</span></p>
+      <p>
+        <span class="font-semibold">Category:</span>
+        <span>{{ product.categoryName || product.categoryId }}</span>
+      </p>
     </div>
 
     <hr class="border-gray-300" />
@@ -128,3 +133,5 @@
     </div>
   </div>
 </div>
+</div>
+}

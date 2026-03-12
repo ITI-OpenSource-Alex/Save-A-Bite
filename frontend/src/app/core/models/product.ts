@@ -15,6 +15,8 @@ export interface Product {
   updatedAt: Date;
   discountPercentage?: number;
   isFlashDeal?: boolean;
+  categoryName?: string;
+  storeName?: string;
 }
 
 export interface PaginatedResponse<T> {
