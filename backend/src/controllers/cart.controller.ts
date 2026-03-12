@@ -14,6 +14,7 @@ export class CartController {
     try {
       const userId = req.jwt!.userId;
       const cart = await this.cartService.getCart(userId);
+      await cart.populate("items.productId");
 
       return res.status(200).json({ cart });
     } catch (error) {
@@ -28,13 +29,18 @@ export class CartController {
       const { productId, quantity } = req.body;
 
       const cart = await this.cartService.addItem(userId, { productId, quantity });
+      await cart.populate("items.productId");
 
       return res.status(200).json({
         message: "Item added to cart",
         cart,
       });
     } catch (error: any) {
-      if (error.message === "Quantity must be greater than 0" || error.message === "Invalid Product ID" || error.message === "Requested quantity exceeds available stock") {
+      if (
+        error.message === "Quantity must be greater than 0" ||
+        error.message === "Invalid Product ID" ||
+        error.message === "Requested quantity exceeds available stock"
+      ) {
         return res.status(400).json({ message: error.message });
       }
 
@@ -56,6 +62,7 @@ export class CartController {
       const { productId, quantity } = req.body;
 
       const cart = await this.cartService.updateItem(userId, productId, quantity);
+      await cart.populate("items.productId");
 
       return res.status(200).json({
         message: "Cart item updated",
@@ -81,6 +88,7 @@ export class CartController {
       const productId = req.params.productId as string;
 
       const cart = await this.cartService.removeItem(userId, productId);
+      await cart.populate("items.productId");
 
       return res.status(200).json({
         message: "Item removed from cart",
@@ -105,6 +113,7 @@ export class CartController {
       const userId = req.jwt!.userId;
 
       const cart = await this.cartService.clearCart(userId);
+      await cart.populate("items.productId");
 
       return res.status(200).json({
         message: "Cart cleared",
@@ -122,6 +131,7 @@ export class CartController {
       const { promoCode } = req.body;
 
       const cart = await this.cartService.applyPromoCode(userId, promoCode);
+      await cart.populate("items.productId");
 
       return res.status(200).json({
         message: "Promo code applied",
@@ -136,7 +146,10 @@ export class CartController {
         "You are not allowed to use this promo code",
       ];
 
-      if (badRequestErrors.includes(error.message) || error.message.startsWith("Minimum order amount")) {
+      if (
+        badRequestErrors.includes(error.message) ||
+        error.message.startsWith("Minimum order amount")
+      ) {
         return res.status(400).json({ message: error.message });
       }
 
@@ -158,6 +171,7 @@ export class CartController {
       const userId = req.jwt!.userId;
 
       const cart = await this.cartService.removePromoCode(userId);
+      await cart.populate("items.productId");
 
       return res.status(200).json({
         message: "Promo code removed",
