@@ -1,77 +1,46 @@
-import { Component, signal, computed } from '@angular/core';
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-  size: string;
-  color: string;
-}
+import { Component, signal, inject, OnInit, DestroyRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CartService } from '@/core/services/cart.service';
+import { Cart } from '@/core/models/cart';
+import { CartItemsComponent } from './components/cart-items/cart-items.component';
+import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
 @Component({
   selector: 'app-cart',
-  imports: [],
+  imports: [CommonModule, CartItemsComponent, OrderSummaryComponent],
   templateUrl: './cart.html',
 })
-export class Cart {
+export class CartComponent implements OnInit {
+  private cartService = inject(CartService);
+  private destroyRef = inject(DestroyRef);
+
   deliveryFee = 15;
-  discountPercent = 20;
+  cart = signal<Cart | null>(null);
+  isLoading = signal<boolean>(true);
 
-  cartItems = signal<CartItem[]>([
-    {
-      id: 1,
-      name: 'Gradient Graphic T-shirt',
-      price: 145,
-      quantity: 1,
-      size: 'Large',
-      color: 'White',
-      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200',
-    },
-    {
-      id: 2,
-      name: 'Checkered Shirt',
-      price: 180,
-      quantity: 1,
-      size: 'Medium',
-      color: 'Red',
-      image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=200',
-    },
-    {
-      id: 3,
-      name: 'Skinny Fit Jeans',
-      price: 240,
-      quantity: 1,
-      size: 'Large',
-      color: 'Blue',
-      image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=200',
-    },
-  ]);
-
-  subtotal = computed(() =>
-    this.cartItems().reduce((sum, item) => sum + item.price * item.quantity, 0),
-  );
-
-  discount = computed(() => (this.subtotal() * this.discountPercent) / 100);
-
-  total = computed(() => this.subtotal() - this.discount() + this.deliveryFee);
-
-  increase(item: CartItem) {
-    this.cartItems.update((items) =>
-      items.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i)),
-    );
+  ngOnInit() {
+    this.fetchCart();
   }
 
-  decrease(item: CartItem) {
-    this.cartItems.update((items) =>
-      items.map((i) =>
-        i.id === item.id && i.quantity > 1 ? { ...i, quantity: i.quantity - 1 } : i,
-      ),
-    );
+  fetchCart() {
+    this.isLoading.set(true);
+    this.cartService
+      .getCart()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.cart.set(res.cart);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('Failed to fetch cart:', err);
+          this.isLoading.set(false);
+        },
+      });
   }
 
-  remove(item: CartItem) {
-    this.cartItems.update((items) => items.filter((i) => i.id !== item.id));
+  onCartUpdated(updatedCart: Cart) {
+    this.cart.set(updatedCart);
   }
 }

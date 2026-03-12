@@ -20,7 +20,7 @@ rootRouter.use("/users", userRoutes);
 rootRouter.use("/category", categoryRoutes);
 rootRouter.use("/stores", storeRoutes);
 rootRouter.use("/products", productRoutes);
-rootRouter.use('/payments', paymentRoutes);
+rootRouter.use("/payments", paymentRoutes);
 rootRouter.use("/cart", cartRoutes);
 rootRouter.use("/admin/promocodes", promoCodeRoutes);
 rootRouter.use("/notifications", notificationRoutes);

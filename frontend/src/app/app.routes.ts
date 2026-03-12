@@ -56,6 +56,10 @@ export const routes: Routes = [
         path: 'browse',
         loadComponent: () => import('./layout/layouts/browse/browse').then((m) => m.Browse),
       },
+      {
+        path: 'cart',
+        loadComponent: () => import('./features/cart/cart').then((m) => m.CartComponent),
+      },
     ],
   },
   {

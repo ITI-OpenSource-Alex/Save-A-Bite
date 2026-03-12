@@ -2,8 +2,10 @@ export interface Product {
   _id: string;
   name: string;
   price: number;
-  category: string;
-  imageUrl: string;
+  category?: string;
+  categoryId?: any;
+  imageUrl?: string;
+  images?: string[];
   discountPercentage?: number;
   isFlashDeal?: boolean;
   stock?: number;
