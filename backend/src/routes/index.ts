@@ -8,6 +8,8 @@ import storeRoutes from "./store.routes";
 import productRoutes from "./product.routes";
 import paymentRoutes from "./payment.routes";
 import cartRoutes from "./cart.routes";
+import promoCodeRoutes from "./promocode.routes";
+
 const rootRouter = Router();
 
 rootRouter.use("/auth", authRoutes);
@@ -19,5 +21,6 @@ rootRouter.use("/stores", storeRoutes);
 rootRouter.use("/products", productRoutes);
 rootRouter.use("/payments", paymentRoutes);
 rootRouter.use("/cart", cartRoutes);
+rootRouter.use("/admin/promocodes", promoCodeRoutes);
 
 export default rootRouter;
