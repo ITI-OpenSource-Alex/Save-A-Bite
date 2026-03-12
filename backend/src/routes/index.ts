@@ -9,6 +9,7 @@ import productRoutes from "./product.routes";
 import paymentRoutes from './payment.routes';
 import cartRoutes from './cart.routes';
 import promoCodeRoutes from './promocode.routes';
+import notificationRoutes from './notification.routes';
 
 const rootRouter = Router();
 
@@ -22,5 +23,8 @@ rootRouter.use("/products", productRoutes);
 rootRouter.use('/payments', paymentRoutes);
 rootRouter.use("/cart", cartRoutes);
 rootRouter.use("/admin/promocodes", promoCodeRoutes);
+rootRouter.use("/notifications", notificationRoutes);
+
+
 
 export default rootRouter;
