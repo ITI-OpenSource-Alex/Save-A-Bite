@@ -1,8 +1,9 @@
 import { Response as ExpressResponse, NextFunction } from "express";
-import { ObjectId } from "mongodb";
+//import { ObjectId } from "mongodb";
 import { logger } from "../services/logger.service";
 import { StoreService } from "../services/store.service";
 import { AbacRequest } from "../middlewares/abac.middleware";
+import mongoose from "mongoose";
 // import { error } from "winston";
 
 export class StoreController {
@@ -10,20 +11,15 @@ export class StoreController {
 
   storeService = new StoreService();
 
-
   fetchStoreByID = async (req: AbacRequest) => {
     const storeId = req.params.id as string;
     return await this.storeService.getStoreById(storeId);
   };
 
-  createStore = async (
-    req: AbacRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+  createStore = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const { name, description, phone, email, address, logoUrl, avgRating } = req.body;
-      const ownerId = new ObjectId(req.jwt?.userId);
+      const ownerId = new mongoose.Types.ObjectId(req.jwt?.userId);
       const storeData = {
         name,
         description,
@@ -62,10 +58,8 @@ export class StoreController {
 
   getStoreById = async (req: AbacRequest, res: ExpressResponse) => {
     try {
-      const id = Array.isArray(req.params.id)
-        ? req.params.id[0]
-        : req.params.id;
-      const store = req.resource!
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+      const store = req.resource!;
       if (!store) {
         return res.status(404).json({ message: "Store not found" });
       }
