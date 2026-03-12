@@ -2,6 +2,12 @@ import { PromoCode, IPromoCode } from "../models/promocode.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
 
+import NotificationManager from '../utils/notification.manager';
+import { NotificationResource } from '../enum/notification.enum';
+
+const notificationManager = new NotificationManager();
+
+
 export class PromoCodeService {
   constructor() {}
 
@@ -36,6 +42,25 @@ export class PromoCodeService {
 
     logger.info(`Promo code "${promoCode.code}" created (${userId ? `for user ${userId}` : "global"})`);
 
+      try {
+      const discountText = data.type === 'percentage' ? `${data.value}% off` : `${data.value} EGP off`;
+      if (userId) {
+        await notificationManager.pushToUser(userId.toString(), {
+          message: `A new promo code "${promoCode.code}" has been created for you: ${discountText}! Use it before ${promoCode.expiresAt.toDateString()}.`,
+          resource: NotificationResource.PROMOCODE,
+          resourceId: promoCode._id.toString()
+        });
+      }
+      else {
+        await notificationManager.pushBroadcastNotification({
+          message: `🔥 Flash Deal! Use code ${promoCode.code} for ${discountText} your next order!`,
+          resource: NotificationResource.PROMOCODE,
+          resourceId: promoCode._id.toString()
+        });
+      }
+    } catch (error) {
+      logger.error(`Notification Error: Failed to send notification for promo code ${promoCode._id}`, error);
+    }
     return promoCode;
   }
 
