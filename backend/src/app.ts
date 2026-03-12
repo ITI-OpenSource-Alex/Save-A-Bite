@@ -7,7 +7,7 @@ import { dbConnection } from "./config/db.config";
 import rootRouter from "./routes/index";
 import { Seeder } from "./utils/seeder";
 import ErrorHandlerMiddleware from "./middlewares/error-handler";
-
+import { RedisService } from "./utils/redis";
 class App {
   private app!: Application;
 
@@ -25,6 +25,8 @@ class App {
     appInstance.app = express();
     await appInstance.initializeMiddlewares();
     await dbConnection();
+    await Seeder.seedSuperAdmin();
+    new RedisService().getClient();
     await Seeder.runAllSeeds();
     await appInstance.initializeRoutes();
     appInstance.errorHandler();

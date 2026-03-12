@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 export interface Category {
-  id: string;
+  _id: string;
   name: string;
   offers: number;
   icon: string;

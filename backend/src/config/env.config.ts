@@ -17,7 +17,10 @@ const processEnvSchema = Joi.object({
   EMAIL_PASS: Joi.string().required(),
   APP_URL: Joi.string().required(),
   STRIPE_SECRET_KEY: Joi.string().required(),
-  STRIPE_WEBHOOK_SECRET: Joi.string().required() // <-- 1. Added this here!
+  STRIPE_WEBHOOK_SECRET: Joi.string().required(), // <-- 1. Added this here!
+  REDIS_HOST: Joi.string().required(),
+  REDIS_PORT: Joi.number().required(),
+  REDIS_PASSWORD: Joi.string().required(),
 })
   .unknown()
   .required();
@@ -53,6 +56,11 @@ export const envSchema = Joi.object({
     SECRET_KEY: Joi.string().required(),
     WEBHOOK_SECRET: Joi.string().required(),
   }).required(),
+  REDIS: Joi.object({
+    HOST: Joi.string().required(),
+    PORT: Joi.number().required(),
+    PASSWORD: Joi.string().required(),
+  }).required(),
 });
 
 const env = {
@@ -79,6 +87,11 @@ const env = {
   STRIPE: {
     SECRET_KEY: envVars.STRIPE_SECRET_KEY,
     WEBHOOK_SECRET: envVars.STRIPE_WEBHOOK_SECRET,
+  },
+  REDIS: {
+    HOST: envVars.REDIS_HOST,
+    PORT: envVars.REDIS_PORT,
+    PASSWORD: envVars.REDIS_PASSWORD,
   },
 };
 

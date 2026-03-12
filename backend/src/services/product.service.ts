@@ -23,10 +23,20 @@ export class ProductService {
     if (filters.category) query.categoryId = filters.category;
     if (filters.categoryId) query.categoryId = filters.categoryId;
     if (filters.storeId) query.storeId = filters.storeId;
+
+    if (filters.isFlashDeal === true || filters.isFlashDeal === "true") {
+      query.isFlashDeal = true;
+    }
+
     if (filters.minPrice != null || filters.maxPrice != null) {
       query.price = {};
       if (filters.minPrice != null) query.price.$gte = Number(filters.minPrice);
       if (filters.maxPrice != null) query.price.$lte = Number(filters.maxPrice);
+    }
+
+    if (filters.search) {
+      const searchRegex = { $regex: filters.search, $options: "i" };
+      query.$or = [{ name: searchRegex }, { description: searchRegex }];
     }
 
     let sortOption: any = { createdAt: -1 }; // Default to newest
@@ -34,16 +44,10 @@ export class ProductService {
     if (sort === "price_desc") sortOption = { price: -1 };
 
     const skip = (page - 1) * limit;
+    const products = await Product.find(query).sort(sortOption).skip(skip).limit(limit);
+    return products;
 
-    const products = await Product.find(query)
-      .populate("storeId categoryId")
-      .sort(sortOption)
-      .skip(skip)
-      .limit(limit)
-      .exec();
-
-    logger.info(`Products fetched successfully, count: ${products.length}`);
-    return products; // <-- just return the array
+    console.log(products);
   }
 
   async getProductByIdAndStoreId(productId: string, storeId: string): Promise<IProduct | null> {
