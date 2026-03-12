@@ -13,7 +13,7 @@ import { Product } from '@/core/models/product';
 export class SimilarCategory implements OnInit {
   products: Product[] = [];
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/products'; // your backend endpoint
+  private apiUrl = 'http://localhost:3000/api/products';
 
   ngOnInit(): void {
     this.http.get<Product[]>(this.apiUrl).subscribe({

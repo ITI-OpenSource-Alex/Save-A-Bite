@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
 export interface Product {
+  _id: mongoose.Types.ObjectId;
   name: string;
   storeId: mongoose.Types.ObjectId;
   categoryId: mongoose.Types.ObjectId;
-  images: string[];
+  imageUrl: string[];
   price: number;
   stock: number;
   description: string;
@@ -12,6 +13,7 @@ export interface Product {
   isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;
+  discountPercentage?: number;
 }
 
 export interface PaginatedResponse<T> {
