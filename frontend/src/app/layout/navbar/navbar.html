@@ -19,7 +19,14 @@
     <div class="hidden md:flex items-center gap-6 shrink-0">
       <a class="text-green-600 font-medium cursor-pointer">Home</a>
       <a class="text-gray-600 hover:text-green-600 cursor-pointer">Browse</a>
+      <a class="text-gray-600 hover:text-green-600 cursor-pointer">Sales</a>
       <a class="text-gray-600 hover:text-green-600 cursor-pointer">Flash Deals</a>
+      <button class="text-gray-600 hover:text-green-600 cursor-pointer" aria-label="Notifications">
+        <lucide-angular [img]="bellIcon" [size]="20"></lucide-angular>
+      </button>
+      <button class="text-gray-600 hover:text-green-600 cursor-pointer" aria-label="Cart">
+        <lucide-angular [img]="shoppingCartIcon" [size]="20"></lucide-angular>
+      </button>
       <button class="bg-green-600 text-white px-5 py-2 rounded-full">Sign In</button>
     </div>
 
@@ -49,7 +56,16 @@
       <div class="flex flex-col gap-5 text-lg">
         <a class="hover:text-green-600 cursor-pointer">Home</a>
         <a class="hover:text-green-600 cursor-pointer">Browse</a>
+        <a class="hover:text-green-600 cursor-pointer">Sales</a>
         <a class="hover:text-green-600 cursor-pointer">Flash Deals</a>
+        <button class="flex items-center gap-2 hover:text-green-600 cursor-pointer text-left" aria-label="Notifications">
+          <lucide-angular [img]="bellIcon" [size]="20"></lucide-angular>
+          <span>Notifications</span>
+        </button>
+        <button class="flex items-center gap-2 hover:text-green-600 cursor-pointer text-left" aria-label="Cart">
+          <lucide-angular [img]="shoppingCartIcon" [size]="20"></lucide-angular>
+          <span>Cart</span>
+        </button>
       </div>
 
       <button class="mt-8 w-full bg-green-600 text-white py-3 rounded-lg">Sign In</button>
