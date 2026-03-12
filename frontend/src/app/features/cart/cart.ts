@@ -43,8 +43,4 @@ export class CartComponent implements OnInit {
   onCartUpdated(updatedCart: Cart) {
     this.cart.set(updatedCart);
   }
-
-  onCheckoutCompleted() {
-    this.fetchCart();
-  }
 }

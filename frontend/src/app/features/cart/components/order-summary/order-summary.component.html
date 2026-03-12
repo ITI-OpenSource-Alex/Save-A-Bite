@@ -52,17 +52,9 @@
     </div>
   }
 
-  <!-- CHECKOUT -->
   <button
-    (click)="checkout()"
-    [disabled]="isCheckoutLoading()"
-    class="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"
+    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"
   >
-    @if (isCheckoutLoading()) {
-      <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-      Processing...
-    } @else {
-      Go to Checkout →
-    }
+    Go to Checkout →
   </button>
 </div>
