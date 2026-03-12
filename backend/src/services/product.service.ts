@@ -46,8 +46,6 @@ export class ProductService {
     const skip = (page - 1) * limit;
     const products = await Product.find(query).sort(sortOption).skip(skip).limit(limit);
     return products;
-
-    console.log(products);
   }
 
   async getProductByIdAndStoreId(productId: string, storeId: string): Promise<IProduct | null> {

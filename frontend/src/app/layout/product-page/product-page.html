@@ -1,9 +1,9 @@
-<div class="flex gap-10 p-10 bg-gray-50">
+<div *ngIf="product$ | async as product" class="flex gap-10 p-10 bg-gray-50">
   <!-- Left Container -->
   <div class="flex justify-center">
     <div>
       <img
-        [src]="'assets/images/4e52654e8674efe5def5c7050fac51d5.jpg'"
+        [src]="product.imageUrl[0]"
         alt="Product_image"
         class="w-100 rounded-lg"
       />
@@ -13,8 +13,8 @@
   <!-- Right Container -->
   <div class="flex flex-col gap-6">
     <div>
-      <h1 class="text-3xl font-bold">Product Name</h1>
-      <h3 class="text-xl text-emerald-600">300 EGP</h3>
+      <h1 class="text-3xl font-bold">{{product.name}}</h1>
+      <h3 class="text-xl text-emerald-600">{{product.price}}</h3>
     </div>
 
     <!-- Buy Container -->
@@ -63,8 +63,8 @@
 
     <!-- Vendor & Category -->
     <div class="space-y-2">
-      <p><span class="font-semibold">Vendor:</span> <span>Vendor_Name</span></p>
-      <p><span class="font-semibold">Category:</span> <span>Cat_Name</span></p>
+      <p><span class="font-semibold">Vendor:</span> <span>{{product.storeId}}</span></p>
+      <p><span class="font-semibold">Category:</span> <span>{{product.categoryId}}</span></p>
     </div>
 
     <hr class="border-gray-300" />

@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ProductLayout } from './layout/layouts/product-layout/product-layout/product-layout';
 // import { Navbar } from './layout/navbar/navbar';
 // import { Footer } from './layout/footer/footer';
 // import { Restaurants } from './features/home/restaurants/restaurants';
@@ -8,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [ProductLayout],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

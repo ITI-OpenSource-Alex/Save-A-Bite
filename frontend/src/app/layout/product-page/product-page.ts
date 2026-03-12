@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { KeyValue } from '@angular/common';
+import { Observable, tap } from 'rxjs';
+import { Product } from '@/core/models/product';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 const macros = {
   calories: 250,
@@ -14,14 +20,28 @@ const state = 'Fresh and ready to be served';
 
 @Component({
   selector: 'app-product-page',
-  imports: [FormsModule],
+  imports: [FormsModule, AsyncPipe, NgIf],
   templateUrl: './product-page.html',
   styleUrl: './product-page.css',
 })
 export class ProductPage {
+  @Output() categorySelected = new EventEmitter<string>();
   quantity = 1;
   wishlistAdded = false;
   content: any = null;
+  product$!: Observable<Product>;
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000/api/products';
+  private route = inject(ActivatedRoute);
+  private productId = this.route.snapshot.paramMap.get('id');
+
+  ngOnInit(): void {
+    if (this.productId) {
+      this.product$ = this.http
+        .get<Product>(`${this.apiUrl}/${this.productId}`)
+        .pipe(tap((res) => console.log(res)));
+    }
+  }
 
   macros = [
     { key: 'Calories', value: 250 },

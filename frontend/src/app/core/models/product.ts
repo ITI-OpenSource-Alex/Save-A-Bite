@@ -14,6 +14,7 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   discountPercentage?: number;
+  isFlashDeal?: boolean;
 }
 
 export interface PaginatedResponse<T> {

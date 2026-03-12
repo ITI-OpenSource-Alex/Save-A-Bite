@@ -1,4 +1,4 @@
-<section class="py-16 bg-muted/30 px-20">
+<section *ngIf="products$ | async as products" class="py-16 bg-muted/30 px-20">
   <div class="container mx-auto px-6">
     <div class="flex items-center justify-between mb-7">
       <h2 class="text-3xl font-semibold">Products of Same Category</h2>
@@ -17,7 +17,7 @@
         class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition cursor-pointer hover:-translate-y-2 duration-300"
       >
         <img
-          [src]="product.images[0]"
+          [src]="product.imageUrl[0]"
           alt="{{ product.name }}"
           class="w-full object-cover h-25"
         />
@@ -30,8 +30,6 @@
             <div class="flex items-center gap-1">
               <span class="font-medium">{{ product.price | currency }}</span>
             </div>
-            <!-- Optional: store distance -->
-            <!-- <div class="text-gray-500">📍 {{ store.distance }} km</div> -->
           </div>
         </div>
       </div>
