@@ -5,6 +5,10 @@ import { logger } from "./logger.service";
 import { getIo } from "../utils/socket"; 
 import { sendInvoiceEmail } from "../send-mails/emailService"; 
 
+import NotificationManager from '../utils/notification.manager'; 
+import { NotificationResource } from '../enum/notification.enum';
+
+const notificationManager = new NotificationManager();
 export class OrderService {
   constructor() {}
 
@@ -16,7 +20,7 @@ export class OrderService {
         }
 
         const newOrder = new Order({
-            ...orderData,
+        ...orderData,
             userId,
             idempotencyKey,
             status: 'PLACED',
@@ -27,17 +31,15 @@ export class OrderService {
         logger.info(`Order created successfully of user id:${newOrder.userId}`);
 
         try {
-            const io = getIo();
-            io.to(userId).emit('orderStatusChanged', {
-                orderId: newOrder._id,
-                status: newOrder.status,
-                message: 'Your order has been placed successfully!'
-            });
-        } catch (error) {
-            logger.error(`WebSocket Error: Failed to emit PLACED status for order ${newOrder._id}`, error);
-        }
-
-
+           await notificationManager.pushToUser(userId.toString(), {
+        message: `Your order #${newOrder._id.toString().slice(-4)} has been placed successfully!`,
+        resource: NotificationResource.ORDER, 
+        resourceId: newOrder._id.toString()
+         });
+        }catch (error) {
+             logger.error(`Notification Error: Failed to send notification for order ${newOrder._id}`, error);
+             }
+        
         try {
             const user = await mongoose.model('User').findById(userId); 
 
@@ -104,15 +106,14 @@ export class OrderService {
         logger.info(`Order cancelled successfully of user id:${userId}`);
 
         try {
-            const io = getIo();
-            io.to(userId).emit('orderStatusChanged', {
-                orderId: order._id,
-                status: order.status,
-                message: 'Your order has been cancelled.'
+            await notificationManager.pushToUser(userId.toString(), {
+        message: `Your order #${order._id.toString().slice(-4)} has been cancelled.`,
+        resource: NotificationResource.ORDER,
+        resourceId: order._id.toString()
             });
         } catch (error) {
-            logger.error(`WebSocket Error: Failed to emit CANCELLED status for order ${order._id}`, error);
-        }
+                    logger.error(`Notification Error: Failed to emit CANCELLED status for order ${order._id}`, error);
+                        }
 
         return order;
     }

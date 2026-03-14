@@ -1,4 +1,4 @@
-<section class="relative h-[70vh] md:h-[85vh]">
+<section class="relative h-[70vh] md:h-[85vh] w-full flex items-center overflow-hidden">
   <div
     class="absolute inset-0 bg-cover bg-center"
     style="
@@ -6,26 +6,56 @@
     "
   ></div>
 
-  <div class="absolute inset-0 bg-black/70"></div>
+  <div class="absolute inset-0 bg-black/75"></div>
+  <div
+    class="absolute top-0 left-1/4 w-3/4 h-full bg-green-900/30 blur-[120px] pointer-events-none"
+  ></div>
 
-  <div class="relative z-10 h-full flex items-center">
-    <div
-      class="text-white flex flex-col gap-6 max-w-xl md:max-w-2xl px-6 md:px-20 text-center md:text-left"
-    >
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
-        Rescue delicious food
-        <span class="text-green-400 block md:inline"> at up to 70% off </span>
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="flex flex-col items-start max-w-2xl gap-5">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 backdrop-blur-md text-sm font-medium text-gray-200"
+      >
+        <svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+          />
+        </svg>
+        Save food. Save money. Save the planet.
+      </div>
+
+      <h1
+        class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.1]"
+      >
+        Rescue delicious food <br />
+        <span class="text-[#2bb563]">at up to 70% off</span>
       </h1>
 
-      <p class="text-base md:text-lg text-gray-200">
-        Discover surplus meals and groceries before they go to waste.
+      <p class="text-lg md:text-xl text-gray-300 max-w-lg mt-2">
+        Discover surplus meals, pastries, and groceries from your favorite local spots before they
+        go to waste.
       </p>
 
-      <button
-        class="bg-green-600 hover:bg-green-700 px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-lg transition w-fit self-center md:self-start"
-      >
-        Browse Deals →
-      </button>
+      <div class="flex flex-wrap items-center gap-4 mt-4">
+        <button
+          routerLink="/browse"
+          [queryParams]="{ flashDeals: 'true' }"
+          class="bg-[#2bb563] hover:bg-[#249c54] cursor-pointer text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2 transition-all"
+        >
+          Browse Deals
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </section>
