@@ -1,0 +1,108 @@
+<div class="relative min-h-screen bg-linear-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-6 overflow-hidden">
+  
+  <!-- Decorative Background Blobs -->
+  <div class="absolute top-[-5%] right-[-5%] w-[45%] h-[45%] bg-green-200/40 rounded-full blur-3xl animate-float"></div>
+  <div class="absolute bottom-[-5%] left-[-5%] w-[45%] h-[45%] bg-emerald-200/40 rounded-full blur-3xl animate-float" style="animation-delay: -3.5s"></div>
+
+  <div class="w-full max-w-[500px] relative z-10 py-10">
+    <!-- Card -->
+    <div class="premium-glass rounded-[32px] overflow-hidden">
+      <!-- Header Banner -->
+      <div class="bg-linear-to-r from-green-600 to-emerald-500 px-8 py-10 text-center relative overflow-hidden">
+        <div class="inline-flex items-center justify-center w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl mb-4 shadow-inner">
+          <span class="text-3xl">🥑</span>
+        </div>
+        <h1 class="text-2xl font-black text-white tracking-tight">Join SaveBite</h1>
+        <p class="text-green-50/80 text-xs font-medium mt-1">Start your journey to zero waste today.</p>
+      </div>
+
+      <!-- Form Content -->
+      <div class="px-10 py-8 bg-white/40">
+        <!-- Messages -->
+        <div *ngIf="successMessage" class="mb-6 flex items-center gap-3 bg-green-500/10 border border-green-200/50 text-green-700 text-xs font-bold px-5 py-3.5 rounded-2xl animate-in zoom-in">
+          <i class="fa-solid fa-circle-check text-green-500 text-sm"></i>
+          <span>{{ successMessage }}</span>
+        </div>
+        <div *ngIf="error" class="mb-6 flex items-center gap-3 bg-red-500/10 border border-red-200/50 text-red-700 text-xs font-bold px-5 py-3.5 rounded-2xl animate-in fade-in slide-in-from-top-2">
+          <i class="fa-solid fa-circle-exclamation text-red-500 text-sm"></i>
+          <span>{{ error }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+          <!-- Name -->
+          <div class="group md:col-span-2">
+            <label class="premium-label">Full Name</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors">
+                <i class="fa-solid fa-user text-base"></i>
+              </span>
+              <input type="text" [(ngModel)]="name" class="premium-input" />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="group md:col-span-2">
+            <label class="premium-label">Email Address</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors">
+                <i class="fa-regular fa-envelope text-base"></i>
+              </span>
+              <input type="email" placeholder=" " [(ngModel)]="email" class="premium-input" />
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="group md:col-span-2">
+            <label class="premium-label">Phone (Optional)</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors">
+                <i class="fa-solid fa-phone text-base"></i>
+              </span>
+              <input type="text" placeholder=" " [(ngModel)]="phone" class="premium-input" />
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="group">
+            <label class="premium-label">Password</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors">
+                <i class="fa-solid fa-lock text-base"></i>
+              </span>
+              <input type="password" [(ngModel)]="password" class="premium-input" />
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="group">
+            <label class="premium-label">Confirm Password</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors">
+                <i class="fa-solid fa-shield-check text-base"></i>
+              </span>
+              <input type="password" [(ngModel)]="confirmPassword" class="premium-input" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="mt-8">
+          <button (click)="signup()" [disabled]="loading" class="premium-button flex items-center justify-center gap-3">
+            <svg *ngIf="loading" class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>{{ loading ? 'Creating Account...' : 'Get Started' }}</span>
+          </button>
+        </div>
+
+        <!-- Bottom Link -->
+        <div class="mt-8"></div>
+        <p class="text-center text-sm text-gray-400">
+          Already have an account? 
+          <a routerLink="/login" class="text-green-600 hover:text-green-700 font-black decoration-2 hover:underline transition-all">Sign In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="relative min-h-screen bg-linear-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-6 overflow-hidden">
+  
+  <!-- Decorative Background Blobs -->
+  <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-green-200/30 rounded-full blur-3xl animate-float"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-200/30 rounded-full blur-3xl animate-float" style="animation-delay: -3s"></div>
+
+  <div class="w-full max-w-[440px] relative z-10">
+    <!-- Card -->
+    <div class="premium-glass rounded-[32px] overflow-hidden">
+      <!-- Header Banner -->
+      <div class="bg-linear-to-r from-green-600 to-emerald-500 px-8 py-12 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(#grid)"></path>
+            <defs>
+              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+          </svg>
+        </div>
+        
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl mb-6 shadow-inner animate-float">
+          <span class="text-4xl">🌿</span>
+        </div>
+        <h1 class="text-3xl font-black text-white tracking-tight mb-2">
+          Save<span class="text-green-200">Bite</span>
+        </h1>
+        <p class="text-green-50/80 text-sm font-medium">Welcome back! Please enter your details.</p>
+      </div>
+
+      <!-- Form Content -->
+      <div class="px-10 py-10 bg-white/40">
+        <!-- Error Alert -->
+        <div *ngIf="error" class="mb-6 flex items-center gap-3 bg-red-500/10 border border-red-200/50 text-red-700 text-xs font-semibold px-5 py-3.5 rounded-2xl animate-in fade-in slide-in-from-top-2">
+          <i class="fa-solid fa-circle-exclamation text-red-500 shrink-0 text-sm"></i>
+          <span>{{ error }}</span>
+        </div>
+
+        <!-- Inputs Group -->
+        <div class="space-y-5">
+          <!-- Email Field -->
+          <div class="group">
+            <label class="premium-label">Email Address</label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors">
+                <i class="fa-regular fa-envelope text-lg"></i>
+              </span>
+              <input
+                type="email"
+                placeholder=" "
+                [(ngModel)]="email"
+                class="premium-input"
+              />
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="group">
+            <div class="flex justify-between items-center mb-2">
+              <label class="premium-label mb-0">Password</label>
+              <a routerLink="/forgot-password" class="text-xs text-green-600 hover:text-green-700 font-bold transition-colors">Forgot Password?</a>
+            </div>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-600 transition-colors">
+                <i class="fa-solid fa-lock-open text-lg"></i>
+              </span>
+              <input
+                type="password"
+                placeholder=" "
+                [(ngModel)]="password"
+                class="premium-input"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Action -->
+        <div class="mt-8">
+          <button (click)="login()" [disabled]="loading" class="premium-button flex items-center justify-center gap-3">
+            <svg *ngIf="loading" class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>{{ loading ? 'Securing Access...' : 'Sign In' }}</span>
+          </button>
+        </div>
+
+        <!-- Bottom Link -->
+        <p class="text-center text-sm text-gray-500 mt-10">
+          New to SaveBite? 
+          <a routerLink="/signup" class="text-green-600 hover:text-green-700 font-black decoration-2 hover:underline transition-all">Create Account</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Legal Footer -->
+    <div class="mt-8 flex justify-center gap-6 text-[10px] uppercase tracking-widest font-bold text-gray-400">
+      <a class="hover:text-green-600 transition-colors cursor-pointer">Terms</a>
+      <span>&bull;</span>
+      <a class="hover:text-green-600 transition-colors cursor-pointer">Privacy</a>
+      <span>&bull;</span>
+      <a class="hover:text-green-600 transition-colors cursor-pointer">Help</a>
+    </div>
+  </div>
+</div>

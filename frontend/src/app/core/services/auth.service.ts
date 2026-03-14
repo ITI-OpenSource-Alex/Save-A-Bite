@@ -1,44 +1,74 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  phone?: string;
+}
+
+interface LoginResponse {
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private http = inject(HttpClient);
-  private router = inject(Router);
 
-  private apiUrl = 'http://localhost:3000';
+  private API = 'http://localhost:3000/api/auth';
 
-  setToken(token: string): void {
-    localStorage.setItem('auth_token', token);
+  constructor(private http: HttpClient) {}
+
+  login(data: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.API}/login`, data);
+  }
+register(data: RegisterRequest): Observable<any> {
+    return this.http.post(`${this.API}/register`, data);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('auth_token');
+  saveToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  logout() {
+    localStorage.removeItem('token');
   }
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    return !!token;
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp * 1000 > Date.now();
+    } catch {
+      return false;
+    }
   }
 
   getUserRole(): string {
     const token = this.getToken();
     if (!token) return '';
-
     try {
-      const payload = token.split('.')[1];
-      const decodedPayload = JSON.parse(atob(payload));
-      return decodedPayload.role || '';
-    } catch (error) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role || '';
+    } catch {
       return '';
     }
-  }
-
-  logout(): void {
-    localStorage.removeItem('auth_token');
-    this.router.navigate(['/login']);
   }
 }
