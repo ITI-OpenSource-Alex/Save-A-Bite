@@ -1,54 +1,104 @@
 <div
-  class="relative flex flex-col h-full overflow-hidden transition-shadow bg-white border border-gray-100 shadow-sm cursor-pointer rounded-xl hover:shadow-md group"
+  class="group relative flex flex-col h-full bg-white border border-gray-200 rounded-xl overflow-hidden transition duration-300 hover:shadow-lg hover:-translate-y-1"
 >
-  @if (product.discountPercentage) {
-    <div
-      class="absolute top-2 left-2 z-10 px-2 py-1 text-[10px] font-bold tracking-wider text-white uppercase bg-gray-900 rounded"
-    >
-      {{ product.discountPercentage }}
-    </div>
-  } -->
-
-  <button
-    type="button"
-    (click)="toggleWishList($event)"
-    [attr.aria-label]="isWishListed ? 'Remove from wishlist' : 'Add to wishlist'"
-    [ngClass]="isWishListed ? 'text-red-500' : 'text-gray-400'"
-    class="absolute z-10 p-1.5 transition-colors rounded-full top-3 right-3 bg-white/80 hover:text-red-500 backdrop-blur-sm"
-  >
-    <svg
-      class="w-5 h-5 transition-all duration-200"
-      [ngClass]="isWishListed ? 'fill-current scale-110' : 'fill-none scale-100'"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-      />
-    </svg>
-  </button>
-
-  <div class="flex-shrink-0 p-4 bg-gray-50 aspect-w-3 aspect-h-4">
+  <!-- Image -->
+  <div class="relative w-full h-[220px] bg-gray-50 overflow-hidden">
     <img
-      [src]="product.images?.[0] || product.imageUrl || 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200'"
+      [src]="
+        product.images?.[0] ||
+        product.imageUrl ||
+        'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200'
+      "
       [alt]="product.name"
       loading="lazy"
-      class="block object-contain w-full h-full drop-shadow-md"
+      class="object-cover w-full h-full transition duration-500 group-hover:scale-105"
     />
+
+    <!-- Discount -->
+    @if (product.discountPercentage) {
+      <span
+        class="absolute top-3 left-3 px-2 py-0.5 text-xs font-semibold text-white bg-red-500 rounded"
+      >
+        -{{ product.discountPercentage }}%
+      </span>
+    }
+
+    <!-- Out of stock -->
+    @if (product.stock === 0) {
+      <div class="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+        <span class="px-3 py-1 text-xs font-semibold text-red-600 bg-red-100 rounded-full">
+          Out of Stock
+        </span>
+      </div>
+    }
   </div>
 
-  <div class="flex flex-col flex-grow p-4 border-t border-gray-50">
-    <h4
-      class="mb-2 text-sm font-semibold text-gray-800 transition-colors line-clamp-2 group-hover:text-green-400"
-    >
+  <!-- Content -->
+  <div class="flex flex-col flex-grow p-4">
+    <!-- Product Name -->
+    <h4 class="text-sm font-semibold text-gray-900 line-clamp-2" [title]="product.name">
       {{ product.name }}
     </h4>
 
-    <div class="flex items-center justify-between pt-2 mt-auto">
-      <span class="text-lg font-bold text-green-400"> {{ product.price }} EGP </span>
+    <!-- Price + Cart -->
+    <div class="flex items-center justify-between mt-3">
+      <div class="flex flex-col">
+        @if (product.discountPercentage) {
+          <span class="text-xs text-gray-400 line-through">
+            {{ product.price | currency: 'EGP' }}
+          </span>
+
+          <span class="text-lg font-bold text-black">
+            {{ product.price * (1 - product.discountPercentage / 100) | currency: 'EGP' }}
+          </span>
+        } @else {
+          <span class="text-lg font-bold text-black">
+            {{ product.price | currency: 'EGP' }}
+          </span>
+        }
+      </div>
+
+      <!-- Add To Cart -->
+      <button
+        type="button"
+        (click)="addToCart($event)"
+        [disabled]="isAddingToCart || product.stock === 0"
+        class="flex items-center justify-center w-8 h-8 text-white transition rounded-full bg-black hover:bg-green-600 hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed"
+        aria-label="Add to cart"
+      >
+        @if (isAddingToCart) {
+          <svg
+            class="w-4 h-4 animate-spin"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            ></path>
+          </svg>
+        } @else {
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5"
+            />
+          </svg>
+        }
+      </button>
     </div>
   </div>
 </div>
