@@ -9,8 +9,18 @@ import { categoryPolicy } from '../policies/category.policy';
 // Public endpoints
 const router = Router();
 router.post('/create', IsAuthenticatedMiddleware, AuthorizeRoles(categoryPolicy.canCreate),ValidationMiddleware(CategoryDto), categoryController.createCategory);
-router.get('/list', IsAuthenticatedMiddleware, AuthorizeRoles(categoryPolicy.canRead),categoryController.list);
-router.get('/details/:id', IsAuthenticatedMiddleware,  AuthorizeRoles(categoryPolicy.canRead),categoryController.details);
+router.get(
+  "/list",
+  // IsAuthenticatedMiddleware,
+  // AuthorizeRoles(categoryPolicy.canRead),
+  categoryController.list
+);
+router.get(
+  "/details/:id",
+  // IsAuthenticatedMiddleware,
+  // AuthorizeRoles(categoryPolicy.canRead),
+  categoryController.details
+);
 router.put('/update/:id', IsAuthenticatedMiddleware,   AuthorizeRoles(categoryPolicy.canUpdate),categoryController.update);
 router.delete('/delete/:id', IsAuthenticatedMiddleware,  AuthorizeRoles(categoryPolicy.canDelete),categoryController.softDelete);
 export default router;

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of, delay } from 'rxjs';
+import { Observable, of, delay, map } from 'rxjs';
 import { Product, PaginatedResponse, ProductFilters } from '../models/product';
 
 @Injectable({
@@ -119,6 +119,24 @@ export class ProductService {
     if (filters.maxPrice != null) params = params.set('maxPrice', filters.maxPrice.toString());
     if (filters.search) params = params.set('search', filters.search);
 
-    return this.http.get<PaginatedResponse<Product>>(this.apiURL, { params, headers });
+    return this.http.get<PaginatedResponse<any>>(this.apiURL, { params, headers }).pipe(
+      map((res) => ({
+        ...res,
+        products: res.products.map(
+          (p: any) =>
+            ({
+              ...p,
+              imageUrl: p.imageUrl ?? p.images ?? [],
+            } as Product),
+        ),
+      })),
+    );
+  }
+
+  getProductById(id: string): Observable<Product> {
+    const tempToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFjY2VkZjZmMWY4OTUwZjMzZjYyNDEiLCJyb2xlIjoidXNlciIsImVtYWlsIjoidXNlckB0ZXN0LmNvbSIsImlhdCI6MTc3MzEyMjEwMCwiZXhwIjoxNzc1NzE0MTAwfQ.k2D20UHBUFTC-6xbR0rPQUXcJm-ZgzmWINBozJGiJlE';
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${tempToken}`);
+    return this.http.get<Product>(`${this.apiURL}/${id}`, { headers });
   }
 }

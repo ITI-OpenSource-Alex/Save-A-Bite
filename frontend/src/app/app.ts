@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ProductLayout } from './layout/layouts/product-layout/product-layout/product-layout';
 import { Navbar } from './layout/navbar/navbar';
 // import { Footer } from './layout/footer/footer';
 // import { Restaurants } from './features/home/restaurants/restaurants';
@@ -10,7 +11,7 @@ import { NotificationService } from './core/services/notification';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, NotificationBellComponent],
+  imports: [ProductLayout, Navbar, RouterOutlet,NotificationBellComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -1,15 +1,26 @@
+import mongoose from 'mongoose';
+
 export interface Product {
-  _id: string;
+  _id: mongoose.Types.ObjectId;
   name: string;
+  storeId: mongoose.Types.ObjectId;
+  categoryId: mongoose.Types.ObjectId;
+  imageUrl: string[];
   price: number;
+  stock: number;
+  description: string;
+  isActive: boolean;
+  isDeleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
   category?: string;
   categoryId?: any;
   imageUrl?: string;
   images?: string[];
   discountPercentage?: number;
   isFlashDeal?: boolean;
-  stock?: number;
-  description?: string;
+  categoryName?: string;
+  storeName?: string;
 }
 
 export interface PaginatedResponse<T> {

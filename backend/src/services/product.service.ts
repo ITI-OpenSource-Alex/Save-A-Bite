@@ -2,6 +2,7 @@ import { Product, IProduct } from "../models/product.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
 import { AbacRequest } from "../middlewares/abac.middleware";
+import { Observable } from "rxjs";
 
 export class ProductService {
   constructor() {}
@@ -13,9 +14,7 @@ export class ProductService {
     return newProduct;
   }
 
-  async getAllProducts(
-    filters: any
-  ): Promise<{ products: IProduct[]; total: number; page: number; limit: number }> {
+  async getAllProducts(filters: any) {
     const page = Number(filters.page) || 1;
     const limit = Number(filters.limit) || 12;
     const sort = filters.sort || "relevance";
@@ -45,18 +44,23 @@ export class ProductService {
     if (sort === "price_desc") sortOption = { price: -1 };
 
     const skip = (page - 1) * limit;
-
-    const [products, totalItems] = await Promise.all([
+    const [products, total] = await Promise.all([
       Product.find(query)
-        .populate("storeId categoryId")
         .sort(sortOption)
         .skip(skip)
         .limit(limit)
-        .exec(),
+        .populate({ path: "storeId", select: "ownerId" })
+        .populate({ path: "categoryId", select: "name" })
+        .lean(),
       Product.countDocuments(query),
     ]);
-    logger.info(`Products fetched successfully`);
-    return { products, total: totalItems, page, limit };
+
+    return {
+      products,
+      total,
+      page,
+      limit,
+    };
   }
 
   async getProductByIdAndStoreId(productId: string, storeId: string): Promise<IProduct | null> {
@@ -83,6 +87,7 @@ export class ProductService {
       isDeleted: false,
     })
       .populate({ path: "storeId", select: "ownerId" })
+      .populate({ path: "categoryId", select: "name" })
       .exec();
     if (!product) {
       logger.warning(`Product not found: ${productId}`);
