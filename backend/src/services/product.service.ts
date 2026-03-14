@@ -45,7 +45,13 @@ export class ProductService {
 
     const skip = (page - 1) * limit;
     const [products, total] = await Promise.all([
-      Product.find(query).sort(sortOption).skip(skip).limit(limit),
+      Product.find(query)
+        .sort(sortOption)
+        .skip(skip)
+        .limit(limit)
+        .populate({ path: "storeId", select: "ownerId" })
+        .populate({ path: "categoryId", select: "name" })
+        .lean(),
       Product.countDocuments(query),
     ]);
 
