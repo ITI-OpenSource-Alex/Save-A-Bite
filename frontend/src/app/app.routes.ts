@@ -56,6 +56,28 @@ export const routes: Routes = [
         path: 'browse',
         loadComponent: () => import('./layout/layouts/browse/browse').then((m) => m.Browse),
       },
+      {
+        path: 'cart',
+        loadComponent: () => import('./features/cart/cart').then((m) => m.CartComponent),
+      },
+      {
+  path: 'login',
+  loadComponent: () =>
+    import('./features/auth/login/login')
+      .then(m => m.LoginComponent)
+},
+{
+  path: 'signup',
+  loadComponent: () =>
+    import('./features/auth/signup/signup')
+      .then(m => m.SignupComponent)
+},
+{
+  path: 'forgot-password',
+  loadComponent: () =>
+    import('./features/auth/forgot-password/forgot-password')
+      .then(m => m.ForgotPasswordComponent)
+},
     ],
   },
   {
