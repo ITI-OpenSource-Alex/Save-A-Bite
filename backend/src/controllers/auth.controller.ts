@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { authService } from "../services/auth.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
+import env from "../config/env.config";
 
 export class AuthController {
   register = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,7 +19,7 @@ export class AuthController {
     try {
       const token = req.query.token as string;
       await authService.verifyEmail(token);
-      res.status(200).json({ message: "Email verified successfully. You can now log in." });
+      res.redirect(`${env.FRONTEND_URL}/login?verified=true`);
     } catch (error) {
       next(error);
     }
@@ -60,6 +61,15 @@ export class AuthController {
       res.status(200).json({
         message: "If an account with that email exists, an OTP has been sent.",
       });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  verifyResetOtp = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await authService.verifyResetOtp(req.body.email, req.body.otp);
+      res.status(200).json({ message: "OTP is valid." });
     } catch (error) {
       next(error);
     }

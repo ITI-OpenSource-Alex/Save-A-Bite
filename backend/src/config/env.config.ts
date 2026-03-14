@@ -16,8 +16,9 @@ const processEnvSchema = Joi.object({
   EMAIL_USER: Joi.string().required(),
   EMAIL_PASS: Joi.string().required(),
   APP_URL: Joi.string().required(),
+  FRONTEND_URL: Joi.string().required(),
   STRIPE_SECRET_KEY: Joi.string().required(),
-  STRIPE_WEBHOOK_SECRET: Joi.string().required(), // <-- 1. Added this here!
+  STRIPE_WEBHOOK_SECRET: Joi.string().required(),
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
   REDIS_PASSWORD: Joi.string().required(),
@@ -37,6 +38,7 @@ export const envSchema = Joi.object({
     PORT: Joi.number().required(),
     URL: Joi.string().required(),
   }).required(),
+  FRONTEND_URL: Joi.string().required(),
   MONGO: Joi.object({
     URI: Joi.string().required(),
   }).required(),
@@ -52,7 +54,7 @@ export const envSchema = Joi.object({
     USER: Joi.string().required(),
     PASS: Joi.string().required(),
   }).required(),
-  STRIPE: Joi.object({                           // <-- 2. Grouped into an object!
+  STRIPE: Joi.object({
     SECRET_KEY: Joi.string().required(),
     WEBHOOK_SECRET: Joi.string().required(),
   }).required(),
@@ -69,6 +71,7 @@ const env = {
     PORT: envVars.PORT,
     URL: envVars.APP_URL,
   },
+  FRONTEND_URL: envVars.FRONTEND_URL,
   MONGO: {
     URI: envVars.MONGO_URI,
   },

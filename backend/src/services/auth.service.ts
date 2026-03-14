@@ -74,7 +74,8 @@ export class AuthService {
     });
 
     await newUser.save();
-    await sendVerifyEmail(email, verificationToken);
+    // Send email asynchronously so it doesn't block the HTTP response
+    sendVerifyEmail(email, verificationToken).catch(console.error);
   }
 
   async verifyEmail(token: string): Promise<void> {
@@ -156,7 +157,19 @@ export class AuthService {
     user.otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
     await user.save({ validateBeforeSave: false });
 
-    await sendOtpEmail(email, otp, "reset-password");
+    // Send OTP asynchronously so the user isn't stuck waiting for the SMTP timeout
+    sendOtpEmail(email, otp, "reset-password").catch(console.error);
+  }
+
+  async verifyResetOtp(email: string, otp: string): Promise<void> {
+    const user = await User.findOne({
+      email,
+      otpExpiresAt: { $gt: new Date() },
+    });
+    if (!user || !user.otpCode) throw new BadRequestException("Invalid or expired OTP");
+
+    const isOtpValid = await bcrypt.compare(otp, user.otpCode);
+    if (!isOtpValid) throw new BadRequestException("Invalid or expired OTP");
   }
 
   async resetPassword(data: ResetPasswordDto): Promise<void> {
@@ -193,7 +206,7 @@ export class AuthService {
       const token = generateToken();
       user.verificationToken = token;
       user.verificationTokenExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-      await sendVerifyEmail(data.email, token);
+      sendVerifyEmail(data.email, token).catch(console.error);
     }
 
     if (data.name) user.name = data.name;

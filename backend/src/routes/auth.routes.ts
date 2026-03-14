@@ -8,6 +8,7 @@ import {
   RefreshTokenDto,
   VerifyEmailDto,
   ForgotPasswordDto,
+  VerifyResetOtpDto,
   ResetPasswordDto,
   ChangeEmailDto,
   VerifyChangeEmailDto,
@@ -29,6 +30,11 @@ router.post(
   "/forgot-password",
   ValidationMiddleware(ForgotPasswordDto),
   authController.forgotPassword
+);
+router.post(
+  "/verify-reset-otp",
+  ValidationMiddleware(VerifyResetOtpDto),
+  authController.verifyResetOtp
 );
 router.post(
   "/reset-password",

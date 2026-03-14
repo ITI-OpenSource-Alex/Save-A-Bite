@@ -44,6 +44,14 @@ export class ForgotPasswordDto {
   email!: string;
 }
 
+export class VerifyResetOtpDto {
+  @IsEmail()
+  email!: string;
+
+  @IsString()
+  otp!: string;
+}
+
 export class ResetPasswordDto {
   @IsEmail()
   email!: string;

@@ -11,6 +11,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
   tls: { rejectUnauthorized: false },
+  // Fail quickly (5s) instead of freezing the backend if ISP blocks the port
+  connectionTimeout: 5000,
 });
 
 export const sendEmail = async (to: string, subject: string, html: string): Promise<any> => {
@@ -23,13 +25,25 @@ export const sendEmail = async (to: string, subject: string, html: string): Prom
     });
     console.log(`Email sent to ${to}`);
   } catch (error) {
-    console.log("Email Error: " + error);
-    throw error;
+    console.log("\n==============================================");
+    console.error(`⚠️ Email Delivery Failed to ${to}`);
+    console.log("Error Reason:", (error as any).message);
+    console.log("If testing locally, your ISP is likely blocking port 587.");
+    console.log("==============================================\n");
+    
+    // Do not throw the error in development to prevent 500 statuses from crashing the frontend
+    if (process.env.NODE_ENV !== "development" && process.env.NODE_ENV !== undefined) {
+      throw error;
+    }
   }
 };
 
 export const sendVerifyEmail = async (to: string, token: string) => {
   const verifyLink = `${process.env.APP_URL || "http://localhost:3000"}/api/auth/verify-email?token=${token}`;
+  
+  // Log the link so you can test locally without emails actually sending
+  console.log(`\n🔑 [LOCAL DEV] Verification Link for ${to}: 👉 ${verifyLink}\n`);
+
   const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
           <h2 style="color: #4CAF50;">Verify Your Email - Save A Bite</h2>
@@ -49,6 +63,9 @@ export const sendOtpEmail = async (
   otp: string,
   purpose: "reset-password" | "change-email"
 ) => {
+  // Log the OTP so you can test locally without emails actually sending
+  console.log(`\n🔑 [LOCAL DEV] OTP Code for ${to} (${purpose}): 👉 ${otp}\n`);
+
   const titleMap = {
     "reset-password": "Reset Your Password",
     "change-email": "Change Your Email",

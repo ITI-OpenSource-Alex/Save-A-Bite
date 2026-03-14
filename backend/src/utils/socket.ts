@@ -3,6 +3,7 @@ import { Server, Socket } from "socket.io";
 import mongoose from "mongoose";
 import { NotificationService } from "../services/notification.service";
 import jwt from "jsonwebtoken";
+import env from "../config/env.config";
 import { log } from "console";
 
 let io: Server;
@@ -25,7 +26,7 @@ export const initSocket = (server: HttpServer) => {
       return next(new Error("Authentication error: No token provided"));
     }
     try {
-      const secret = process.env.JWT_SECRET as string;
+      const secret = env.JWT.SECRET as string;
       const decoded: any = jwt.verify(token, secret) as any;
       socket.data.user = decoded;
       next();
