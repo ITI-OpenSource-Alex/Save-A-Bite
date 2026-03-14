@@ -1,8 +1,9 @@
 import { Response as ExpressResponse, NextFunction } from "express";
-import { ObjectId } from "mongodb";
+//import { ObjectId } from "mongodb";
 import { logger } from "../services/logger.service";
 import { StoreService } from "../services/store.service";
 import { AbacRequest } from "../middlewares/abac.middleware";
+import mongoose from "mongoose";
 // import { error } from "winston";
 
 export class StoreController {
@@ -18,7 +19,7 @@ export class StoreController {
   createStore = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const { name, description, phone, email, address, logoUrl, avgRating } = req.body;
-      const ownerId = new ObjectId(req.jwt?.userId);
+      const ownerId = new mongoose.Types.ObjectId(req.jwt?.userId);
       const storeData = {
         name,
         description,

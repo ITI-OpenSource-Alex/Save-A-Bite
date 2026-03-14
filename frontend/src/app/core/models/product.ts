@@ -13,6 +13,10 @@ export interface Product {
   isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;
+  category?: string;
+  categoryId?: any;
+  imageUrl?: string;
+  images?: string[];
   discountPercentage?: number;
   isFlashDeal?: boolean;
   categoryName?: string;

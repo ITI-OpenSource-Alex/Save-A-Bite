@@ -34,6 +34,7 @@
     "clsx": "^2.1.1",
     "lucide-angular": "^0.576.0",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.8.3",
     "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7",
     "tslib": "^2.3.0"

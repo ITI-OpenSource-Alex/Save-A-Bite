@@ -6,13 +6,18 @@ import { Navbar } from './layout/navbar/navbar';
 // import { Restaurants } from './features/home/restaurants/restaurants';
 // import { MasterSearch } from './features/search/master-search/master-search/master-search';
 // import { EcoSection } from './layout/eco-section/eco-section/eco-section';
+import { NotificationBellComponent } from './shared/components/notification-bell/notification-bell';
+import { NotificationService } from './core/services/notification';
 
 @Component({
   selector: 'app-root',
-  imports: [ProductLayout, Navbar, RouterOutlet],
+  imports: [ProductLayout, Navbar, RouterOutlet,NotificationBellComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('gawafa_store');
+  constructor(private notificationService: NotificationService) {}
+
 }
+

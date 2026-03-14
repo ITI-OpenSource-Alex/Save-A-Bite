@@ -97,7 +97,7 @@ export class ProductService {
     sort: string = 'relevance',
   ): Observable<PaginatedResponse<Product>> {
     const tempToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFjY2VkZjZmMWY4OTUwZjMzZjYyNDEiLCJyb2xlIjoidXNlciIsImVtYWlsIjoidXNlckB0ZXN0LmNvbSIsImlhdCI6MTc3MzEyMjEwMCwiZXhwIjoxNzc1NzE0MTAwfQ.k2D20UHBUFTC-6xbR0rPQUXcJm-ZgzmWINBozJGiJlE';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFhNjMzMjg4YmEyN2U1NWVkMTlhMzciLCJyb2xlIjoic3VwZXItYWRtaW4iLCJlbWFpbCI6InN1cGVyYWRtaW5Ac2F2ZWFiaXRlLmNvbSIsImlhdCI6MTc3MzIwNjIxNiwiZXhwIjoxNzc1Nzk4MjE2fQ.Vt1z3f_wCPLtVvElqoLf7V6AwAoMDrvudNE_h11zVw4';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${tempToken}`);
     let params = new HttpParams()
       .set('page', page.toString())
