@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@/core/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-signup',
@@ -24,7 +25,8 @@ export class SignupComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   signup() {
@@ -45,11 +47,16 @@ export class SignupComponent {
         this.successMessage =
           'Account created successfully. Please check your email to verify your account.';
         this.loading = false;
+        this.cdr.detectChanges();
       },
 
       error: (err) => {
-        this.error = err.error?.message || 'Registration failed';
         this.loading = false;
+        const msg = err.error?.message;
+        this.error = (msg && msg !== 'BAD_REQUEST') 
+          ? msg 
+          : 'Registration failed. Please check your inputs and try again.';
+        this.cdr.detectChanges();
       }
 
     });

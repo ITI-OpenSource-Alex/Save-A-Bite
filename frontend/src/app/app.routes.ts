@@ -72,12 +72,12 @@ export const routes: Routes = [
     import('./features/auth/signup/signup')
       .then(m => m.SignupComponent)
 },
-// {
-//   path: 'forgot-password',
-//   loadComponent: () =>
-//     import('./features/auth/forgot-password/forgot-password')
-//       .then(m => m.ForgotPasswordComponent)
-// },
+{
+  path: 'forgot-password',
+  loadComponent: () =>
+    import('./features/auth/forgot-password/forgot-password')
+      .then(m => m.ForgotPasswordComponent)
+},
     ],
   },
   {

@@ -5,6 +5,7 @@ import { LucideAngularModule, Bell, ShoppingCart } from 'lucide-angular';
 import { NotificationService, AppNotification } from '@/core/services/notification';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from '@/core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,15 +26,25 @@ export class Navbar implements OnInit, OnDestroy {
   constructor(
     private notificationService: NotificationService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
   goToLogin() {
-  this.router.navigate(['/login']);
-}
+    this.router.navigate(['/login']);
+  }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/home']);
+  }
 
   ngOnInit() {
     this.notificationService.getNotificationHistory().subscribe({

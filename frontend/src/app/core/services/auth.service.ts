@@ -38,6 +38,18 @@ register(data: RegisterRequest): Observable<any> {
     return this.http.post(`${this.API}/register`, data);
   }
 
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.API}/forgot-password`, { email });
+  }
+
+  verifyResetOtp(data: any): Observable<any> {
+    return this.http.post(`${this.API}/verify-reset-otp`, data);
+  }
+
+  resetPassword(data: any): Observable<any> {
+    return this.http.post(`${this.API}/reset-password`, data);
+  }
+
   saveToken(token: string) {
     localStorage.setItem('token', token);
   }
@@ -47,6 +59,12 @@ register(data: RegisterRequest): Observable<any> {
   }
 
   logout() {
+    const token = this.getToken();
+    if (token) {
+      this.http.post(`${this.API}/logout`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      }).subscribe();
+    }
     localStorage.removeItem('token');
   }
 
