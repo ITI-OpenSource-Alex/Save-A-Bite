@@ -74,3 +74,37 @@ export const sendInvoiceEmail = async (to: string, orderId: string, amount: numb
     `;
   await sendEmail(to, `Your Invoice #${orderId}`, html);
 };
+
+export const sendVendorApprovalEmail = async (to: string, storeName: string) => {
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #10b981; border-radius: 20px; background-color: #f0fdf4;">
+      <h2 style="color: #059669;">Congratulations! 🎉</h2>
+      <p style="font-size: 16px; color: #374151;">Your application for <strong>${storeName}</strong> has been approved!</p>
+      <p style="color: #4b5563;">You now have access to your Vendor Dashboard where you can start adding products and managing your store.</p>
+      <a href="${process.env.FRONTEND_URL}/vendor/dashboard" 
+         style="display:inline-block;background:#10b981;color:white;padding:12px 30px;border-radius:12px;text-decoration:none;margin:20px 0;font-weight:bold;">
+        Open My Dashboard
+      </a>
+      <hr style="border: none; border-top: 1px solid #d1fae5; margin: 20px 0;">
+      <p style="color: #6b7280; font-size: 12px;">Welcome to the SaveBite family!</p>
+    </div>
+  `;
+  await sendEmail(to, `Application Approved: ${storeName} is now live!`, html);
+};
+
+export const sendVendorRejectionEmail = async (to: string, storeName: string, reason: string) => {
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ef4444; border-radius: 20px; background-color: #fef2f2;">
+      <h2 style="color: #dc2626;">Application Update</h2>
+      <p style="font-size: 16px; color: #374151;">We reviewed your application for <strong>${storeName}</strong>.</p>
+      <div style="background: white; padding: 15px; border-radius: 12px; border-left: 4px solid #ef4444; margin: 20px 0;">
+        <p style="margin: 0; color: #b91c1c; font-weight: bold;">Reason for rejection:</p>
+        <p style="margin: 5px 0 0 0; color: #4b5563;">${reason}</p>
+      </div>
+      <p style="color: #4b5563;">If you believe this was a mistake or would like to apply again after addressing the reason above, please feel free to do so.</p>
+      <hr style="border: none; border-top: 1px solid #fee2e2; margin: 20px 0;">
+      <p style="color: #6b7280; font-size: 12px;">Best regards,<br>The SaveBite Team</p>
+    </div>
+  `;
+  await sendEmail(to, `Update on your vendor application for ${storeName}`, html);
+};

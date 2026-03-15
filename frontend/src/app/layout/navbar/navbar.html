@@ -24,10 +24,19 @@
     </div>
 
     <div class="hidden md:flex items-center gap-6 shrink-0">
-      <a class="text-green-600 font-medium cursor-pointer">Home</a>
-      <a class="text-gray-600 hover:text-green-600 cursor-pointer">Browse</a>
-      <a class="text-gray-600 hover:text-green-600 cursor-pointer">Sales</a>
-      <a class="text-gray-600 hover:text-green-600 cursor-pointer">Flash Deals</a>
+      <a [routerLink]="['/home']" class="text-green-600 font-medium cursor-pointer">Home</a>
+      <a [routerLink]="['/browse']" class="text-gray-600 hover:text-green-600 cursor-pointer">Browse</a>
+      <a [routerLink]="['/home']" fragment="restaurants" class="text-gray-600 hover:text-green-600 cursor-pointer">Store</a>
+      <a [routerLink]="['/home']" fragment="flash-deals" class="text-gray-600 hover:text-green-600 cursor-pointer">Flash Deals</a>
+      @if (isLoggedIn && isVendor) {
+        <a [routerLink]="['/vendor/dashboard']" class="text-emerald-600 hover:text-emerald-700 font-semibold cursor-pointer">🏪 My Store</a>
+      }
+      @if (isLoggedIn && isSuperAdmin) {
+        <a [routerLink]="['/admin/dashboard']" class="text-indigo-600 hover:text-indigo-700 font-semibold cursor-pointer">👑 Admin</a>
+      }
+      @if (isLoggedIn && !isVendor && !isSuperAdmin) {
+        <a [routerLink]="['/become-vendor']" class="text-amber-600 hover:text-amber-700 font-semibold cursor-pointer">🚀 Become Vendor</a>
+      }
       <div class="flex items-center gap-4">
         <div class="relative flex items-center">
           <button
@@ -139,15 +148,20 @@
       </div>
 
       <div class="flex flex-col gap-5 text-lg">
-        <a class="hover:text-green-600 cursor-pointer">Home</a>
-        <a class="hover:text-green-600 cursor-pointer">Browse</a>
-        <a class="hover:text-green-600 cursor-pointer">Sales</a>
-        <a class="hover:text-green-600 cursor-pointer">Flash Deals</a>
-        <button
-          class="relative flex items-center gap-2 hover:text-green-600 cursor-pointer text-left"
-          aria-label="Notifications"
-          (click)="toggleNotif()"
-        >
+        <a [routerLink]="['/home']" (click)="toggleMenu()" class="hover:text-green-600 cursor-pointer">Home</a>
+        <a [routerLink]="['/browse']" (click)="toggleMenu()" class="hover:text-green-600 cursor-pointer">Browse</a>
+        <a [routerLink]="['/home']" fragment="restaurants" (click)="toggleMenu()" class="hover:text-green-600 cursor-pointer">Store</a>
+        <a [routerLink]="['/home']" fragment="flash-deals" (click)="toggleMenu()" class="hover:text-green-600 cursor-pointer">Flash Deals</a>
+        @if (isLoggedIn && isVendor) {
+          <a [routerLink]="['/vendor/dashboard']" (click)="toggleMenu()" class="text-emerald-600 hover:text-emerald-700 font-semibold cursor-pointer">🏪 My Store</a>
+        }
+        @if (isLoggedIn && isSuperAdmin) {
+          <a [routerLink]="['/admin/dashboard']" (click)="toggleMenu()" class="text-indigo-600 hover:text-indigo-700 font-semibold cursor-pointer">👑 Admin Panel</a>
+        }
+        @if (isLoggedIn && !isVendor && !isSuperAdmin) {
+          <a [routerLink]="['/become-vendor']" (click)="toggleMenu()" class="text-amber-600 hover:text-amber-700 font-semibold cursor-pointer">🚀 Become Vendor</a>
+        }
+        <button class="relative flex items-center gap-2 hover:text-green-600 cursor-pointer text-left" aria-label="Notifications" (click)="toggleNotif()">
           <lucide-angular [img]="bellIcon" [size]="20"></lucide-angular>
           <span>Notifications</span>
           @if (unreadCount > 0) {

@@ -97,8 +97,24 @@
         </div>
 
         <!-- Bottom Link -->
-        <div class="mt-8"></div>
-        <p class="text-center text-sm text-gray-400">
+        <div class="mt-8 pt-8 border-t border-gray-100">
+          <div class="text-center">
+            <p class="text-[10px] uppercase tracking-widest font-extrabold text-gray-400 mb-4">Want to sell on SaveBite?</p>
+            <button type="button" [routerLink]="['/become-vendor']" class="w-full py-4 px-6 rounded-2xl border-2 border-dashed border-green-200 hover:border-green-500 hover:bg-green-50/50 group transition-all duration-300">
+              <div class="flex items-center justify-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
+                  <i class="fa-solid fa-store text-lg"></i>
+                </div>
+                <div class="text-left">
+                  <p class="text-xs font-black text-gray-800">Become a Vendor</p>
+                  <p class="text-[10px] text-gray-500 font-medium">Join our network of eco-merchants</p>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <p class="text-center text-sm text-gray-400 mt-8">
           Already have an account? 
           <a routerLink="/login" class="text-green-600 hover:text-green-700 font-black decoration-2 hover:underline transition-all">Sign In</a>
         </p>

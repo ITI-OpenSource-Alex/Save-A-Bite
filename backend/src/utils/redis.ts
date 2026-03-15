@@ -14,7 +14,7 @@ export class RedisService {
           host: env.REDIS.HOST,
           port: env.REDIS.PORT,
           password: env.REDIS.PASSWORD,
-          tls: {}, // <-- Add this line to enable TLS
+          //tls: {}, // <-- Add this line to enable TLS
         });
         RedisService.handleClientListeners();
       }

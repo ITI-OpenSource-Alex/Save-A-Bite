@@ -19,14 +19,8 @@ export class CategoriesSection implements OnInit {
   categories$!: Observable<Category[]>;
 
   ngOnInit() {
-    const tempToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFjY2VkZjZmMWY4OTUwZjMzZjYyNDEiLCJyb2xlIjoidXNlciIsImVtYWlsIjoidXNlckB0ZXN0LmNvbSIsImlhdCI6MTc3MzEyMjEwMCwiZXhwIjoxNzc1NzE0MTAwfQ.k2D20UHBUFTC-6xbR0rPQUXcJm-ZgzmWINBozJGiJlE';
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${tempToken}`);
     this.categories$ = this.http
-      .get<Category[]>('http://localhost:3000/api/category/list', {
-        headers,
-      })
+      .get<Category[]>('http://localhost:3000/api/category/list')
       .pipe(tap((res) => console.log(res)));
   }
 }

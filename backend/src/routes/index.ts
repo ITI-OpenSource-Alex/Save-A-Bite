@@ -10,6 +10,8 @@ import paymentRoutes from './payment.routes';
 import cartRoutes from './cart.routes';
 import promoCodeRoutes from './promocode.routes';
 import notificationRoutes from './notification.routes';
+import vendorRequestRoutes from './vendorRequest.routes';
+import uploadRoutes from "./upload.routes";
 
 const rootRouter = Router();
 
@@ -24,6 +26,8 @@ rootRouter.use("/payments", paymentRoutes);
 rootRouter.use("/cart", cartRoutes);
 rootRouter.use("/admin/promocodes", promoCodeRoutes);
 rootRouter.use("/notifications", notificationRoutes);
+rootRouter.use("/vendor-requests", vendorRequestRoutes);
+rootRouter.use("/upload", uploadRoutes);
 
 
 

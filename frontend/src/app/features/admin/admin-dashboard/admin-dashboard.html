@@ -1,0 +1,264 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+
+  <!-- Header -->
+  <div class="bg-white/80 backdrop-blur-xl border-b border-white/40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <span class="text-2xl text-white">👑</span>
+          </div>
+          <div>
+            <h1 class="text-2xl font-extrabold text-gray-900">Admin Dashboard</h1>
+            <p class="text-gray-500 text-sm">Manage vendor requests & vendors</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="bg-yellow-50 text-yellow-700 px-4 py-2 rounded-2xl text-sm font-bold border border-yellow-200">
+            {{ requests.length }} Requests
+          </div>
+          <div class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-2xl text-sm font-bold border border-indigo-200">
+            {{ vendors.length }} Vendors
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-6">
+      <button 
+        (click)="activeTab = 'requests'"
+        [class.bg-indigo-600]="activeTab === 'requests'"
+        [class.text-white]="activeTab === 'requests'"
+        [class.bg-white]="activeTab !== 'requests'"
+        [class.text-gray-600]="activeTab !== 'requests'"
+        class="px-6 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 shadow-sm border border-gray-100 cursor-pointer"
+      >
+        📋 Vendor Requests
+      </button>
+      <button 
+        (click)="activeTab = 'vendors'"
+        [class.bg-indigo-600]="activeTab === 'vendors'"
+        [class.text-white]="activeTab === 'vendors'"
+        [class.bg-white]="activeTab !== 'vendors'"
+        [class.text-gray-600]="activeTab !== 'vendors'"
+        class="px-6 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 shadow-sm border border-gray-100 cursor-pointer"
+      >
+        🏪 Active Vendors
+      </button>
+    </div>
+
+    <!-- Messages -->
+    @if (successMessage) {
+      <div class="mb-6 bg-green-50 border border-green-200 rounded-2xl p-4 text-green-700 text-sm font-medium animate-fade-in">
+        ✅ {{ successMessage }}
+      </div>
+    }
+    @if (errorMessage) {
+      <div class="mb-6 bg-red-50 border border-red-200 rounded-2xl p-4 text-red-700 text-sm font-medium">
+        ❌ {{ errorMessage }}
+      </div>
+    }
+
+    <!-- ═══════════════ Requests Tab ═══════════════ -->
+    @if (activeTab === 'requests') {
+      <!-- Filter -->
+      <div class="mb-6 flex items-center gap-3">
+        <span class="text-sm text-gray-500 font-medium">Filter by status:</span>
+        <select 
+          [(ngModel)]="statusFilter" 
+          (ngModelChange)="onFilterChange()" 
+          class="bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm font-medium text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+        >
+          <option value="">All</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+
+      @if (isLoading) {
+        <div class="flex justify-center py-16">
+          <div class="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+        </div>
+      } @else if (requests.length === 0) {
+        <div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/40 shadow-lg p-12 text-center">
+          <div class="text-6xl mb-4">📋</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">No Requests Found</h3>
+          <p class="text-gray-500">No vendor requests match the current filter.</p>
+        </div>
+      } @else {
+        <div class="space-y-4 pb-8">
+          @for (req of requests; track req._id) {
+            <div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/40 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <!-- Request Info -->
+                <div class="flex-1">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-bold">
+                      {{ req.storeName.charAt(0) }}
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-gray-800 text-lg">{{ req.storeName }}</h3>
+                      <p class="text-sm text-gray-500">
+                        by {{ req.userId?.name || 'Unknown User' }} · {{ req.userId?.email }}
+                      </p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold capitalize border"
+                          [ngClass]="getStatusColor(req.status)">
+                      {{ req.status }}
+                    </span>
+                  </div>
+                  <p class="text-sm text-gray-600 mb-2">{{ req.storeDescription }}</p>
+                  <div class="flex flex-wrap gap-4 text-sm text-gray-500">
+                    <span>📞 {{ req.storePhone }}</span>
+                    <span>📧 {{ req.storeEmail }}</span>
+                    <span>📅 {{ req.createdAt | date:'mediumDate' }}</span>
+                  </div>
+                  @if (req.message) {
+                    <div class="mt-3 bg-blue-50/50 rounded-xl p-3 text-sm text-blue-700">
+                      <strong>Message:</strong> {{ req.message }}
+                    </div>
+                  }
+                  @if (req.rejectionReason) {
+                    <div class="mt-3 bg-red-50/50 rounded-xl p-3 text-sm text-red-700">
+                      <strong>Rejection Reason:</strong> {{ req.rejectionReason }}
+                    </div>
+                  }
+                </div>
+
+                <!-- Actions -->
+                @if (req.status === 'pending') {
+                  <div class="flex gap-3 lg:flex-col">
+                    <button 
+                      (click)="approveRequest(req._id)"
+                      [disabled]="actionLoading === req._id"
+                      class="px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-2xl shadow-md shadow-green-500/20 hover:shadow-lg transition-all disabled:opacity-50 cursor-pointer text-sm"
+                    >
+                      {{ actionLoading === req._id ? '...' : '✓ Approve' }}
+                    </button>
+                    <button 
+                      (click)="openRejectModal(req._id)"
+                      [disabled]="actionLoading === req._id"
+                      class="px-6 py-2.5 bg-white border-2 border-red-200 text-red-600 font-bold rounded-2xl hover:bg-red-50 transition-all disabled:opacity-50 cursor-pointer text-sm"
+                    >
+                      ✕ Reject
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    <!-- ═══════════════ Vendors Tab ═══════════════ -->
+    @if (activeTab === 'vendors') {
+      @if (vendors.length === 0) {
+        <div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/40 shadow-lg p-12 text-center">
+          <div class="text-6xl mb-4">🏪</div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">No Vendors Yet</h3>
+          <p class="text-gray-500">Approved vendors will appear here.</p>
+        </div>
+      } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
+          @for (v of vendors; track v.vendor._id) {
+            <div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/40 shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+              <!-- Vendor Header -->
+              <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-5">
+                <div class="flex items-center gap-3">
+                  @if (v.store?.logoUrl) {
+                    <img [src]="v.store.logoUrl" alt="Store" class="w-12 h-12 rounded-xl object-cover border-2 border-white/30">
+                  } @else {
+                    <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white text-xl font-bold">
+                      {{ v.vendor.name.charAt(0) }}
+                    </div>
+                  }
+                  <div>
+                    <h3 class="font-bold text-white text-lg">{{ v.vendor.name }}</h3>
+                    <p class="text-white/70 text-sm">{{ v.vendor.email }}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- Store Info -->
+              <div class="p-5">
+                @if (v.store) {
+                  <div class="space-y-3 mb-4">
+                    <div class="flex justify-between text-sm">
+                      <span class="text-gray-500">Store Name</span>
+                      <span class="font-semibold text-gray-800">{{ v.store.name }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span class="text-gray-500">Products</span>
+                      <span class="font-semibold text-gray-800">{{ v.productCount }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span class="text-gray-500">Status</span>
+                      <span class="px-3 py-1 rounded-full text-xs font-bold"
+                            [ngClass]="v.store.isActive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'">
+                        {{ v.store.isActive ? 'Active' : 'Inactive' }}
+                      </span>
+                    </div>
+                  </div>
+                } @else {
+                  <p class="text-gray-400 text-sm mb-4">No store found</p>
+                }
+                <button 
+                  (click)="deleteVendor(v.vendor._id, v.vendor.name)"
+                  [disabled]="actionLoading === v.vendor._id"
+                  class="w-full py-2.5 bg-red-50 text-red-600 font-bold rounded-2xl border border-red-200 hover:bg-red-100 transition-all disabled:opacity-50 cursor-pointer text-sm"
+                >
+                  {{ actionLoading === v.vendor._id ? 'Deleting...' : '🗑️ Delete Vendor' }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Reject Modal -->
+  @if (showRejectModal) {
+    <div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" (click)="closeRejectModal()">
+      <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8" (click)="$event.stopPropagation()">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl">⚠️</span>
+          </div>
+          <h2 class="text-xl font-bold text-gray-800">Reject Vendor Request</h2>
+          <p class="text-gray-500 text-sm mt-1">Provide a reason for rejection (optional)</p>
+        </div>
+
+        <div class="mb-6">
+          <textarea 
+            [(ngModel)]="rejectionReason" 
+            placeholder="e.g. Incomplete store information, doesn't meet our criteria..."
+            rows="3"
+            class="premium-input resize-none !py-3"
+          ></textarea>
+        </div>
+
+        <div class="flex gap-3">
+          <button 
+            (click)="confirmReject()" 
+            [disabled]="actionLoading === rejectRequestId"
+            class="flex-1 py-3 bg-red-500 text-white font-bold rounded-2xl hover:bg-red-600 transition-all disabled:opacity-50 cursor-pointer"
+          >
+            {{ actionLoading === rejectRequestId ? 'Rejecting...' : 'Confirm Reject' }}
+          </button>
+          <button 
+            (click)="closeRejectModal()" 
+            class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all cursor-pointer"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
