@@ -1,7 +1,7 @@
 {
   "name": "save-a-bite",
   "version": "1.0.0",
-  "description": "Save A Bite",
+  "description": "LastBite",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
