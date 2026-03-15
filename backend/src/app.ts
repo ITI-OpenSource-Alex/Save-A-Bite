@@ -8,6 +8,8 @@ import rootRouter from "./routes/index";
 import { Seeder } from "./utils/seeder";
 import ErrorHandlerMiddleware from "./middlewares/error-handler";
 import { RedisService } from "./utils/redis";
+import { generalLimiter } from "./utils/ratelimit";
+import { webhookController } from "./controllers/webhook.controller";
 class App {
   private app!: Application;
 
@@ -59,6 +61,7 @@ class App {
   }
 
   private async initializeRoutes() {
+    this.app.use(generalLimiter); // Apply general rate limit to all routes
     this.app.use("/api", rootRouter);
   }
 

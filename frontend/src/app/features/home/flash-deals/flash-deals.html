@@ -10,7 +10,7 @@
       @for (deal of deals$ | async; track deal._id) {
         <app-product-card [product]="deal"></app-product-card>
       } @empty {
-        <p class="text-center col-span-full text-muted-foreground">Loading deals...</p>
+        <p class="text-center col-span-full text-muted-foreground">No flash deals available Right now</p>
       }
     </div>
   </div>

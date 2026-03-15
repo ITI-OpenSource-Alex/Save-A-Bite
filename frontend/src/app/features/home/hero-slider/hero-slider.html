@@ -1,61 +1,85 @@
-<section class="relative h-[70vh] md:h-[85vh] w-full flex items-center overflow-hidden">
+<section class="relative h-[85vh] md:h-[95vh] w-full flex items-center overflow-hidden">
+  <!-- Background Image with subtle zoom effect -->
   <div
-    class="absolute inset-0 bg-cover bg-center"
-    style="
-      background-image: url('https://plus.unsplash.com/premium_photo-1693086422327-20b9370ecea0?q=80&w=1170&auto=format&fit=crop');
-    "
+    class="absolute inset-0 bg-cover bg-center transition-transform duration-[10s] hover:scale-110"
+    style="background-image: url('assets/images/hero-image.jpg');"
   ></div>
 
-  <div class="absolute inset-0 bg-black/75"></div>
-  <div
-    class="absolute top-0 left-1/4 w-3/4 h-full bg-green-900/30 blur-[120px] pointer-events-none"
-  ></div>
+  <!-- Smart Overlay: Darker on the left for text readability, clear on the right for the "shiny" look -->
+  <div class="absolute inset-0 bg-black/30"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
 
   <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-    <div class="flex flex-col items-start max-w-2xl gap-5">
-      <div
-        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 backdrop-blur-md text-sm font-medium text-gray-200"
+    <div class="flex flex-col items-start max-w-3xl gap-6">
+      
+      <!-- Top Badge -->
+      <div 
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 border border-white/10 backdrop-blur-md text-sm font-medium text-white/90"
       >
-        <svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-          />
+        <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
         </svg>
-        Save food. Save money. Save the planet.
+        <span>Save food. Save money. Save the planet.</span>
       </div>
 
-      <h1
-        class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.1]"
-      >
-        Rescue delicious food <br />
-        <span class="text-[#2bb563]">at up to 70% off</span>
+      <!-- Main Heading -->
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
+        Rescue delicious <br />
+        food <span class="text-[#2bb563]">at up to 70% off</span>
       </h1>
 
-      <p class="text-lg md:text-xl text-gray-300 max-w-lg mt-2">
-        Discover surplus meals, pastries, and groceries from your favorite local spots before they
-        go to waste.
+      <!-- Description -->
+      <p class="text-lg md:text-xl text-white/80 max-w-xl font-medium leading-relaxed">
+        Discover surplus meals, pastries, and groceries from your favorite local spots before they go to waste.
       </p>
 
-      <div class="flex flex-wrap items-center gap-4 mt-4">
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center gap-5 mt-4">
         <button
           routerLink="/browse"
           [queryParams]="{ flashDeals: 'true' }"
-          class="bg-[#2bb563] hover:bg-[#249c54] cursor-pointer text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2 transition-all"
+          class="bg-[#2bb563] hover:bg-[#249c54] cursor-pointer text-white font-bold py-4 px-8 rounded-full flex items-center gap-3 transition-all transform hover:scale-105 shadow-xl shadow-green-900/30"
         >
           Browse Deals
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </button>
       </div>
+
+      <!-- Impact Stats Bar -->
+      <div class="flex flex-wrap items-center gap-10 mt-12 pt-8 border-t border-white/10 w-full">
+        <!-- Stat 1 -->
+        <div class="flex items-center gap-4">
+          <div class="p-2.5 bg-red-500/20 rounded-xl text-red-400 border border-red-500/10">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-white">55%</div>
+            <div class="text-xs uppercase tracking-wider text-white/50 font-semibold">Avg. Discount</div>
+          </div>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="flex items-center gap-4">
+          <div class="p-2.5 bg-green-500/20 rounded-xl text-green-400 border border-green-500/10">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-white">12,400+</div>
+            <div class="text-xs uppercase tracking-wider text-white/50 font-semibold">Meals Saved</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- Decorative bottom fade -->
+  <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent"></div>
 </section>
+
