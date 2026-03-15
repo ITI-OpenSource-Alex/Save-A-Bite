@@ -4,7 +4,6 @@ export interface Product {
   price: number;
   category?: string;
   categoryId?: any;
-  imageUrl?: string[];
   images?: string[];
   discountPercentage?: number;
   isFlashDeal?: boolean;
@@ -29,4 +28,5 @@ export interface ProductFilters {
   isFlashDeal?: boolean;
   discountPercentage?: number;
   search?: string;
+  storeId?: string;
 }

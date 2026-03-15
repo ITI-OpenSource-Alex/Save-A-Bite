@@ -17,6 +17,7 @@ router.post(
   ValidationMiddleware(CreateProductDto),
   productController.createProduct
 );
+router.get("/:storeId", productController.getProductByIdAndStoreId);
 router.patch(
   "/:id",
   IsAuthenticatedMiddleware,

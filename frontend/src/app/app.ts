@@ -6,7 +6,9 @@ import { NotificationService } from './core/services/notification';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationBellComponent],
+  imports: [RouterOutlet,
+    // NotificationBellComponent
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

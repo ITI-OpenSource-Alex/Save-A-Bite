@@ -1,8 +1,12 @@
-<section *ngIf="products$ | async as products" class="py-16 bg-muted/30 px-20">
+@if(products$ | async; as products){
+<section class="py-16 bg-muted/30 px-20">
   <div class="container mx-auto px-6">
     <div class="flex items-center justify-between mb-7">
       <h2 class="text-3xl font-semibold">Products of Same Category</h2>
-      <a href="#" class="text-emerald-600 font-medium hover:bg-emerald-100 px-5 py-2 rounded-full">
+      <a
+      [routerLink]="['/browse']"
+      [queryParams]="{ category: categoryId}"
+      class="text-emerald-600 font-medium hover:bg-emerald-100 px-5 py-2 rounded-full">
         View All →
       </a>
     </div>
@@ -12,9 +16,10 @@
       <div
         *ngFor="let product of products; trackBy: trackByName"
         class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition cursor-pointer hover:-translate-y-2 duration-300"
+        [routerLink]="['/product/', product._id]"
       >
         <img
-          [src]="product.imageUrl?.[0]"
+          [src]="product.images?.[0]"
           alt="{{ product.name }}"
           class="w-full object-cover h-25"
         />
@@ -33,3 +38,4 @@
     </div>
   </div>
 </section>
+}

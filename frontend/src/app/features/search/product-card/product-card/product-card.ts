@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { Product } from '@/core/models/product';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CartService } from '@/core/services/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
@@ -15,6 +16,8 @@ export class ProductCard {
   isAddingToCart: boolean = false;
 
   private cartService = inject(CartService);
+
+  private router = inject(Router);
 
   addToCart(event: Event): void {
     event.stopPropagation();
@@ -37,5 +40,9 @@ export class ProductCard {
           this.isAddingToCart = false;
         },
       });
+  }
+
+  goToProduct(productId:string) {
+    this.router.navigate(['/product', productId]);
   }
 }

@@ -6,6 +6,7 @@ export interface ICategory extends Document {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  icon?: string[];
 }
 
 const CategorySchema = new Schema<ICategory>(
@@ -24,6 +25,9 @@ const CategorySchema = new Schema<ICategory>(
     isActive: {
       type: Boolean,
       default: true,
+    },
+    icon: {
+      type: String,
     },
   },
   { timestamps: true }

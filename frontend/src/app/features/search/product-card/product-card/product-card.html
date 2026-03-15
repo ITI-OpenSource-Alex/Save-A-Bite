@@ -1,13 +1,12 @@
 <div
   class="group relative flex flex-col h-full bg-white border border-gray-200 rounded-xl overflow-hidden transition duration-300 hover:shadow-lg hover:-translate-y-1"
+  (click)="goToProduct(product._id)"
 >
   <!-- Image -->
   <div class="relative w-full h-[220px] bg-gray-50 overflow-hidden">
     <img
       [src]="
-        product.images?.[0] ||
-        product.imageUrl ||
-        'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200'
+        product.images?.[0]
       "
       [alt]="product.name"
       loading="lazy"

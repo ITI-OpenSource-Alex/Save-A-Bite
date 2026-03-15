@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+
 export interface Category {
   _id: string;
   name: string;
   offers: number;
-  icon: string;
+  icon: string[];
 }
 
 @Component({

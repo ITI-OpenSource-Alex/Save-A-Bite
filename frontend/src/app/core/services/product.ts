@@ -33,6 +33,7 @@ export class ProductService {
       params = params.set('isFlashDeal', filters.isFlashDeal.toString());
     }
     if (filters.category) params = params.set('category', filters.category);
+    if (filters.storeId) params = params.set('storeId', filters.storeId);
     if (filters.minPrice != null) params = params.set('minPrice', filters.minPrice.toString());
     if (filters.maxPrice != null) params = params.set('maxPrice', filters.maxPrice.toString());
     if (filters.search) params = params.set('search', filters.search);

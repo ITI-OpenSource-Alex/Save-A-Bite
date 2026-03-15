@@ -48,13 +48,15 @@ export class ProductService {
 
     const [products, totalItems] = await Promise.all([
       Product.find(query)
-        .populate("storeId categoryId")
+        .populate("storeId", "name")
+        .populate("categoryId", "name")
         .sort(sortOption)
         .skip(skip)
         .limit(limit)
         .exec(),
       Product.countDocuments(query),
     ]);
+    
     logger.info(`Products fetched successfully`);
     return { products, total: totalItems, page, limit };
   }
@@ -83,6 +85,8 @@ export class ProductService {
       isDeleted: false,
     })
       .populate({ path: "storeId", select: "ownerId" })
+      .populate("storeId", "name")
+      .populate("categoryId", "name")
       .exec();
     if (!product) {
       logger.warning(`Product not found: ${productId}`);

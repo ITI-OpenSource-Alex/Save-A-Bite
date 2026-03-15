@@ -14,7 +14,9 @@ router.post(
   ValidationMiddleware(StoreDto),
   storeController.createStore
 );
-router.get("/", IsAuthenticatedMiddleware, storeController.getAllStores);
+router.get("/",
+  // IsAuthenticatedMiddleware,
+  storeController.getAllStores);
 router.get("/:id", IsAuthenticatedMiddleware, storeController.getStoreById);
 router.patch(
   "/:id",

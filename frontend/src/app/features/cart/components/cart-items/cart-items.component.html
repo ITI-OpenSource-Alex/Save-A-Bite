@@ -6,9 +6,7 @@
       <!-- IMAGE -->
       <img
         [src]="
-          item.productId.images?.[0] ||
-          item.productId.imageUrl ||
-          'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200'
+          item.productId.images?.[0]
         "
         class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border border-gray-100 shrink-0"
       />
