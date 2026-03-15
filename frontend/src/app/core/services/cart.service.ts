@@ -10,46 +10,66 @@ export class CartService {
   private http = inject(HttpClient);
   private apiURL = 'http://localhost:3000/api/cart';
 
-  // public cartState = signal<Cart | null>(null); --> for cart icone in navbar
+public cartState = signal<Cart | null>(null);
 
   getCart(): Observable<{ cart: Cart }> {
     const headers = this.getAuthHeaders();
-    return this.http.get<{ cart: Cart }>(this.apiURL, { headers });
+  return this.http.get<{ cart: Cart }>(this.apiURL, { headers }).pipe(
+      tap(response => this.cartState.set(response.cart))
+    );  
   }
 
   addItem(data: AddItemDto): Observable<{ cart: Cart }> {
     const headers = this.getAuthHeaders();
-    return this.http.post<{ cart: Cart }>(`${this.apiURL}/add-item`, data, { headers });
+    return this.http.post<{ cart: Cart }>(`${this.apiURL}/add-item`, data, { headers }).pipe(
+      tap(response => this.cartState.set(response.cart))
+    );
   }
 
   updateItem(data: UpdateItemDto): Observable<{ cart: Cart }> {
     const headers = this.getAuthHeaders();
-    return this.http.patch<{ cart: Cart }>(`${this.apiURL}/update-item`, data, { headers });
+    return this.http.patch<{ cart: Cart }>(`${this.apiURL}/update-item`, data, { headers }
+    ).pipe(
+      tap(response => this.cartState.set(response.cart))
+    );
   }
 
   removeItem(productId: string): Observable<{ cart: Cart }> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<{ cart: Cart }>(`${this.apiURL}/remove-item/${productId}`, { headers });
+    return this.http.delete<{ cart: Cart }>(`${this.apiURL}/remove-item/${productId}`, { headers })
+    .pipe(
+      tap(response => this.cartState.set(response.cart))
+    );
   }
 
   clearCart(): Observable<{ message: string }> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<{ message: string }>(`${this.apiURL}/clear`, { headers });
+    return this.http.delete<{ message: string }>(`${this.apiURL}/clear`, { headers }).pipe(
+      tap(response => this.cartState.set(null))
+    );
   }
 
   applyPromoCode(data: ApplyPromoCodeDto): Observable<{ cart: Cart }> {
     const headers = this.getAuthHeaders();
-    return this.http.post<{ cart: Cart }>(`${this.apiURL}/apply-promocode`, data, { headers });
+    return this.http.post<{ cart: Cart }>(`${this.apiURL}/apply-promocode`, data, { headers })
+    .pipe(
+      tap(response => this.cartState.set(response.cart))
+    );
   }
 
   removePromoCode(): Observable<{ cart: Cart }> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<{ cart: Cart }>(`${this.apiURL}/remove-promocode`, { headers });
+    return this.http.delete<{ cart: Cart }>(`${this.apiURL}/remove-promocode`, { headers })
+    .pipe(
+      tap(response => this.cartState.set(response.cart))
+    );
   }
 
-  private getAuthHeaders(): HttpHeaders {
-    const tempToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWFhNjMzMjg4YmEyN2U1NWVkMTlhMzciLCJyb2xlIjoic3VwZXItYWRtaW4iLCJlbWFpbCI6InN1cGVyYWRtaW5Ac2F2ZWFiaXRlLmNvbSIsImlhdCI6MTc3MzIwMTgwOCwiZXhwIjoxNzc1NzkzODA4fQ.3kUFLKW_np7_EyxSM_V-yJRn63QQDA4Ow6Uz9Eo6ItA';
-    return new HttpHeaders().set('Authorization', `Bearer ${tempToken}`);
+  public getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); 
+    if (token) {
+      return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    }
+    return new HttpHeaders();
   }
 }

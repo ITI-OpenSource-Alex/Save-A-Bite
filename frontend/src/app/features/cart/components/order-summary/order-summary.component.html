@@ -4,19 +4,19 @@
   <div class="flex flex-col gap-4 text-gray-600 mb-5">
     <div class="flex justify-between">
       <span>Subtotal</span>
-      <span class="font-semibold text-gray-800"> ${{ cart.subtotal }} </span>
+      <span class="font-semibold text-gray-800"> EGP{{ cart.subtotal }} </span>
     </div>
 
     @if (cart.discount > 0) {
       <div class="flex justify-between text-green-600">
         <span>Discount</span>
-        <span class="font-semibold"> −${{ cart.discount }} </span>
+        <span class="font-semibold"> -{{ cart.discount | currency: 'EGP' }} </span>
       </div>
     }
 
     <div class="flex justify-between">
       <span>Delivery Fee</span>
-      <span class="font-semibold text-gray-800"> ${{ deliveryFee }} </span>
+      <span class="font-semibold text-gray-800"> {{ deliveryFee | currency: 'EGP' }} </span>
     </div>
   </div>
 
@@ -24,7 +24,7 @@
     <span class="font-bold text-gray-800"> Total </span>
 
     <span class="text-2xl font-black text-gray-900">
-      ${{ cart.total + deliveryFee }}
+      {{ cart.total + deliveryFee | currency: 'EGP' }}
     </span>
   </div>
 
@@ -44,6 +44,13 @@
     >
       Apply
     </button>
+    <button
+      *ngIf="cart.appliedPromoCode"
+      (click)="removePromo()"
+      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
+    >
+      X
+    </button>
   </div>
 
   @if (cart.appliedPromoCode) {
@@ -53,8 +60,17 @@
   }
 
   <button
-    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"
+    (click)="proceedToCheckout()"
+    [disabled]="isCheckingOut()"
+    class="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors"
   >
-    Go to Checkout →
+    @if (isCheckingOut()) {
+      <div
+        class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
+      ></div>
+      Processing...
+    } @else {
+      Go to Checkout →
+    }
   </button>
 </div>

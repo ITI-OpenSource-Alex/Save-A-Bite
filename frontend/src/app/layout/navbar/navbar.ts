@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ZardInputDirective } from '@/shared/components/input/input.directive';
 import { LucideAngularModule, Bell, ShoppingCart } from 'lucide-angular';
@@ -7,6 +7,7 @@ import { NotificationService, AppNotification } from '@/core/services/notificati
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '@/core/services/auth.service';
+import { CartService } from '@/core/services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,7 @@ export class Navbar implements OnInit, OnDestroy {
   isMenuOpen = false;
   protected readonly bellIcon = Bell;
   protected readonly shoppingCartIcon = ShoppingCart;
-
+  public cartService = inject(CartService);
   notifications: AppNotification[] = [];
   unreadCount: number = 0;
   isNotifOpen: boolean = false;

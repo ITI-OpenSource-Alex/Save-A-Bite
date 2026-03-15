@@ -8,6 +8,7 @@ import rootRouter from "./routes/index";
 import { Seeder } from "./utils/seeder";
 import ErrorHandlerMiddleware from "./middlewares/error-handler";
 import { RedisService } from "./utils/redis";
+import { webhookController } from "./controllers/webhook.controller";
 class App {
   private app!: Application;
 
@@ -41,12 +42,11 @@ class App {
   }
 
   private async initializeMiddlewares() {
-    this.app.post(
+   this.app.post(
       '/api/payments/webhook', 
       express.raw({ type: 'application/json' }), 
-      (req, res) => {import('./controllers/webhook.controller').then
-        (m => m.webhookController.handleStripeWebhook(req, res));
-      });
+      webhookController.handleStripeWebhook
+    );
     this.app.use(cors(this.corsOptions));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
