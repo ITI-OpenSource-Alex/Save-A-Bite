@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-
 export interface Product {
   _id: string;
   name: string;
