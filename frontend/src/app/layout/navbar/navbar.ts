@@ -27,7 +27,7 @@ export class Navbar implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   toggleMenu() {
@@ -56,16 +56,16 @@ export class Navbar implements OnInit, OnDestroy {
           createdAt: item.createdAt,
           message: item.notification?.message || item.message,
           resource: item.notification?.resource || item.resource,
-          resourceId: item.notification?.resourceId || item.resourceId
+          resourceId: item.notification?.resourceId || item.resourceId,
         }));
         this.unreadCount = this.notifications.filter((n: any) => !n.isRead).length;
       },
       error: (err) => {
         console.error('Could not load history', err);
         this.notifications = [];
-      }
+      },
     });
-    this.sub = this.notificationService.newNotification$.subscribe(newNotif => {
+    this.sub = this.notificationService.newNotification$.subscribe((newNotif) => {
       this.notifications.unshift(newNotif);
       if (!this.isNotifOpen) {
         this.unreadCount++;
@@ -79,13 +79,21 @@ export class Navbar implements OnInit, OnDestroy {
     if (this.isNotifOpen && this.unreadCount > 0) {
       this.unreadCount = 0;
       this.notificationService.markAllAsRead().subscribe({
-        next: () => { this.notifications.forEach(n => n.isRead = true); },
-        error: (err) => console.error('Failed to mark as read in DB', err)
+        next: () => {
+          this.notifications.forEach((n) => (n.isRead = true));
+        },
+        error: (err) => console.error('Failed to mark as read in DB', err),
       });
     }
   }
 
   ngOnDestroy() {
     if (this.sub) this.sub.unsubscribe();
+  }
+  onSearch(term: string) {
+    const search = term.trim();
+    this.router.navigate(['/browse'], {
+      queryParams: search ? { search } : {},
+    });
   }
 }

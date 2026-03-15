@@ -12,7 +12,14 @@
 
     <div class="hidden md:flex flex-1 justify-center px-6">
       <div class="w-full max-w-lg">
-        <input z-input placeholder="Search restaurants or food..." zSize="default" class="w-full" />
+        <input
+          #mainSearch
+          z-input
+          placeholder="Search restaurants or food..."
+          zSize="default"
+          class="w-full"
+          (keyup.enter)="onSearch(mainSearch.value)"
+        />
       </div>
     </div>
 
@@ -23,17 +30,27 @@
       <a class="text-gray-600 hover:text-green-600 cursor-pointer">Flash Deals</a>
       <div class="flex items-center gap-4">
         <div class="relative flex items-center">
-          <button class="relative text-gray-600 hover:text-green-600 cursor-pointer" aria-label="Notifications" (click)="toggleNotif()">
+          <button
+            class="relative text-gray-600 hover:text-green-600 cursor-pointer"
+            aria-label="Notifications"
+            (click)="toggleNotif()"
+          >
             <lucide-angular [img]="bellIcon" [size]="20"></lucide-angular>
             @if (unreadCount > 0) {
-              <span class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-bounce shadow-sm">
+              <span
+                class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-bounce shadow-sm"
+              >
                 {{ unreadCount }}
               </span>
             }
           </button>
           @if (isNotifOpen) {
-            <div class="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-100 z-50 overflow-hidden">
-              <div class="p-3 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+            <div
+              class="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-100 z-50 overflow-hidden"
+            >
+              <div
+                class="p-3 border-b border-gray-100 flex justify-between items-center bg-gray-50"
+              >
                 <h3 class="font-bold text-gray-800">Notifications</h3>
                 <span class="text-xs text-gray-500">{{ notifications.length }} total</span>
               </div>
@@ -45,7 +62,10 @@
                   </div>
                 } @else {
                   @for (notif of notifications; track $index) {
-                    <div [ngClass]="{'bg-blue-50/50': !notif.isRead}" class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex gap-3 items-start cursor-default">
+                    <div
+                      [ngClass]="{ 'bg-blue-50/50': !notif.isRead }"
+                      class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex gap-3 items-start cursor-default"
+                    >
                       <div class="text-green-500 mt-0.5">
                         @if (notif.resource === 'promocode') {
                           <i class="fa-solid fa-tags"></i>
@@ -58,7 +78,9 @@
                       <div>
                         <p class="text-sm text-gray-800">{{ notif.message }}</p>
                         @if (notif.createdAt) {
-                          <p class="text-[10px] text-gray-400 mt-1">{{ notif.createdAt | date:'short' }}</p>
+                          <p class="text-[10px] text-gray-400 mt-1">
+                            {{ notif.createdAt | date: 'short' }}
+                          </p>
                         }
                       </div>
                     </div>
@@ -73,19 +95,16 @@
         </button>
       </div>
       @if (!isLoggedIn) {
-        <button 
-          class="bg-green-600 text-white px-5 py-2 rounded-full"
-          (click)="goToLogin()"
-        >
+        <button class="bg-green-600 text-white px-5 py-2 rounded-full" (click)="goToLogin()">
           Sign In
         </button>
       } @else {
-       <button
-  class="bg-white border border-red-400 text-red-600 px-5 py-2 rounded-full hover:border-2 hover:border-red-600 transition-all"
-  (click)="logout()"
->
-  Sign Out
-</button>
+        <button
+          class="bg-white border border-red-400 text-red-600 px-5 py-2 rounded-full hover:border-2 hover:border-red-600 transition-all"
+          (click)="logout()"
+        >
+          Sign Out
+        </button>
       }
     </div>
 
@@ -109,7 +128,14 @@
       </div>
 
       <div class="mb-6">
-        <input z-input placeholder="Search..." zSize="default" class="w-full" />
+        <input
+          #mobileSearch
+          z-input
+          placeholder="Search..."
+          zSize="default"
+          class="w-full"
+          (keyup.enter)="onSearch(mobileSearch.value)"
+        />
       </div>
 
       <div class="flex flex-col gap-5 text-lg">
@@ -117,25 +143,38 @@
         <a class="hover:text-green-600 cursor-pointer">Browse</a>
         <a class="hover:text-green-600 cursor-pointer">Sales</a>
         <a class="hover:text-green-600 cursor-pointer">Flash Deals</a>
-        <button class="relative flex items-center gap-2 hover:text-green-600 cursor-pointer text-left" aria-label="Notifications" (click)="toggleNotif()">
+        <button
+          class="relative flex items-center gap-2 hover:text-green-600 cursor-pointer text-left"
+          aria-label="Notifications"
+          (click)="toggleNotif()"
+        >
           <lucide-angular [img]="bellIcon" [size]="20"></lucide-angular>
           <span>Notifications</span>
           @if (unreadCount > 0) {
-            <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+            <span
+              class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm"
+            >
               {{ unreadCount }}
             </span>
           }
         </button>
-        <button class="flex items-center gap-2 hover:text-green-600 cursor-pointer text-left" aria-label="Cart">
+        <button
+          class="flex items-center gap-2 hover:text-green-600 cursor-pointer text-left"
+          aria-label="Cart"
+        >
           <lucide-angular [img]="shoppingCartIcon" [size]="20"></lucide-angular>
           <span>Cart</span>
         </button>
       </div>
 
       @if (!isLoggedIn) {
-        <button class="mt-8 w-full bg-green-600 text-white py-3 rounded-lg" (click)="goToLogin()">Sign In</button>
+        <button class="mt-8 w-full bg-green-600 text-white py-3 rounded-lg" (click)="goToLogin()">
+          Sign In
+        </button>
       } @else {
-        <button class="mt-8 w-full bg-green-600 text-white py-3 rounded-lg" (click)="logout()">Sign Out</button>
+        <button class="mt-8 w-full bg-green-600 text-white py-3 rounded-lg" (click)="logout()">
+          Sign Out
+        </button>
       }
     </div>
   }
