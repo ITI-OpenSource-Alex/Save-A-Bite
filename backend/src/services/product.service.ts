@@ -2,7 +2,9 @@ import { Product, IProduct } from "../models/product.model";
 import mongoose from "mongoose";
 import { logger } from "./logger.service";
 import { AbacRequest } from "../middlewares/abac.middleware";
-
+import storeModel from "../models/store.model";
+import Store from "../models/store.model";
+import { Category } from "../models/category.model";
 export class ProductService {
   constructor() {}
 
@@ -37,7 +39,18 @@ export class ProductService {
 
     if (filters.search) {
       const searchRegex = { $regex: filters.search, $options: "i" };
-      query.$or = [{ name: searchRegex }, { description: searchRegex }, { category: searchRegex }];
+      const [matchingStores, matchingCategories] = await Promise.all([
+        Store.find({ name: searchRegex }, "_id").lean(),
+        Category.find({ name: searchRegex }, "_id").lean(),
+      ]);
+      const storeIds = matchingStores.map((store) => store._id);
+      const categoryIds = matchingCategories.map((category) => category._id);
+      query.$or = [
+        { name: searchRegex },
+        { description: searchRegex },
+        { categoryId: { $in: categoryIds } },
+        { storeId: { $in: storeIds } },
+      ];
     }
 
     let sortOption: any = { createdAt: -1 }; // Default to newest
@@ -56,7 +69,7 @@ export class ProductService {
         .exec(),
       Product.countDocuments(query),
     ]);
-    
+
     logger.info(`Products fetched successfully`);
     return { products, total: totalItems, page, limit };
   }
