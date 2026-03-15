@@ -69,7 +69,7 @@ export class ProductController {
   getProductById = async (req: AbacRequest, res: ExpressResponse, next: NextFunction) => {
     try {
       const productId = req.params.id as string;
-      const product = req.resource!;
+      const product = await this.productService.getProductById(productId);
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }

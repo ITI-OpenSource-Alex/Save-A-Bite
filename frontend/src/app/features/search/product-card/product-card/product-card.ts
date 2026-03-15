@@ -1,21 +1,41 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Product } from '@/core/models/product';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CartService } from '@/core/services/cart.service';
+
 @Component({
   selector: 'app-product-card',
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
 })
 export class ProductCard {
   @Input({ required: true }) product!: Product;
-  isWishListed: boolean = false;
-  toggleWishList(event: Event): void {
+
+  isAddingToCart: boolean = false;
+
+  private cartService = inject(CartService);
+
+  addToCart(event: Event): void {
     event.stopPropagation();
 
-    this.isWishListed = !this.isWishListed;
+    // Prevent multiple clicks if currently adding or if product has no ID
+    if (this.isAddingToCart || !this.product._id) return;
 
-    // Optional: Emit an event to your parent component or call a service
-    // here to actually save this to the database.
+    this.isAddingToCart = true;
+
+    this.cartService
+      .addItem({
+        productId: this.product._id,
+        quantity: 1,
+      })
+      .subscribe({
+        next: () => {
+          this.isAddingToCart = false;
+        },
+        error: () => {
+          this.isAddingToCart = false;
+        },
+      });
   }
 }
