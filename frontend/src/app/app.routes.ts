@@ -21,6 +21,12 @@ export const routes: Routes = [
         component: Home,
       },
       {
+        path: 'checkout/success', 
+        loadComponent: () => import('./features/checkout/components/checkout-success/checkout-success')
+          .then(m => m.CheckoutSuccessComponent) 
+      },
+      { path: 'checkout/cancel', redirectTo: 'cart' },
+      {
         path: 'browse',
         loadComponent: () => import('./layout/layouts/browse/browse').then((m) => m.Browse),
       },

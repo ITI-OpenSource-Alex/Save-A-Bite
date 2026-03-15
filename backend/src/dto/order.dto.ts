@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsNumber, ValidateNested, IsEnum } from "class-validator";
+import { IsString, IsArray, IsNumber, ValidateNested, IsEnum, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 
 class OrderItemDto {
@@ -38,5 +38,6 @@ export class CreateOrderDto {
   addressSnapshot!: string;
 
   @IsString()
+  @IsOptional()
   promocode?: string;
 }
