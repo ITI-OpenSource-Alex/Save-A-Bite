@@ -109,4 +109,3 @@ LastBite is a modern, full-stack e-commerce web application. It features a robus
    ```bash
    ng serve
    ```
-4. Open your browser and navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
