@@ -4,7 +4,7 @@
   <div class="flex flex-col gap-4 text-gray-600 mb-5">
     <div class="flex justify-between">
       <span>Subtotal</span>
-      <span class="font-semibold text-gray-800"> EGP{{ cart.subtotal }} </span>
+      <span class="font-semibold text-gray-800">{{ cart.subtotal | currency: 'EGP' }}</span>
     </div>
 
     @if (cart.discount > 0) {
@@ -14,10 +14,17 @@
       </div>
     }
 
-    <div class="flex justify-between">
-      <span>Delivery Fee</span>
-      <span class="font-semibold text-gray-800"> {{ deliveryFee | currency: 'EGP' }} </span>
-    </div>
+    @if (deliveryFee > 0) {
+      <div class="flex justify-between">
+        <span>Delivery Fee</span>
+        <span class="font-semibold text-gray-800">{{ deliveryFee | currency: 'EGP' }}</span>
+      </div>
+    } @else {
+      <div class="flex justify-between">
+        <span>Delivery Fee</span>
+        <span class="font-semibold text-green-600">Free</span>
+      </div>
+    }
   </div>
 
   <div class="border-t border-gray-100 pt-4 flex justify-between items-center mb-6">
@@ -61,7 +68,7 @@
 
   <button
     (click)="proceedToCheckout()"
-    [disabled]="isCheckingOut()"
+    [disabled]="isCheckingOut() || cart.items.length === 0"
     class="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors"
   >
     @if (isCheckingOut()) {

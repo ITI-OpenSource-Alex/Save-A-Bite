@@ -127,9 +127,10 @@ export class VendorRequestService {
     await request.save();
 
     // 2. Update user role to VENDOR and Activate account
-    await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
       request.userId,
-      { role: Role.VENDOR, isActive: true, isEmailVerified: true }
+      { role: Role.VENDOR, isActive: true, isEmailVerified: true },
+      { new: true }
     );
 
     // 3. Create the store immediately
@@ -147,7 +148,8 @@ export class VendorRequestService {
 
     // 4. Send email notification
     try {
-      await sendVendorApprovalEmail(request.storeEmail, request.storeName);
+      const recipientEmail = user ? user.email : request.storeEmail;
+      await sendVendorApprovalEmail(recipientEmail, request.storeName);
     } catch (emailError) {
       logger.error(`Failed to send approval email for request ${requestId}:`, emailError);
     }
@@ -175,7 +177,9 @@ export class VendorRequestService {
 
     // Send email notification
     try {
-      await sendVendorRejectionEmail(request.storeEmail, request.storeName, request.rejectionReason);
+      const user = await User.findById(request.userId);
+      const recipientEmail = user ? user.email : request.storeEmail;
+      await sendVendorRejectionEmail(recipientEmail, request.storeName, request.rejectionReason);
     } catch (emailError) {
       logger.error(`Failed to send rejection email for request ${requestId}:`, emailError);
     }

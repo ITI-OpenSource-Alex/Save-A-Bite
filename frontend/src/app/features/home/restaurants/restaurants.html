@@ -14,7 +14,9 @@
           [routerLink]="['/browse']"
           [queryParams]="{ storeId: store._id }"
         >
-          <img [src]="store.logoUrl" alt="" class="w-full object-cover h-48" />
+          <div class="relative h-48 bg-gray-50 flex items-center justify-center">
+            <img [src]="store.logoUrl" alt="" class="max-w-full max-h-full object-contain p-4" />
+          </div>
           <div class="p-5">
             <h3 class="text-lg font-semibold">
               {{ store.name }}

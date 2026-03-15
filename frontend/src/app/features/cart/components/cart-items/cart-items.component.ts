@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, inject, DestroyRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CartService } from '@/core/services/cart.service';
 import { CartItem, Cart } from '@/core/models/cart';
@@ -7,7 +7,7 @@ import { CartItem, Cart } from '@/core/models/cart';
 @Component({
   selector: 'app-cart-items',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './cart-items.component.html'
 })
 export class CartItemsComponent {

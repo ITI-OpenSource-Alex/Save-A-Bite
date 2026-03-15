@@ -31,6 +31,5 @@ router.delete(
   AuthorizeRoles(productPolicy.canDelete, productController.fetchProductByID),
   productController.deleteProduct
 );
-router.delete("/:id", IsAuthenticatedMiddleware, productController.deleteProduct);
 
 export default router;

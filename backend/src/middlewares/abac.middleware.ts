@@ -34,7 +34,7 @@ export const AuthorizeRoles = <ResourceT>(
                 const isAllowed = policyEvaluator(req.user, targetResource as ResourceT)
 
                 if (!isAllowed){
-                    return next(new ForbiddenAccessException("Access denied: User context is missing.") )
+                    return next(new ForbiddenAccessException("Access denied: You do not have permission to perform this action.") )
                 }
 
                 next()
