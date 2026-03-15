@@ -37,7 +37,7 @@ export class ProductService {
 
     if (filters.search) {
       const searchRegex = { $regex: filters.search, $options: "i" };
-      query.$or = [{ name: searchRegex }, { description: searchRegex }];
+      query.$or = [{ name: searchRegex }, { description: searchRegex }, { category: searchRegex }];
     }
 
     let sortOption: any = { createdAt: -1 }; // Default to newest
@@ -116,5 +116,3 @@ export class ProductService {
     return deletedProduct;
   }
 }
-
-

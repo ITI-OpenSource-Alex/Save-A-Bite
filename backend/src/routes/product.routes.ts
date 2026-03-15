@@ -8,9 +8,8 @@ import { productPolicy } from "../policies/product.policy";
 
 const router = Router();
 
-
 router.get("/", productController.getProducts);
-router.get("/:id",AuthorizeRoles(productPolicy.canRead, productController.fetchProductByID), productController.getProductById);
+router.get("/:id", productController.getProductById);
 router.post(
   "/:storeId",
   IsAuthenticatedMiddleware,
@@ -23,13 +22,13 @@ router.patch(
   IsAuthenticatedMiddleware,
   AuthorizeRoles(productPolicy.canUpdate, productController.fetchProductByID),
   ValidationMiddleware(UpdateProductDto),
-  productController.updateProduct,
+  productController.updateProduct
 );
 router.delete(
   "/:id",
   IsAuthenticatedMiddleware,
   AuthorizeRoles(productPolicy.canDelete, productController.fetchProductByID),
-  productController.deleteProduct,
+  productController.deleteProduct
 );
 router.delete("/:id", IsAuthenticatedMiddleware, productController.deleteProduct);
 
