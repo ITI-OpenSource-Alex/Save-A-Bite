@@ -22,7 +22,7 @@ export const paymentController = {
           price_data: {
             currency: "egp",
             product_data: {
-              name: item.productId?.name || "Save-A-Bite Item",
+              name: item.productId?.name || "LastBite Item",
             },
             unit_amount: Math.round(item.price * 100),
           },
