@@ -110,4 +110,12 @@ export class Navbar implements OnInit, OnDestroy {
       queryParams: search ? { search } : {},
     });
   }
+
+  goToCart() {
+    if (this.isLoggedIn) {
+      this.router.navigate(['/cart']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
 }

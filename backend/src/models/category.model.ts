@@ -6,7 +6,7 @@ export interface ICategory extends Document {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-  icon?: string[];
+  icon?: string;
 }
 
 const CategorySchema = new Schema<ICategory>(

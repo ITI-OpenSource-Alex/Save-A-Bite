@@ -100,7 +100,7 @@
           }
         </div>
         
-       <button class="relative text-gray-600 hover:text-green-600 cursor-pointer" aria-label="Cart" routerLink="/cart">
+       <button class="relative text-gray-600 hover:text-green-600 cursor-pointer" aria-label="Cart" (click)="goToCart()">
           <lucide-angular [img]="shoppingCartIcon" [size]="20"></lucide-angular>
           
           @if (cartService.cartState()?.items?.length) {
@@ -182,6 +182,7 @@
         <button
           class="flex items-center gap-2 hover:text-green-600 cursor-pointer text-left"
           aria-label="Cart"
+          (click)="goToCart(); toggleMenu()"
         >
           <lucide-angular [img]="shoppingCartIcon" [size]="20"></lucide-angular>
           <span>Cart</span>

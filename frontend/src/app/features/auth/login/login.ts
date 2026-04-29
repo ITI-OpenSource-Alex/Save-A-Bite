@@ -29,7 +29,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['verified'] === 'true') {
-        this.successMessage = 'Email verified successfully! You can now sign in.';
+        this.successMessage = '✅ Email verified successfully! You can now sign in.';
+      } else if (params['verified'] === 'false') {
+        const reason = params['reason'] ? decodeURIComponent(params['reason']) : 'Email verification failed.';
+        this.error = `⚠️ ${reason} Please request a new verification email.`;
       }
     });
   }

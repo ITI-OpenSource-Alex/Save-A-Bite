@@ -80,10 +80,10 @@ export const sendVendorApprovalEmail = async (to: string, storeName: string) => 
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #10b981; border-radius: 20px; background-color: #f0fdf4;">
       <h2 style="color: #059669;">Congratulations! 🎉</h2>
       <p style="font-size: 16px; color: #374151;">Your application for <strong>${storeName}</strong> has been approved!</p>
-      <p style="color: #4b5563;">You now have access to your Vendor Dashboard where you can start adding products and managing your store.</p>
-      <a href="${process.env.FRONTEND_URL}/vendor/dashboard" 
+      <p style="color: #4b5563;">You now have access to your Vendor Dashboard. Please log in to your account first.</p>
+      <a href="${process.env.FRONTEND_URL}/login" 
          style="display:inline-block;background:#10b981;color:white;padding:12px 30px;border-radius:12px;text-decoration:none;margin:20px 0;font-weight:bold;">
-        Open My Dashboard
+        Login to Access Dashboard
       </a>
       <hr style="border: none; border-top: 1px solid #d1fae5; margin: 20px 0;">
       <p style="color: #6b7280; font-size: 12px;">Welcome to the LastBite family!</p>

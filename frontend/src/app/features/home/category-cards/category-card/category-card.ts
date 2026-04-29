@@ -5,7 +5,7 @@ export interface Category {
   _id: string;
   name: string;
   offers: number;
-  icon: string[];
+  icon: string;
 }
 
 @Component({

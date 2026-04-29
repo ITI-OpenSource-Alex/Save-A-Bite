@@ -23,8 +23,8 @@
           </app-cart-items>
         </div>
 
-        <!-- ORDER SUMMARY -->
-        @if (cart() && cart()!.items.length > 0) {
+        <!-- ORDER SUMMARY (always visible) -->
+        @if (cart()) {
           <app-order-summary
             [cart]="cart()!"
             [deliveryFee]="deliveryFee"
