@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
   private cartService = inject(CartService);
   private destroyRef = inject(DestroyRef);
 
-  deliveryFee = 15;
+  deliveryFee = 0;
   cart = signal<Cart | null>(null);
   isLoading = signal<boolean>(true);
 

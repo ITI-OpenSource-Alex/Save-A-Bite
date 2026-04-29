@@ -4,11 +4,12 @@ import { Product } from '@/core/models/product';
 import { Observable, map, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ProductService } from '@/core/services/product';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-similar-category',
   standalone: true,
-  imports: [CommonModule, AsyncPipe],
+  imports: [CommonModule, AsyncPipe, RouterLink],
   templateUrl: './similar-category.html',
   styleUrl: './similar-category.css',
 })

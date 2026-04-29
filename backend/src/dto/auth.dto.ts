@@ -60,6 +60,14 @@ export class ResetPasswordDto {
   confirmPassword!: string;
 }
 
+export class VerifyResetOtpDto {
+  @IsEmail()
+  email!: string;
+
+  @IsString()
+  otp!: string;
+}
+
 export class ChangeEmailDto {
   @IsEmail()
   newEmail!: string;

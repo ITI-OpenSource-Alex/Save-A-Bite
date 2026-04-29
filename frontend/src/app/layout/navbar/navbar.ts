@@ -1,15 +1,17 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ZardInputDirective } from '@/shared/components/input/input.directive';
 import { LucideAngularModule, Bell, ShoppingCart } from 'lucide-angular';
+import { RouterModule } from '@angular/router';
 import { NotificationService, AppNotification } from '@/core/services/notification';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '@/core/services/auth.service';
+import { CartService } from '@/core/services/cart.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [ZardInputDirective, LucideAngularModule, CommonModule],
+  imports: [ZardInputDirective, LucideAngularModule, RouterModule, CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -17,7 +19,7 @@ export class Navbar implements OnInit, OnDestroy {
   isMenuOpen = false;
   protected readonly bellIcon = Bell;
   protected readonly shoppingCartIcon = ShoppingCart;
-
+  public cartService = inject(CartService);
   notifications: AppNotification[] = [];
   unreadCount: number = 0;
   isNotifOpen: boolean = false;
@@ -39,6 +41,18 @@ export class Navbar implements OnInit, OnDestroy {
 
   get isLoggedIn(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  get userRole(): string {
+    return this.authService.getUserRole();
+  }
+
+  get isVendor(): boolean {
+    return this.userRole === 'vendor';
+  }
+
+  get isSuperAdmin(): boolean {
+    return this.userRole === 'super-admin';
   }
 
   logout() {
@@ -95,5 +109,13 @@ export class Navbar implements OnInit, OnDestroy {
     this.router.navigate(['/browse'], {
       queryParams: search ? { search } : {},
     });
+  }
+
+  goToCart() {
+    if (this.isLoggedIn) {
+      this.router.navigate(['/cart']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

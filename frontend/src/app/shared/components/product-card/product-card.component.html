@@ -1,12 +1,13 @@
 <div
-  class="h-full rounded-xl border shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col"
+  class="h-full rounded-xl border shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col cursor-pointer"
   [class.bg-stone-100]="product.stock === 0"
   [class.opacity-60]="product.stock === 0"
   [class.bg-background]="product.stock !== 0"
+  (click)="goToProduct()"
 >
   <div class="relative">
     <img
-      [src]="product.images?.[0] || product.imageUrl || 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200'"
+      [src]="product.images?.[0]"
       [alt]="product.name"
       class="w-full h-48 object-cover"
       loading="lazy"
@@ -68,13 +69,5 @@
         </span>
       }
     </div>
-
-    <button
-      class="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-      [disabled]="product.stock === 0"
-      [attr.aria-label]="product.stock === 0 ? 'Out of stock' : 'Add ' + product.name + ' to cart'"
-    >
-      Add
-    </button>
   </div>
 </div>

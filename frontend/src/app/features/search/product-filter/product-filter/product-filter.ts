@@ -51,6 +51,11 @@ export class ProductFilter implements OnInit {
       if (params['category']) {
         this.filters.category = params['category'];
       }
+
+      if (params['storeId']) {
+        this.filters.storeId = params['storeId'];
+      }
+      
       this.applyFilters();
     });
   }

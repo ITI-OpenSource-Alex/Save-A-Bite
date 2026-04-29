@@ -159,6 +159,21 @@ export class AuthService {
     await sendOtpEmail(email, otp, "reset-password");
   }
 
+  async verifyResetOtp(data: { email: string; otp: string }): Promise<void> {
+    const { email, otp } = data;
+
+    const user = await User.findOne({
+      email,
+      otpExpiresAt: { $gt: new Date() },
+    });
+    if (!user || !user.otpCode) throw new BadRequestException("Invalid or expired OTP");
+
+    const isOtpValid = await bcrypt.compare(otp, user.otpCode);
+    if (!isOtpValid) throw new BadRequestException("Invalid or expired OTP");
+    
+    // Do not clear the OTP here since it will be verified again during resetPassword
+  }
+
   async resetPassword(data: ResetPasswordDto): Promise<void> {
     const { email, otp, newPassword, confirmPassword } = data;
 

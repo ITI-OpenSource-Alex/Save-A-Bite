@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 
 import NotificationManager from '../utils/notification.manager';
 import { NotificationResource } from '../enum/notification.enum';
+import { Cart } from "../models/cart.model";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2026-02-25.clover",
@@ -42,7 +43,16 @@ export const webhookController = {
 
           if (order) {
             logger.info(`Stripe Webhook: Order ${orderId} successfully updated to PAID`);
-            
+            await Cart.findOneAndUpdate(
+        { userId: order.userId }, 
+        { 
+          items: [], 
+          subtotal: 0, 
+          discount: 0, 
+          total: 0, 
+          appliedPromoCode: undefined 
+        }
+      );
             if (order.promocode) {
               try {
                 const promo = await mongoose

@@ -15,12 +15,16 @@ export class AuthController {
   };
 
   verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:4200";
     try {
       const token = req.query.token as string;
       await authService.verifyEmail(token);
-      res.status(200).json({ message: "Email verified successfully. You can now log in." });
-    } catch (error) {
-      next(error);
+      // Redirect user to the frontend login page with a success flag
+      return res.redirect(`${frontendUrl}/login?verified=true`);
+    } catch (error: any) {
+      // Redirect to login with an error message so the frontend can display it
+      const message = encodeURIComponent(error?.message || "Email verification failed");
+      return res.redirect(`${frontendUrl}/login?verified=false&reason=${message}`);
     }
   };
 
@@ -60,6 +64,15 @@ export class AuthController {
       res.status(200).json({
         message: "If an account with that email exists, an OTP has been sent.",
       });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  verifyResetOtp = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await authService.verifyResetOtp(req.body);
+      res.status(200).json({ message: "OTP verified successfully." });
     } catch (error) {
       next(error);
     }

@@ -6,7 +6,7 @@ export class ProductPolicy extends Policy<IProduct> {
 
 
     private isAuthorizedVendor(user:IUser, product:IProduct):boolean{
-        if (!this.isVendor(user)) return false;
+        if (!this.isVendor(user) || !product) return false;
         const store = product.storeId as unknown as IStore // for referring an object in mongodb
         if (!store || !store.ownerId) {
             console.warn("ProductPolicy: storeId was not populated on the product document.");
@@ -24,7 +24,7 @@ export class ProductPolicy extends Policy<IProduct> {
 
 
     canCreate = (user: IUser, product: IProduct): boolean => {
-        if (this.isAuthorizedVendor(user, product))return true
+        if (this.isVendor(user)) return true
         return super.canCreate(user, product)
     }
 

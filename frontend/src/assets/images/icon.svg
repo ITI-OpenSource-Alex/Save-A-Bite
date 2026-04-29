@@ -1,0 +1,53 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Vibrant Emerald App Gradient -->
+    <linearGradient id="grad" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="45%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+
+    <!-- Professional Drop Shadow for UI placement -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#047857" flood-opacity="0.25" />
+    </filter>
+
+    <!-- Mask to create the "Bite" -->
+    <mask id="biteMask">
+      <rect x="0" y="0" width="512" height="512" fill="white" />
+      <!-- The bite out of the right side of the dome -->
+      <!-- Perfectly placed to bite the arch edge cleanly -->
+      <circle cx="385" cy="240" r="30" fill="black" />
+      <circle cx="405" cy="275" r="32" fill="black" />
+      <circle cx="415" cy="310" r="30" fill="black" />
+    </mask>
+  </defs>
+
+  <!-- Complete Icon Group -->
+  <g filter="url(#shadow)">
+    <g mask="url(#biteMask)">
+      
+      <!-- Base Plate / Serving Tray -->
+      <!-- Sits at the bottom giving a solid foundation -->
+      <rect x="56" y="370" width="400" height="34" rx="17" fill="url(#grad)" />
+
+      <!-- Cloche Dome (Food Cover) -->
+      <!-- Center: 256, 340. Radius: 160. Left: 96, Right: 416 -->
+      <path d="M 96 370 L 96 340 A 160 160 0 0 1 416 340 L 416 370 Z" fill="url(#grad)" />
+
+      <!-- Inner Glass Highlight for 3D premium feel -->
+      <path d="M 120 360 L 120 340 A 136 136 0 0 1 180 226 Q 145 285 145 360 Z" fill="white" opacity="0.2" />
+
+      <!-- Stem for the Leaf Handle -->
+      <!-- Anchors deep enough to prevent gaps -->
+      <path d="M 256 185 Q 260 140 290 120" stroke="url(#grad)" stroke-width="14" stroke-linecap="round" fill="none" />
+
+      <!-- Left Leaf -->
+      <path d="M 250 150 C 190 145 160 90 160 90 C 210 70 250 110 250 150 Z" fill="url(#grad)" />
+      
+      <!-- Right Leaf (slightly larger and angled) -->
+      <path d="M 270 125 C 330 115 370 50 370 50 C 310 30 270 80 270 125 Z" fill="url(#grad)" />
+      
+    </g>
+  </g>
+</svg>
