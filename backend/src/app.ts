@@ -25,6 +25,7 @@ class App {
     const appInstance = new App();
     appInstance.validateEnv();
     appInstance.app = express();
+    appInstance.app.set("trust proxy", 1); // Trust the reverse proxy
     await appInstance.initializeMiddlewares();
     await dbConnection();
     await Seeder.seedSuperAdmin();
