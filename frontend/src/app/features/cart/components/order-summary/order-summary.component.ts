@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CartService } from '@/core/services/cart.service';
 import { Cart } from '@/core/models/cart';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-order-summary',
@@ -101,7 +102,7 @@ proceedToCheckout() {
     
 
 
-  this.http.post<any>('http://localhost:3000/api/orders', orderData, { headers }).subscribe({
+  this.http.post<any>(environment.apiUrl + '/'api/orders', orderData, { headers }).subscribe({
     next: (res) => {
       console.log('Order Creation Response:', res);
       const orderId =res.data?._id || res.order?._id || res._id
@@ -112,7 +113,7 @@ proceedToCheckout() {
         return;
       }
       console.log('Successfully grabbed Order ID:', orderId);
-      const paymentUrl = 'http://localhost:3000/api/payments/create-checkout-session';
+      const paymentUrl = environment.apiUrl + '/'api/payments/create-checkout-session';
       // Step 2: Redirect to Payment
       this.http.post<any>(paymentUrl, { orderId:orderId }, { headers })
         .subscribe({

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CreateOrderDto, Order } from '../models/order';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { CreateOrderDto, Order } from '../models/order';
 export class OrderService {
   private http = inject(HttpClient);
   // Assuming the backend has /api/orders endpoint based on standard practices and previous conversations
-  private apiURL = 'http://localhost:3000/api/orders';
+  private apiURL = environment.apiUrl + '/'api/orders';
 
   createOrder(data: CreateOrderDto): Observable<{ order: Order }> {
     const headers = this.getAuthHeaders();

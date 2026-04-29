@@ -3,13 +3,14 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, delay } from 'rxjs';
 import { Product, PaginatedResponse, ProductFilters } from '../models/product';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   private http = inject(HttpClient);
-  private apiURL = 'http://localhost:3000/api/products';
+  private apiURL = environment.apiUrl + '/'api/products';
 
   getProducts(
     page: number = 1,

@@ -5,6 +5,7 @@ import { inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from "@angular/router";
+import { environment } from '../../../../environments/environment';
 
 interface Store {
     _id: string;
@@ -27,7 +28,7 @@ export class Restaurants implements OnInit {
 
   stores$!: Observable<Store[]>;
   private http = inject(HttpClient);
-  private apiURL = 'http://localhost:3000/api/stores';
+  private apiURL = environment.apiUrl + '/'api/stores';
 
   ngOnInit() {
     this.stores$ = this.http.get<Store[]>(this.apiURL);
