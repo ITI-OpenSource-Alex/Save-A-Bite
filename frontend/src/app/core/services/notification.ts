@@ -2,6 +2,7 @@ import { Injectable, OnDestroy,NgZone } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { io, Socket } from 'socket.io-client';
 import { Subject, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface AppNotification {
   _id?: string;
@@ -22,7 +23,7 @@ export class NotificationService implements OnDestroy {
   private newNotificationSource = new Subject<AppNotification>();
   public newNotification$ = this.newNotificationSource.asObservable();
 
-  private apiUrl = 'http://localhost:3000/api/notifications'; 
+  private apiUrl = environment.apiUrl + '/'api/notifications'; 
 
   constructor(private http: HttpClient, private ngZone: NgZone) {
     this.initSocket();
@@ -46,7 +47,7 @@ export class NotificationService implements OnDestroy {
     const token = localStorage.getItem('token');
     if (!token) return; 
 
-    this.socket = io('http://localhost:3000', {
+    this.socket = io(environment.apiUrl, {
       auth: { token: token }
     });
 

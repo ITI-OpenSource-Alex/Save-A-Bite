@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface VendorRequest {
   _id: string;
@@ -42,7 +43,7 @@ export interface CreateVendorRequestPayload {
   providedIn: 'root'
 })
 export class VendorService {
-  private API = 'http://localhost:3000/api/vendor-requests';
+  private API = environment.apiUrl + '/'api/vendor-requests';
 
   constructor(private http: HttpClient) {}
 
@@ -79,24 +80,24 @@ export class VendorService {
 
   // ─── Product endpoints for vendor dashboard ───────
   getCategories(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/category/list');
+    return this.http.get(environment.apiUrl + '/'api/category/list');
   }
 
   addProduct(storeId: string, productData: any): Observable<any> {
-    return this.http.post(`http://localhost:3000/api/products/${storeId}`, productData);
+    return this.http.post(`${environment.apiUrl}/api/products/${storeId}`, productData);
   }
 
   updateProduct(productId: string, data: any): Observable<any> {
-    return this.http.patch(`http://localhost:3000/api/products/${productId}`, data);
+    return this.http.patch(`${environment.apiUrl}/api/products/${productId}`, data);
   }
 
   deleteProduct(productId: string): Observable<any> {
-    return this.http.delete(`http://localhost:3000/api/products/${productId}`);
+    return this.http.delete(`${environment.apiUrl}/api/products/${productId}`);
   }
 
   uploadImage(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('image', file);
-    return this.http.post('http://localhost:3000/api/upload', formData);
+    return this.http.post(environment.apiUrl + '/'api/upload', formData);
   }
 }

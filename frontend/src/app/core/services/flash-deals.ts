@@ -4,6 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { inject } from '@angular/core';
 import { PaginatedResponse, ProductFilters } from '../models/product';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { PaginatedResponse, ProductFilters } from '../models/product';
 })
 export class FlashDeals {
   private http = inject(HttpClient);
-  private apiURL = 'http://localhost:3000/api/products';
+  private apiURL = environment.apiUrl + '/'api/products';
 
 
   getFlashDeals(

@@ -7,6 +7,7 @@ import { AsyncPipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-categories-section',
@@ -20,7 +21,7 @@ export class CategoriesSection implements OnInit {
 
   ngOnInit() {
     this.categories$ = this.http
-      .get<Category[]>('http://localhost:3000/api/category/list')
+      .get<Category[]>(environment.apiUrl + '/'api/category/list')
       .pipe(tap((res) => console.log(res)));
   }
 }

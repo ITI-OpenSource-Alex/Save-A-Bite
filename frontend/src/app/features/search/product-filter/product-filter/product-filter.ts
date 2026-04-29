@@ -6,6 +6,7 @@ import { filter, Observable } from 'rxjs';
 import { ProductFilters } from '@/core/models/product';
 import { ActivatedRoute } from '@angular/router';
 import { Query } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 export interface Category {
   _id: string;
   name: string;
@@ -67,7 +68,7 @@ export class ProductFilter implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${tempToken}`);
 
     // Assign the HTTP request directly to the Observable. No .subscribe() needed!
-    this.categories$ = this.http.get<Category[]>('http://localhost:3000/api/category/list', {
+    this.categories$ = this.http.get<Category[]>(environment.apiUrl + '/'api/category/list', {
       headers,
     });
   }
