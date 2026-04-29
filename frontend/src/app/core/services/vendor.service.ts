@@ -43,7 +43,7 @@ export interface CreateVendorRequestPayload {
   providedIn: 'root'
 })
 export class VendorService {
-  private API = environment.apiUrl + '/'api/vendor-requests';
+  private API = environment.apiUrl + '/api/vendor-requests';
 
   constructor(private http: HttpClient) {}
 
@@ -80,7 +80,7 @@ export class VendorService {
 
   // ─── Product endpoints for vendor dashboard ───────
   getCategories(): Observable<any> {
-    return this.http.get(environment.apiUrl + '/'api/category/list');
+    return this.http.get(environment.apiUrl + '/api/category/list');
   }
 
   addProduct(storeId: string, productData: any): Observable<any> {
@@ -98,6 +98,6 @@ export class VendorService {
   uploadImage(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('image', file);
-    return this.http.post(environment.apiUrl + '/'api/upload', formData);
+    return this.http.post(environment.apiUrl + '/api/upload', formData);
   }
 }

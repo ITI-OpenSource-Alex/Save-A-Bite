@@ -68,7 +68,7 @@ export class ProductFilter implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${tempToken}`);
 
     // Assign the HTTP request directly to the Observable. No .subscribe() needed!
-    this.categories$ = this.http.get<Category[]>(environment.apiUrl + '/'api/category/list', {
+    this.categories$ = this.http.get<Category[]>(environment.apiUrl + '/api/category/list', {
       headers,
     });
   }

@@ -28,7 +28,7 @@ interface LoginResponse {
 })
 export class AuthService {
 
-  private API = environment.apiUrl + '/'api/auth';
+  private API = environment.apiUrl + '/api/auth';
 
   constructor(private http: HttpClient) {}
 

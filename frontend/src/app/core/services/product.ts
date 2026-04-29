@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ProductService {
   private http = inject(HttpClient);
-  private apiURL = environment.apiUrl + '/'api/products';
+  private apiURL = environment.apiUrl + '/api/products';
 
   getProducts(
     page: number = 1,

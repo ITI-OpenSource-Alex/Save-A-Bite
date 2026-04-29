@@ -102,7 +102,7 @@ proceedToCheckout() {
     
 
 
-  this.http.post<any>(environment.apiUrl + '/'api/orders', orderData, { headers }).subscribe({
+  this.http.post<any>(environment.apiUrl + '/api/orders', orderData, { headers }).subscribe({
     next: (res) => {
       console.log('Order Creation Response:', res);
       const orderId =res.data?._id || res.order?._id || res._id
@@ -113,7 +113,7 @@ proceedToCheckout() {
         return;
       }
       console.log('Successfully grabbed Order ID:', orderId);
-      const paymentUrl = environment.apiUrl + '/'api/payments/create-checkout-session';
+      const paymentUrl = environment.apiUrl + '/api/payments/create-checkout-session';
       // Step 2: Redirect to Payment
       this.http.post<any>(paymentUrl, { orderId:orderId }, { headers })
         .subscribe({
