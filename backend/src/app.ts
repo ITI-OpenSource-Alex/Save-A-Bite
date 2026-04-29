@@ -50,7 +50,17 @@ class App {
       express.raw({ type: 'application/json' }), 
       webhookController.handleStripeWebhook
     );
-    this.app.use(cors(this.corsOptions));
+    this.app.use((req, res, next) => {
+      const origin = req.headers.origin || "*";
+      res.header("Access-Control-Allow-Origin", origin);
+      res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS");
+      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept");
+      res.header("Access-Control-Allow-Credentials", "true");
+      if (req.method === "OPTIONS") {
+        return res.status(200).end();
+      }
+      next();
+    });
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
 
