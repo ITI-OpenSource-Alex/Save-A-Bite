@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment';
 })
 export class FlashDeals {
   private http = inject(HttpClient);
-  private apiURL = environment.apiUrl + '/'api/products';
+  private apiURL = environment.apiUrl + '/api/products';
 
 
   getFlashDeals(

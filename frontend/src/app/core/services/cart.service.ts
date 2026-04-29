@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 })
 export class CartService {
   private http = inject(HttpClient);
-  private apiURL = environment.apiUrl + '/'api/cart';
+  private apiURL = environment.apiUrl + '/api/cart';
 
 public cartState = signal<Cart | null>(null);
 

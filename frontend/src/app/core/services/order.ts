@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class OrderService {
   private http = inject(HttpClient);
   // Assuming the backend has /api/orders endpoint based on standard practices and previous conversations
-  private apiURL = environment.apiUrl + '/'api/orders';
+  private apiURL = environment.apiUrl + '/api/orders';
 
   createOrder(data: CreateOrderDto): Observable<{ order: Order }> {
     const headers = this.getAuthHeaders();

@@ -28,7 +28,7 @@ export class Restaurants implements OnInit {
 
   stores$!: Observable<Store[]>;
   private http = inject(HttpClient);
-  private apiURL = environment.apiUrl + '/'api/stores';
+  private apiURL = environment.apiUrl + '/api/stores';
 
   ngOnInit() {
     this.stores$ = this.http.get<Store[]>(this.apiURL);

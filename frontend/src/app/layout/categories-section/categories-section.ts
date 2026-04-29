@@ -21,7 +21,7 @@ export class CategoriesSection implements OnInit {
 
   ngOnInit() {
     this.categories$ = this.http
-      .get<Category[]>(environment.apiUrl + '/'api/category/list')
+      .get<Category[]>(environment.apiUrl + '/api/category/list')
       .pipe(tap((res) => console.log(res)));
   }
 }

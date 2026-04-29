@@ -23,7 +23,7 @@ export class NotificationService implements OnDestroy {
   private newNotificationSource = new Subject<AppNotification>();
   public newNotification$ = this.newNotificationSource.asObservable();
 
-  private apiUrl = environment.apiUrl + '/'api/notifications'; 
+  private apiUrl = environment.apiUrl + '/api/notifications'; 
 
   constructor(private http: HttpClient, private ngZone: NgZone) {
     this.initSocket();
