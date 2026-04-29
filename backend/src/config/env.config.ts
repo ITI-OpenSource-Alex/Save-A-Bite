@@ -21,6 +21,9 @@ const processEnvSchema = Joi.object({
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
   REDIS_PASSWORD: Joi.string().required(),
+  CLOUDINARY_CLOUD_NAME: Joi.string().required(),
+  CLOUDINARY_API_KEY: Joi.string().required(),
+  CLOUDINARY_API_SECRET: Joi.string().required(),
 })
   .unknown()
   .required();
@@ -61,6 +64,9 @@ export const envSchema = Joi.object({
     PORT: Joi.number().required(),
     PASSWORD: Joi.string().required(),
   }).required(),
+  CLOUDINARY_CLOUD_NAME: Joi.string().required(),
+  CLOUDINARY_API_KEY: Joi.string().required(),
+  CLOUDINARY_API_SECRET: Joi.string().required(),
 });
 
 const env = {
@@ -93,6 +99,9 @@ const env = {
     PORT: envVars.REDIS_PORT,
     PASSWORD: envVars.REDIS_PASSWORD,
   },
+  CLOUDINARY_CLOUD_NAME: envVars.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: envVars.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: envVars.CLOUDINARY_API_SECRET,
 };
 
 export default env;

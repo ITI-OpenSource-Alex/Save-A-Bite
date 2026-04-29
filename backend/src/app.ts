@@ -51,7 +51,6 @@ class App {
     this.app.use(cors(this.corsOptions));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use("/uploads", express.static("uploads"));
 
   
     this.app.get("/", (req: Request, res: Response) => {
