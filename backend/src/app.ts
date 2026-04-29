@@ -14,9 +14,10 @@ class App {
   private app!: Application;
 
   public corsOptions: cors.CorsOptions = {
-    origin: "*",
-    allowedHeaders: "*",
-    methods: "*",
+    origin: true, // Reflects the origin of the request
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type, Authorization, X-Requested-With, Accept"
   };
 
   private constructor() {}
