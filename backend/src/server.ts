@@ -19,9 +19,9 @@ const startApplication = async () => {
     
     // Initialize notification collector
     NotificationCollector.getInstance();
-
-    server.listen(env.APP.PORT, () => {
-      logger.info(`🚀 Server is running at http://localhost:${env.APP.PORT}`);
+    const port = env.APP.PORT || 4000;
+    server.listen(port, () => {
+      logger.info(`🚀 Server is running at http://localhost:${port}`);
     });
   } catch (err: any) {
     logger.error(`Error starting application: ${err.message}`, err);
