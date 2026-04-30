@@ -17,7 +17,7 @@ class App {
     origin: true, // Reflects the origin of the request
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    allowedHeaders: "Content-Type, Authorization, X-Requested-With, Accept"
+    allowedHeaders: "Content-Type, Authorization, X-Requested-With, Accept",
   };
 
   private constructor() {}
@@ -45,16 +45,19 @@ class App {
   }
 
   private async initializeMiddlewares() {
-   this.app.post(
-      '/api/payments/webhook', 
-      express.raw({ type: 'application/json' }), 
+    this.app.post(
+      "/api/payments/webhook",
+      express.raw({ type: "application/json" }),
       webhookController.handleStripeWebhook
     );
     this.app.use((req, res, next) => {
       const origin = req.headers.origin || "*";
       res.header("Access-Control-Allow-Origin", origin);
       res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS");
-      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept");
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, X-Requested-With, Accept"
+      );
       res.header("Access-Control-Allow-Credentials", "true");
       if (req.method === "OPTIONS") {
         return res.status(200).end();
@@ -64,10 +67,9 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
 
-  
-    this.app.get("/", (req: Request, res: Response) => {
-      res.json({ message: "Hello World!" });
-    });
+    // this.app.get("/", (req: Request, res: Response) => {
+    //   res.json({ message: "Hello World!" });
+    // });
   }
 
   private async initializeRoutes() {
