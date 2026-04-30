@@ -7,7 +7,7 @@ import { createServer } from "http";
 import addressRoutes from "./routes/address.routes";
 import { initSocket } from "./utils/socket";
 import App from "./app";
-import NotificationCollector from './utils/notification.collector';
+import NotificationCollector from "./utils/notification.collector";
 
 const logger = Container.get(Logger);
 
@@ -16,16 +16,16 @@ const startApplication = async () => {
     const app = await App.init();
     const server = createServer(app.getExpressInstance());
     const io = initSocket(server);
-    
+
     // Initialize notification collector
     NotificationCollector.getInstance();
-    const port = env.APP.PORT || 4000;
+    const port = process.env.PORT || env.APP.PORT || 4000;
     server.listen(port, () => {
       logger.info(`🚀 Server is running at http://localhost:${port}`);
     });
   } catch (err: any) {
-    logger.error(`Error starting application: ${err.message}`, err);
-    exit(1);
+    console.error("FATAL STARTUP ERROR:", err);
+    process.exit(1);
   }
 };
 
